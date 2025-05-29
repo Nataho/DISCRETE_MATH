@@ -15,7 +15,6 @@ class Ciphers:
         self.start()
         
     def start(self):
-        """hi ciar"""
         print("pick your desired encryption method.")
         for i, method in enumerate(self.methods):
             print(f"{i + 1}. {method}")
@@ -29,15 +28,15 @@ class Ciphers:
         print(f"You have selected: {picked_method}")
         match picked_method:
             case "Caesar Cipher":
-                self.caesar()
+                self._caesar()
             case "Vigenère Cipher":
-                self.vigenere()
+                self._vigenere()
             case "Playfair Cipher":
-                self.playfair()
+                self._playfair()
             case _:
                 print("This method is not implemented yet.")
         
-    def caesar(self):
+    def _caesar(self):
         print()
         text = input("Enter the text to encrypt: ")
         shift = int(input("Enter the shift value (1-25): "))
@@ -47,7 +46,7 @@ class Ciphers:
         else:
             print("Invalid shift value. Please enter a number between 1 and 25.")
     
-    def _caesar(self, text, shift):
+    def caesar(self, text, shift):
         small = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
         big = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         encrypted_text = ""
@@ -64,14 +63,14 @@ class Ciphers:
                 encrypted_text += char
         return encrypted_text
     
-    def vigenere(self):
+    def _vigenere(self):
         print()
         text = input("Enter the text to encrypt: ")
         keyword = input("Enter the keyword: ")
         encrypted_text = self._vigenere(text, keyword)
         print(f"Encrypted text: {encrypted_text}")
 
-    def _vigenere(self, text, keyword):
+    def vigenere(self, text, keyword):
         small = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
         big = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         keyword_repeated = (keyword * (len(text) // len(keyword) + 1))[:len(text)] # Repeat the keyword to match the length of the text
@@ -93,14 +92,14 @@ class Ciphers:
         
         return encrypted_text
 
-    def playfair(self):
+    def _playfair(self):
         print()
         text = input("Enter the text to encrypt: ")
         keyword = input("Enter the keyword: ")
         encrypted_text = self._playfair(text, keyword)
         print(f"Encrypted text: {encrypted_text}")
     
-    def _playfair(self, text, keyword):
+    def playfair(self, text, keyword):
         cipher = PlayfairCipher(text,keyword)
 
         return cipher.ciphertext

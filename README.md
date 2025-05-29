@@ -16,3 +16,9 @@ Classes
   - Caesar Cipher
   - Vigenere Cipher
   - Playfair Cipher (advanced)
+-Sorting
+  - Bubble Sort
+  - Selection Sort
+  - Insertion Sort
+  - Merge Sort
+  - Quick Sort

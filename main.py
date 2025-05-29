@@ -1,5 +1,6 @@
 from ST import ST
-from Encription import Ciphers
+from Ciphers import Ciphers
+from Sorting import Sorting
 
 from basic_math import bMath
 from TOOLS import TOOLS
@@ -9,7 +10,8 @@ picked:int = -2
 
 classes = [
     ST,
-    Ciphers
+    Ciphers,
+    Sorting,
 ]
 
 while picked != -1: #-1 is used to exit the loop
