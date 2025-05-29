@@ -12,10 +12,12 @@ Classes
     - Difference
     - A subset of B
     - A equal to B
+
 - Ciphers
   - Caesar Cipher
   - Vigenere Cipher
   - Playfair Cipher (advanced)
+  
 -Sorting
   - Bubble Sort
   - Selection Sort
