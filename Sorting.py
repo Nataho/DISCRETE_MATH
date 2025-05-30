@@ -7,7 +7,8 @@ class Sorting:
             "Selection Sort",
             "Insertion Sort",
             "Merge Sort",
-            "Quick Sort"
+            "Quick Sort",
+            "Bucket Sort",
         ]
         self.start()
         # self.selection_sort()  # For testing purposes, directly calling bubble_sort
@@ -35,9 +36,12 @@ class Sorting:
                 self._merge_sort()
             case "Quick Sort":
                 self._quick_sort()
+            case "Bucket Sort":
+                self._bucket_sort()
             case _:
                 print("This method is not implemented yet.")
-    
+
+#region bubble sort
     def _bubble_sort(self):
         # print()
         arr = input("Enter the items to sort (space-separated): ").split()
@@ -56,7 +60,9 @@ class Sorting:
                 # print(i, j, arr)
         return arr
         print(f"Sorted array: {arr}")
-    
+#endregion bubble sort
+
+#region selection sort
     def _selection_sort(self):
         # print()
         arr = input("Enter the items to sort (space-separated): ").split()
@@ -77,7 +83,9 @@ class Sorting:
             # print(i, min_idx, arr)
         return arr
         print(f"Sorted array: {arr}")
-    
+#endregion selection sort
+
+#region insertion sort
     def _insertion_sort(self):
         # print()
         arr = input("Enter the items to sort (space-separated): ").split()
@@ -99,7 +107,9 @@ class Sorting:
             # print(i, j, arr)
         return arr
         print(f"Sorted array: {arr}")
+#endregion insertion sort
 
+#region merge sort
     def _merge_sort(self):
         # print()
         arr = input("Enter the items to sort (space-separated): ").split()
@@ -145,7 +155,9 @@ class Sorting:
             arr[k] = R[j]
             j += 1
             k += 1
-    
+#endregion merge sort
+
+#region quick sort
     def _quick_sort(self):
         # print()
         arr = input("Enter the items to sort (space-separated): ").split()
@@ -172,3 +184,34 @@ class Sorting:
                 arr[i], arr[j] = arr[j], arr[i]  # Swap if element is smaller than pivot
         arr[i + 1], arr[high] = arr[high], arr[i + 1]  # Place pivot in correct position
         return i + 1  # Return the partitioning index
+#endregion quick sort
+
+#region bucket sort
+    def _bucket_sort(self):
+        # print()
+        arr = list(map(float, input("Enter the items to sort (space-separated): ").split()))
+        sorted_arr = self.bucket_sort(arr)
+        TOOLS.sleep(0.5)
+        print(f"Sorted array: {sorted_arr}")
+
+    def bucket_sort(self, arr):
+        # Create empty buckets
+        bucket = []
+        for i in range(len(arr)):
+            bucket.append([])
+
+        # Put array elements in different buckets
+        for j in arr:
+            index_b = min(int(10 * j), len(arr) - 1)
+            bucket[index_b].append(j)
+        # Sort individual buckets
+        for i in range(len(arr)):
+            bucket[i] = self.insertion_sort(bucket[i])
+        # Concatenate all sorted buckets
+        sorted_arr = []
+        for i in range(len(arr)):
+            sorted_arr = sorted_arr + bucket[i]
+        arr = sorted_arr.copy()  # Copy sorted array back to original array
+        return sorted_arr
+        
+#endregion bucket sort

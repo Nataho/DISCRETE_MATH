@@ -24,3 +24,4 @@ Classes
   - Insertion Sort
   - Merge Sort
   - Quick Sort
+  - Bucket Sort
