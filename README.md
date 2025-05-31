@@ -27,4 +27,11 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - Bucket Sort
 
 # Coming Soon
--
+- ## Sorting
+  - Shell Sort
+- ## Ciphers 
+  - Hill cipher 
+  - Vernam
+  - One time pad 
+  - Rail fence (zigzag cipher)
+  - Columnar cipher
