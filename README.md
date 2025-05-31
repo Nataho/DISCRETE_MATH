@@ -4,7 +4,7 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
 - pls don't, nag struggle sab ko sa money HAHAHAHA
 
 **Things available**
-Classes
+# Classes
 - ST
   - Set theory
     - Union
@@ -25,3 +25,6 @@ Classes
   - Merge Sort
   - Quick Sort
   - Bucket Sort
+
+# Coming Soon
+-
