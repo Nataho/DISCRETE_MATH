@@ -5,7 +5,7 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
 
 **Things available**
 # Classes
-## ST
+- ## ST
   - Set theory
     - Union
     - Intersection
@@ -13,25 +13,28 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
     - A subset of B
     - A equal to B
 
-## Ciphers
+- ## Ciphers
   - Caesar Cipher
-  - Vigenere Cipher
+  - Vigenere Cipher 
   - Playfair Cipher (advanced)
+  - Vernam
+  - One time pad (advanced)
+  - Hill Cipher(advanced)
 
-## Sorting
+
+- ## Sorting
   - Bubble Sort
   - Selection Sort
   - Insertion Sort
-  - Merge Sort
-  - Quick Sort
+  - Merge Sort (advanced)
+  - Quick Sort (advanced)
   - Bucket Sort
+  - Shell Sort
 
 # Coming Soon
-- ## Sorting
-  - Shell Sort
+<!-- - ## Sorting -->
+
 - ## Ciphers 
-  - Hill cipher 
-  - Vernam
-  - One time pad 
+  <!-- - Hill cipher  -->
   - Rail fence (zigzag cipher)
   - Columnar cipher

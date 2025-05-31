@@ -9,6 +9,7 @@ class Sorting:
             "Merge Sort",
             "Quick Sort",
             "Bucket Sort",
+            "Shell Sort"
         ]
         self.start()
         # self.selection_sort()  # For testing purposes, directly calling bubble_sort
@@ -38,13 +39,16 @@ class Sorting:
                 self._quick_sort()
             case "Bucket Sort":
                 self._bucket_sort()
+            case "Shell Sort":
+                self._shell_sort()
             case _:
                 print("This method is not implemented yet.")
 
 #region bubble sort
     def _bubble_sort(self):
         # print()
-        arr = input("Enter the items to sort (space-separated): ").split()
+        arr = list(map(float, input("Enter the items to sort (space-separated): ").split()))
+        # arr = input("Enter the items to sort (space-separated): ").split()
         self.bubble_sort(arr)
         TOOLS.sleep(0.5)
         print(f"Sorted array: {arr}")
@@ -65,7 +69,8 @@ class Sorting:
 #region selection sort
     def _selection_sort(self):
         # print()
-        arr = input("Enter the items to sort (space-separated): ").split()
+        arr = list(map(float, input("Enter the items to sort (space-separated): ").split()))
+        # arr = input("Enter the items to sort (space-separated): ").split()
         self.selection_sort(arr)
         TOOLS.sleep(0.5)
         print(f"Sorted array: {arr}")
@@ -88,7 +93,8 @@ class Sorting:
 #region insertion sort
     def _insertion_sort(self):
         # print()
-        arr = input("Enter the items to sort (space-separated): ").split()
+        # arr = input("Enter the items to sort (space-separated): ").split()
+        arr = list(map(float, input("Enter the items to sort (space-separated): ").split()))
         self.insertion_sort(arr)
         TOOLS.sleep(0.5)
         print(f"Sorted array: {arr}")
@@ -112,7 +118,8 @@ class Sorting:
 #region merge sort
     def _merge_sort(self):
         # print()
-        arr = input("Enter the items to sort (space-separated): ").split()
+        arr = list(map(float, input("Enter the items to sort (space-separated): ").split()))
+        # arr = input("Enter the items to sort (space-separated): ").split()
         self.merge_sort(arr)
         TOOLS.sleep(0.5)
         print(f"Sorted array: {arr}")
@@ -160,7 +167,8 @@ class Sorting:
 #region quick sort
     def _quick_sort(self):
         # print()
-        arr = input("Enter the items to sort (space-separated): ").split()
+        arr = list(map(float, input("Enter the items to sort (space-separated): ").split()))
+        # arr = input("Enter the items to sort (space-separated): ").split()
         self.quick_sort(arr, 0, len(arr) - 1)
         TOOLS.sleep(0.5)
         print(f"Sorted array: {arr}")
@@ -189,6 +197,7 @@ class Sorting:
 #region bucket sort
     def _bucket_sort(self):
         # print()
+        # arr = input("Enter the items to sort (space-separated): ").split() #for string input
         arr = list(map(float, input("Enter the items to sort (space-separated): ").split()))
         sorted_arr = self.bucket_sort(arr)
         TOOLS.sleep(0.5)
@@ -206,7 +215,7 @@ class Sorting:
             bucket[index_b].append(j)
         # Sort individual buckets
         for i in range(len(arr)):
-            bucket[i] = self.insertion_sort(bucket[i])
+            self.insertion_sort(bucket[i])
         # Concatenate all sorted buckets
         sorted_arr = []
         for i in range(len(arr)):
@@ -215,3 +224,32 @@ class Sorting:
         return sorted_arr
         
 #endregion bucket sort
+
+#region shell sort
+    def _shell_sort(self):
+        # arr = input("Enter the items to sort (space-separated): ").split() #for string input
+        arr = list(map(float, input("Enter the items to sort (space-separated): ").split()))
+        self.shell_sort(arr)
+        TOOLS.sleep(0.5)
+        print(f"Sorted array: {arr}")
+
+    def shell_sort(self, arr):
+        n = len(arr)
+        gap = n // 2  # Start with a big gap, then reduce the gap
+        while gap > 0:
+            # Collect the gapped subarrays and use insertion_sort on each
+            for start in range(gap):
+                # Extract the subarray with current gap
+                subarray_indices = list(range(start, n, gap))
+                subarray = [arr[i] for i in subarray_indices]
+                # Sort the subarray using the class's insertion_sort
+                self.insertion_sort(subarray)
+                print(subarray)
+                TOOLS.sleep(0.5)
+            # Put back the sorted subarray into the original array
+            for idx, val in zip(subarray_indices, subarray):
+                arr[idx] = val
+            gap //= 2  # Reduce the gap for the next iteration
+        return arr
+#endregion shell sort
+
