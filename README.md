@@ -5,7 +5,7 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
 
 **Things available**
 # Classes
-- ST
+## ST
   - Set theory
     - Union
     - Intersection
@@ -13,12 +13,12 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
     - A subset of B
     - A equal to B
 
-- Ciphers
+## Ciphers
   - Caesar Cipher
   - Vigenere Cipher
   - Playfair Cipher (advanced)
 
-- Sorting
+## Sorting
   - Bubble Sort
   - Selection Sort
   - Insertion Sort
