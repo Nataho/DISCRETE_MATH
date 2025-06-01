@@ -1,7 +1,12 @@
 This is the source code for the topic asignment of discrete math(sy 2024-2025) in python
 
+# run.sh DOES NOT WORK WITH WINDOWS.
+
 **DO NOT SHARE THIS REPOSITORY TO OTHER STUDENTS**
 - pls don't, nag struggle sab ko sa money HAHAHAHA
+
+## **Prerequisites**
+- Python 3 or microsoft's python extensions in **vscode**
 
 **Things available**
 # Classes
