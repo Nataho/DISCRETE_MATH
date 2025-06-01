@@ -56,7 +56,6 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - Fermat's little theory
 
 # Coming Soon
-
 - ## GCD/LCM
   - Euclidean Algorithm 
   - Chinese remainder theory
