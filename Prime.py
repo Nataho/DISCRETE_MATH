@@ -7,6 +7,7 @@ class Prime:
             "prime factors (trial by division)",
             "Sieve of Eratosthenes",
             "Fermat's little theorem",
+            "Primitive roots",
         ]
         self.start()
 
@@ -39,8 +40,16 @@ class Prime:
             p = int(TOOLS.input_type("Enter a prime number for p: "))
             result = self.fermats(a, k, p)
             TOOLS.print_type(f"{a}^{k} mod {p} = {result} mod {p}")
-    
-    def prime_factors(self, n):
+        elif method_name == "Primitive roots":
+            p = int(TOOLS.input_type("Enter a prime number: "))
+            a = int(TOOLS.input_type("Enter a number to check if it is a primitive root: "))
+
+            roots = self.primitive_roots(a, p)
+            # print(f"Question: is {a} a primitive root of {p}?")
+            TOOLS.print_type(f"Primitive roots of {p}: {roots}")
+
+    @staticmethod
+    def prime_factors(n):
         """Return the list of prime factors of n."""
         factors = []
         # Handle 2 separately
@@ -50,7 +59,7 @@ class Prime:
         # Check odd numbers
         for i in range(3, int(n**0.5) + 1, 2):
             while n % i == 0:
-                if self.is_prime(i):
+                if Prime.is_prime(i):
                     factors.append(i)
                 n //= i
         if n > 2:
@@ -76,6 +85,28 @@ class Prime:
 
         exponent_result = pow(a, k)
         return bMath().modulo(exponent_result,p)
+
+    def primitive_roots(self, a, p):
+        """Check if a is a primitive root of prime p and return all primitive roots of p."""
+        if a <= 0 or p <= 0:
+            TOOLS.print_type("Error: a and p must be positive integers.")
+            raise ValueError("a and p must be positive integers.")
+        if not self.is_prime(p):
+            TOOLS.print_type("Error: p must be a prime number.")
+            raise ValueError("p must be a prime number.")
+
+        # Find all primitive roots of p
+        required_set = set(range(1, p))
+        roots = []
+        for g in range(2, p):
+            actual_set = set(pow(g, k, p) for k in range(1, p))
+            if actual_set == required_set:
+                roots.append(g)
+
+        # Check if 'a' is a primitive root of p
+        is_primitive = a in roots
+        TOOLS.print_type(f"Is {a} a primitive root of {p}? {'Yes' if is_primitive else 'No'}")
+        return roots
 
     def is_prime(self, n):
         if n <= 1:

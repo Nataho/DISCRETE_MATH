@@ -3,14 +3,11 @@ from Ciphers import Ciphers
 from Sorting import Sorting
 from Conversion import Conversion
 from Prime import Prime
+from GCD_LCM import GCD_LCM
 
 #region main
 from basic_math import bMath
 from TOOLS import TOOLS
-# import TOOLS as Tools
-
-# TOOLS = tools()
-
 TOOLS.clear_screen()
 
 picked:int = -2
@@ -21,21 +18,8 @@ classes = [
     Sorting,
     Conversion,
     Prime,
+    GCD_LCM
 ]
-
-# delay = 0
-
-# decision = TOOLS.input_type("Activate Typewriter Mode? (y/n): ", 0.05)
-# if decision.lower() == 'y':
-#     delay_input = TOOLS.input_type("Delay time(float): ", 0.05)
-#     try:
-#         delay = float(delay_input)
-#     except (TypeError, ValueError):
-#         delay = 0.03
-#     TOOLS.set_delay(delay)
-# else:
-#     delay = 0
-#     TOOLS.set_delay(delay)
 
 while picked != -1: #-1 is used to exit the loop
     TOOLS.clear_screen()

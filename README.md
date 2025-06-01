@@ -54,15 +54,18 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - Prime Factors (Trial by division)
   - Sieve of Erastosthenes
   - Fermat's little theory
+  - Primitive roots
+
+- ## GCD/LCM
+  - ### GCD
+    - Euclidean Algorithm
 
 # Coming Soon
 - ## GCD/LCM
-  - Euclidean Algorithm 
-  - Chinese remainder theory
-  - Primitive roots 
-  - Eular totients function
+  - ~~Eular totients function~~
 
-
+- ## Others
+  - ~~Chinese remainder theory~~
 <!-- - ## Sorting -->
 
 <!-- - ## Ciphers  -->
