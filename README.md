@@ -19,8 +19,9 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - Playfair Cipher (advanced)
   - Vernam
   - One time pad (advanced)
-  - Hill Cipher(advanced)
-
+  - Hill Cipher (advanced)
+  - Rail fence
+  - Columnar cipher
 
 - ## Sorting
   - Bubble Sort
@@ -32,9 +33,34 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - Shell Sort
 
 # Coming Soon
+- ## Prime Numbers
+  - Trial by division
+  - Tree factorization
+  - Sieve of Erastosthenes
+  - Fermat's little theory
+
+- ## GCD/LCM
+  - Euclidean Algorithm 
+  - Chinese remainder theory
+  - Primitive roots 
+  - Eular totients function
+
+- ## Conversion
+  - Decimal to Binary
+  - Decimal to Octal
+  - Decimal to Hex
+  
+  - Binary to Octal
+  - Binary to Decimal
+  - Binary to Hex
+
+  - Octal to Binary
+  - Octal to Decimal
+  - Octal to Hex
+
+  - Hex to Binary
+  - Hex to Octal
+  - Hex to Decimal
 <!-- - ## Sorting -->
 
-- ## Ciphers 
-  <!-- - Hill cipher  -->
-  - Rail fence (zigzag cipher)
-  - Columnar cipher
+<!-- - ## Ciphers  -->
