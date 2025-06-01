@@ -37,3 +37,4 @@ class TruthTable:
 #     expr = "(~p^q)or(q^r)"
 #     tt = TruthTable(variables)
 #     tt.print_table(expr)
+

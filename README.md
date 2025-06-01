@@ -50,12 +50,12 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
     - Hex to Octal
     - Hex to Decimal
 
-# Coming Soon
 - ## Prime Numbers
-  - Trial by division
-  - Tree factorization
+  - Prime Factors (Trial by division)
   - Sieve of Erastosthenes
   - Fermat's little theory
+
+# Coming Soon
 
 - ## GCD/LCM
   - Euclidean Algorithm 
