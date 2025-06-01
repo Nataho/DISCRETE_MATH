@@ -32,19 +32,6 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - Bucket Sort
   - Shell Sort
 
-# Coming Soon
-- ## Prime Numbers
-  - Trial by division
-  - Tree factorization
-  - Sieve of Erastosthenes
-  - Fermat's little theory
-
-- ## GCD/LCM
-  - Euclidean Algorithm 
-  - Chinese remainder theory
-  - Primitive roots 
-  - Eular totients function
-
 - ## Conversion
   - ### Decimal
     - Decimal to Binary
@@ -62,6 +49,21 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
     - Hex to Binary
     - Hex to Octal
     - Hex to Decimal
+
+# Coming Soon
+- ## Prime Numbers
+  - Trial by division
+  - Tree factorization
+  - Sieve of Erastosthenes
+  - Fermat's little theory
+
+- ## GCD/LCM
+  - Euclidean Algorithm 
+  - Chinese remainder theory
+  - Primitive roots 
+  - Eular totients function
+
+
 <!-- - ## Sorting -->
 
 <!-- - ## Ciphers  -->

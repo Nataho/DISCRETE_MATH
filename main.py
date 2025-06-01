@@ -1,6 +1,7 @@
 from ST import ST
 from Ciphers import Ciphers
 from Sorting import Sorting
+from Conversion import Conversion
 
 #region main
 from basic_math import bMath
@@ -17,6 +18,7 @@ classes = [
     ST,
     Ciphers,
     Sorting,
+    Conversion,
 ]
 
 # delay = 0
