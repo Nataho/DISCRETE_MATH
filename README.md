@@ -46,21 +46,22 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - Eular totients function
 
 - ## Conversion
-  - Decimal to Binary
-  - Decimal to Octal
-  - Decimal to Hex
-  
-  - Binary to Octal
-  - Binary to Decimal
-  - Binary to Hex
-
-  - Octal to Binary
-  - Octal to Decimal
-  - Octal to Hex
-
-  - Hex to Binary
-  - Hex to Octal
-  - Hex to Decimal
+  - ### Decimal
+    - Decimal to Binary
+    - Decimal to Octal
+    - Decimal to Hex
+  - ### Binary
+    - Binary to Octal
+    - Binary to Decimal
+    - Binary to Hex
+  - ### Octal
+    - Octal to Binary
+    - Octal to Decimal
+    - Octal to Hex
+  - ### Hex
+    - Hex to Binary
+    - Hex to Octal
+    - Hex to Decimal
 <!-- - ## Sorting -->
 
 <!-- - ## Ciphers  -->
