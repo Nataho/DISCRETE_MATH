@@ -64,6 +64,8 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
 - ## GCD/LCM
   - ### GCD
     - Euclidean Algorithm
+  - ### LCM
+    - Using GCD
 
 # Coming Soon
 - ## GCD/LCM
