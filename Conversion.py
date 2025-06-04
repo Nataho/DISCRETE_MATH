@@ -27,7 +27,7 @@ class Conversion: #class for conversion
         print("Pick a conversion method:")
         for i, method in enumerate(self.methods):
             print(f"{i + 1}. {method}")
-        choice = int(input("Enter the number of your choice: ")) - 1
+        choice = int(TOOLS.input_type("Enter the number of your choice: ")) - 1
         if choice < 0 or choice >= len(self.methods):
             print("Invalid choice. Please try again.")
             return
@@ -36,53 +36,53 @@ class Conversion: #class for conversion
         print(f"You chose: {method_name}")
         match method_name:
             case "binary to octal":
-                binary = input("Enter binary number: ")
+                binary = TOOLS.input_type("Enter binary number: ")
                 result = self.btoo(binary)
-                print(f"Octal: {result}")
+                TOOLS.print_type(f"Octal: {result}")
             case "binary to decimal":
-                binary = input("Enter binary number: ")
+                binary = TOOLS.input_type("Enter binary number: ")
                 result = self.btod(binary)
-                print(f"Decimal: {result}")
+                TOOLS.print_type(f"Decimal: {result}")
             case "binary to hex":
-                binary = input("Enter binary number: ")
+                binary = TOOLS.input_type("Enter binary number: ")
                 result = self.btoh(binary)
-                print(f"Hex: {result}")
+                TOOLS.print_type(f"Hex: {result}")
             case "decimal to binary":
-                decimal = int(input("Enter decimal number: "))
+                decimal = int(TOOLS.input_type("Enter decimal number: "))
                 result = self.dtob(decimal)
-                print(f"Binary: {result}")
+                TOOLS.print_type(f"Binary: {result}")
             case "decimal to octal":
-                decimal = int(input("Enter decimal number: "))
+                decimal = int(TOOLS.input_type("Enter decimal number: "))
                 result = self.dtoo(decimal)
-                print(f"Octal: {result}")
+                TOOLS.print_type(f"Octal: {result}")
             case "decimal to hex":
-                decimal = int(input("Enter decimal number: "))
+                decimal = int(TOOLS.input_type("Enter decimal number: "))
                 result = self.dtoh(decimal)
-                print(f"Hex: {result}")
+                TOOLS.print_type(f"Hex: {result}")
             case "octal to binary":
-                octal = input("Enter octal number: ")
+                octal = TOOLS.input_type("Enter octal number: ")
                 result = self.otob(octal)
-                print(f"Binary: {result}")
+                TOOLS.print_type(f"Binary: {result}")
             case "octal to decimal":
-                octal = input("Enter octal number: ")
+                octal = TOOLS.input_type("Enter octal number: ")
                 result = self.otod(octal)
-                print(f"Decimal: {result}")
+                TOOLS.print_type(f"Decimal: {result}")
             case "octal to hex":
-                octal = input("Enter octal number: ")
+                octal = TOOLS.input_type("Enter octal number: ")
                 result = self.otoh(octal)
-                print(f"Hex: {result}")
+                TOOLS.print_type(f"Hex: {result}")
             case "hex to binary":
-                hex_num = input("Enter hex number: ")
+                hex_num = TOOLS.input_type("Enter hex number: ")
                 result = self.htob(hex_num)
-                print(f"Binary: {result}")
+                TOOLS.print_type(f"Binary: {result}")
             case "hex to octal":
-                hex_num = input("Enter hex number: ")
+                hex_num = TOOLS.input_type("Enter hex number: ")
                 result = self.htoo(hex_num)
-                print(f"Octal: {result}")
+                TOOLS.print_type(f"Octal: {result}")
             case "hex to decimal":
-                hex_num = input("Enter hex number: ")
+                hex_num = TOOLS.input_type("Enter hex number: ")
                 result = self.htod(hex_num)
-                print(f"Decimal: {result}")
+                TOOLS.print_type(f"Decimal: {result}")
     
     #decimal to binary
     # @staticmethod

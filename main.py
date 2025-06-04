@@ -4,6 +4,7 @@ from Sorting import Sorting
 from Conversion import Conversion
 from Prime import Prime
 from GCD_LCM import GCD_LCM
+from Searching import Searching
 
 #region main
 from basic_math import bMath
@@ -18,7 +19,8 @@ classes = [
     Sorting,
     Conversion,
     Prime,
-    GCD_LCM
+    GCD_LCM,
+    Searching
 ]
 
 while picked != -1: #-1 is used to exit the loop

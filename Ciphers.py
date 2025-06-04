@@ -21,7 +21,7 @@ class Ciphers:
             "Columnar Cipher"
         ]
         self.start()
-        
+
     def start(self):
         TOOLS.print_type("pick your desired encryption method.")
         for i, method in enumerate(self.methods):
