@@ -17,10 +17,8 @@ class ST:
         print("This class provides various set operations.")
         print("You can perform union, intersection, difference, subset checks, and equality checks on sets.")
         
-        
-
         self.perform_operations()
-        
+
     def perform_operations(self):
         print("Let's begin by reading two sets from the user.")
         TOOLS.sleep(1)

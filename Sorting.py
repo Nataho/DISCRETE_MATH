@@ -113,19 +113,21 @@ class Sorting:
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {arr}")
 
-    def merge_sort(self, arr):
+    @staticmethod
+    def merge_sort(arr):
         if len(arr) > 1:
             mid = len(arr) // 2
             L = arr[:mid]
             R = arr[mid:]
 
-            self.merge_sort(L)
-            self.merge_sort(R)
+            Sorting.merge_sort(L)
+            Sorting.merge_sort(R)
 
-            self.merge(arr, L, R)
+            Sorting.merge(arr, L, R)
         return arr
 
-    def merge(self, arr, L, R):
+    @staticmethod
+    def merge(arr, L, R):
         i = j = k = 0
         while i < len(L) and j < len(R):
             if L[i] < R[j]:

@@ -1,11 +1,12 @@
 from TOOLS import TOOLS
+from Sorting import Sorting
 
 class Searching:
     def __init__(self):
         TOOLS.clear_screen()
         self.methods = [
-            "Linear Search",
-            "Binary Search",
+            "Linear Search", #sequential
+            "Binary Search", #interval
             # "Jump Search",
             # "Exponential Search",
             # "Interpolation Search"
@@ -40,20 +41,20 @@ class Searching:
             #     TOOLS.print_type("You chose Interpolation Search.")
             #     # Implement Interpolation Search logic here
 
-        TOOLS.print_type("")
-        TOOLS.print_type(f"You chose: {method_name}")
+        # TOOLS.print_type("")
+        # TOOLS.print_type(f"You chose: {method_name}")
         
-        # Placeholder for actual search implementations
-        TOOLS.print_type("This feature is under development.")
+        # # Placeholder for actual search implementations
+        # TOOLS.print_type("This feature is under development.")
         # Implement the search methods here
         # match method_name:
         #     case "Linear Search":
     
-    def _linear_search(self):
+    def _linear_search(self): 
         """Perform linear search on a list."""
         TOOLS.print_type("Performing Linear Search...")
         # Example implementation
-        arr = int(map(TOOLS.input_type("Enter the elements of the array(space sepparated): ")))
+        arr = list(map(int, TOOLS.input_type("Enter the elements of the array(space sepparated): ").split()))
         target = int(TOOLS.input_type("Enter the number to search for: "))
         found = False
         for i, num in enumerate(arr):
@@ -71,10 +72,13 @@ class Searching:
                 return i
     
     def _binary_search(self):
+        print()
         """Perform binary search on a sorted list."""
         TOOLS.print_type("Performing Binary Search...")
         # Example implementation
-        arr = [1, 2, 3, 4, 5]
+        arr = list(map(int, TOOLS.input_type("Enter the elements of the array(space sepparated): ").split()))
+        Sorting.merge_sort(arr)
+        TOOLS.print_type(f"Sorted array: {arr}")
         target = int(TOOLS.input_type("Enter the number to search for: "))
         index = self.binary_search(arr, target)
         if index != -1:
@@ -94,3 +98,9 @@ class Searching:
             else:
                 right = mid - 1
         return -1
+    
+    #region interpolation search
+    #endregion interpolation search
+
+    #region ternary search
+    #endregion ternary search
