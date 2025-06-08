@@ -359,8 +359,6 @@ class Sorting:
                 self.comb_sort()
             case 9:
                 self.radix_sort()
-            case 10:
-                self.tree_sort()
             case _:
                 print("Invalid Choice.")
 
@@ -372,10 +370,11 @@ class Sorting:
         for i in range(n):
             for j in range(0, n - i - 1):
                 if arr[j] > arr[j + 1]:
+                    print(f"compare: \t {arr} [{arr[j]} > {arr[j+1]}]" )
                     arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                    print(f"swap: \t {arr} [{arr[j]} <=> {arr[j+1]}]" )
                     comparisons += 1
                     sleep(0.01)
-                    print(f"sorting.. {arr} [{arr[j]} > {arr[j+1]}]" )
         print(f"Sorted array: {arr}| comparisons: {comparisons}")
 
     def selection_sort(self):
@@ -525,11 +524,68 @@ class Sorting:
                 subarray = [arr[i] for i in subarray_indices]
                 self._insertion_sort(subarray)
                 print(subarray)
-                sleep(0.5)
+                sleep(0.2)
             for idx, val in zip(subarray_indices, subarray):
                 arr[idx] = val
             gap //= 2
         print(f"sorted array: {arr}")
+    
+    def comb_sort(self):
+        arr = list(map(int, input("Enter the items to sort (space-separated): ").split()))
+        
+        length = len(arr)
+        gap = length
+        shrink = 1.3
+        sorted_flag = False
+
+        while gap > 1 or not sorted_flag:
+            gap = int(gap / shrink)
+            if gap < 1:
+                gap = 1
+            sorted_flag = True
+
+            for i in range(length - gap):
+                if arr[i] > arr[i + gap]:
+                    print(f"compare:{arr} [{arr[i]} > {arr[i + gap]}]; gap = {gap}")
+                    sleep(0.01)
+                    arr[i], arr[i + gap] = arr[i + gap], arr[i]
+                    print(f"swap:\t{arr} [{arr[i]} <=> {arr[i + gap]}]")
+                    sleep(0.01)
+                    sorted_flag = False
+        print(f"sorted array: {arr}")
+    def radix_sort(self):
+        arr = list(map(int, input("Enter the items to sort (space-separated): ").split()))
+        max_num = max(arr)
+        exp = 1
+        passes = 1
+        while max_num // exp > 0:
+            self._counting_sort(arr, exp)
+            print(f"pass {passes}: {arr}")
+            sleep(0.1)
+            passes += 1
+            exp *= 10
+        print(f"sorted array: {arr}")
+    
+    def _counting_sort(self, arr, exp):
+        n = len(arr)
+        output = [0] * n
+        count = [0] * 10
+
+        for i in range(n):
+            index = arr[i] // exp
+            count[index % 10] += 1
+
+        for i in range(1, 10):
+            count[i] += count[i - 1]
+
+        for i in range(n - 1, -1, -1):
+            index = arr[i] // exp
+            output[count[index % 10] - 1] = arr[i]
+            count[index % 10] -= 1
+
+        for i in range(n):
+            arr[i] = output[i]
+        return arr
 # endregion
 
 # region Conversion
@@ -546,13 +602,45 @@ class Conversion:
         print("Pick a conversion method:")
         print("1. Decimal to Binary")
         print("2. Binary to Decimal")
+        print("3. Decimal to Octal")
+        print("4. Decimal to Hexadecimal")
+        print("5. Octal to Decimal")
+        print("6. Hexadecimal to Decimal")
+        print("7. Binary to Octal")
+        print("8. Binary to Hexadecimal")
+        print("9. Octal to Binary")
+        print("10. Octal to Hexadecimal")
+        print("11. Hexadecimal to Binary")
+        print("12. Hexadecimal to Octal")
         choice = int(input("Enter the number of your choice: "))
-        if choice == 1:
-            self.decimal_to_binary()
-        elif choice == 2:
-            self.binary_to_decimal()
-        else:
-            print("Invalid choice.")
+
+        match choice:
+            case 1:
+                self.decimal_to_binary()
+            case 2:
+                self.binary_to_decimal()
+            case 3:
+                self.decimal_to_octal()
+            case 4:
+                self.decimal_to_hex()
+            case 5:
+                self.octal_to_decimal()
+            case 6:
+                self.hex_to_decimal()
+            case 7:
+                self.binary_to_octal()
+            case 8:
+                self.binary_to_hex()
+            case 9:
+                self.octal_to_binary()
+            case 10:
+                self.octal_to_hex()
+            case 11:
+                self.hex_to_binary()
+            case 12:
+                self.hex_to_octal()
+            case _:
+                print("Invalid choice.")
 
     def decimal_to_binary(self):
         decimal = int(input("Enter decimal number: "))
@@ -571,6 +659,321 @@ class Conversion:
         for digit in binary:
             decimal = decimal * 2 + int(digit)
         print(f"Decimal: {decimal}")
+
+    def decimal_to_binary(self):
+        decimal = int(input("Enter decimal number: "))
+        output = ""
+        sub = 2
+
+        while True:
+            r = decimal % sub  # remainder
+            decimal //= sub
+            output = str(r) + output
+            if decimal == 0:
+                break
+
+        print(f"Binary: {output}")
+
+    def decimal_to_octal(self):
+        decimal = int(input("Enter decimal number: "))
+        output = ""
+        sub = 8
+
+        while True:
+            r = decimal % sub  # remainder
+            decimal //= sub
+            output = str(r) + output
+            if decimal == 0:
+                break
+
+        print(f"Octal: {output}")
+
+    def decimal_to_hex(self):
+        decimal = int(input("Enter decimal number: "))
+        output = ""
+        sub = 16
+
+        while True:
+            r = decimal % sub  # remainder
+            match r:
+                case 10:
+                    r = "A"
+                case 11:
+                    r = "B"
+                case 12:
+                    r = "C"
+                case 13:
+                    r = "D"
+                case 14:
+                    r = "E"
+                case 15:
+                    r = "F"
+            decimal //= sub
+            output = str(r) + output
+            if decimal == 0:
+                break
+
+        print(f"Hexadecimal: {output}")
+
+    def binary_to_decimal(self):
+        binary = input("Enter binary number: ")
+        r_binary = ""
+        output = 0
+        sub = 2
+
+        for char in binary:
+            r_binary = char + r_binary
+
+        for i in range(0, len(r_binary)):
+            output += int(r_binary[i]) * sub ** i
+
+        print(f"Decimal: {output}")
+
+    def octal_to_decimal(self):
+        octal = input("Enter octal number: ")
+        r_octal = ""
+        output = 0
+        sub = 8
+
+        for char in octal:
+            r_octal = char + r_octal
+
+        for i in range(0, len(r_octal)):
+            output += int(r_octal[i]) * sub ** i
+
+        print(f"Decimal: {output}")
+
+    def hex_to_decimal(self):
+        hex_str = input("Enter hexadecimal number: ")
+        r_hex = ""
+        output = 0
+        sub = 16
+
+        for char in hex_str:
+            r_hex = char + r_hex
+
+        for i in range(0, len(r_hex)):
+            to_out = 0
+            match r_hex[i].upper():
+                case "A":
+                    to_out = 10
+                case "B":
+                    to_out = 11
+                case "C":
+                    to_out = 12
+                case "D":
+                    to_out = 13
+                case "E":
+                    to_out = 14
+                case "F":
+                    to_out = 15
+                case _:
+                    to_out = int(r_hex[i])
+            output += to_out * sub ** i
+
+        print(f"Decimal: {output}")
+
+    def binary_to_octal(self):
+        binary = input("Enter binary number: ")
+        decimal = 0
+        r_binary = ""
+        sub = 2
+
+        for char in binary:
+            r_binary = char + r_binary
+
+        for i in range(0, len(r_binary)):
+            decimal += int(r_binary[i]) * sub ** i
+
+        output = ""
+        sub_octal = 8
+        temp_decimal = decimal
+        while True:
+            r = temp_decimal % sub_octal
+            temp_decimal //= sub_octal
+            output = str(r) + output
+            if temp_decimal == 0:
+                break
+
+        print(f"Octal: {output}")
+
+    def binary_to_hex(self):
+        binary = input("Enter binary number: ")
+        decimal = 0
+        r_binary = ""
+        sub = 2
+
+        for char in binary:
+            r_binary = char + r_binary
+
+        for i in range(0, len(r_binary)):
+            decimal += int(r_binary[i]) * sub ** i
+
+        output = ""
+        sub_hex = 16
+        temp_decimal = decimal
+        while True:
+            r = temp_decimal % sub_hex
+            match r:
+                case 10:
+                    r = "A"
+                case 11:
+                    r = "B"
+                case 12:
+                    r = "C"
+                case 13:
+                    r = "D"
+                case 14:
+                    r = "E"
+                case 15:
+                    r = "F"
+            temp_decimal //= sub_hex
+            output = str(r) + output
+            if temp_decimal == 0:
+                break
+
+        print(f"Hexadecimal: {output}")
+
+    def octal_to_binary(self):
+        octal = input("Enter octal number: ")
+        decimal = 0
+        r_octal = ""
+        sub = 8
+
+        for char in octal:
+            r_octal = char + r_octal
+
+        for i in range(0, len(r_octal)):
+            decimal += int(r_octal[i]) * sub ** i
+
+        output = ""
+        sub_bin = 2
+        temp_decimal = decimal
+        while True:
+            r = temp_decimal % sub_bin
+            temp_decimal //= sub_bin
+            output = str(r) + output
+            if temp_decimal == 0:
+                break
+
+        print(f"Binary: {output}")
+
+    def octal_to_hex(self):
+        octal = input("Enter octal number: ")
+        decimal = 0
+        r_octal = ""
+        sub = 8
+
+        for char in octal:
+            r_octal = char + r_octal
+
+        for i in range(0, len(r_octal)):
+            decimal += int(r_octal[i]) * sub ** i
+
+        output = ""
+        sub_hex = 16
+        temp_decimal = decimal
+        while True:
+            r = temp_decimal % sub_hex
+            match r:
+                case 10:
+                    r = "A"
+                case 11:
+                    r = "B"
+                case 12:
+                    r = "C"
+                case 13:
+                    r = "D"
+                case 14:
+                    r = "E"
+                case 15:
+                    r = "F"
+            temp_decimal //= sub_hex
+            output = str(r) + output
+            if temp_decimal == 0:
+                break
+
+        print(f"Hexadecimal: {output}")
+
+    def hex_to_binary(self):
+        hex_str = input("Enter hexadecimal number: ")
+        r_hex = ""
+        decimal = 0
+        sub = 16
+
+        for char in hex_str:
+            r_hex = char + r_hex
+
+        for i in range(0, len(r_hex)):
+            to_out = 0
+            match r_hex[i].upper():
+                case "A":
+                    to_out = 10
+                case "B":
+                    to_out = 11
+                case "C":
+                    to_out = 12
+                case "D":
+                    to_out = 13
+                case "E":
+                    to_out = 14
+                case "F":
+                    to_out = 15
+                case _:
+                    to_out = int(r_hex[i])
+            decimal += to_out * sub ** i
+
+        output = ""
+        sub_bin = 2
+        temp_decimal = decimal
+        while True:
+            r = temp_decimal % sub_bin
+            temp_decimal //= sub_bin
+            output = str(r) + output
+            if temp_decimal == 0:
+                break
+
+        print(f"Binary: {output}")
+
+    def hex_to_octal(self):
+        hex_str = input("Enter hexadecimal number: ")
+        r_hex = ""
+        decimal = 0
+        sub = 16
+
+        for char in hex_str:
+            r_hex = char + r_hex
+
+        for i in range(0, len(r_hex)):
+            to_out = 0
+            match r_hex[i].upper():
+                case "A":
+                    to_out = 10
+                case "B":
+                    to_out = 11
+                case "C":
+                    to_out = 12
+                case "D":
+                    to_out = 13
+                case "E":
+                    to_out = 14
+                case "F":
+                    to_out = 15
+                case _:
+                    to_out = int(r_hex[i])
+            decimal += to_out * sub ** i
+
+        output = ""
+        sub_octal = 8
+        temp_decimal = decimal
+        while True:
+            r = temp_decimal % sub_octal
+            temp_decimal //= sub_octal
+            output = str(r) + output
+            if temp_decimal == 0:
+                break
+
+        print(f"Octal: {output}")
 # endregion
 
 # region Prime
@@ -586,12 +989,16 @@ class Prime:
     def start(self):
         print("Pick a method:")
         print("1. Check if a number is prime")
-        print("2. List primes in a range")
+        print("2. Sieve of Eratosthenes")
+        print("3. prime factors")
+        print("4. fermat's little theorem")
+        print("5. primitive roots")
         choice = int(input("Enter the number of your choice: "))
         if choice == 1:
             self.check_prime()
         elif choice == 2:
-            self.list_primes()
+            self.sieve()
+        
         else:
             print("Invalid choice.")
 
@@ -605,6 +1012,15 @@ class Prime:
                 print("Not prime.")
                 return
         print("Prime!")
+
+    @staticmethod
+    def _check_prime(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n ** 0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
 
     def list_primes(self):
         low = int(input("Enter lower limit: "))
@@ -621,6 +1037,70 @@ class Prime:
             if is_prime:
                 primes.append(num)
         print(f"Primes: {primes}")
+    
+    def prime_factors(self):
+        num = int(input("Enter a number to check for primality: "))
+        factors = []
+        while n % 2 == 0:
+            factors.append(2)
+            n //= 2
+        # Check odd numbers
+        for i in range(3, int(n**0.5) + 1, 2):
+            while n % i == 0:
+                if Prime._check_prime(i):
+                    factors.append(i)
+                n //= i
+        if n > 2:
+            factors.append(n)
+        
+        print(f"Prime factors of {num}: {factors}")
+
+    def sieve(self):
+        min = int(input("enter minimum: "))
+        max = int(input("enter maximum: "))
+        primes = []
+        for i in range(min, max):
+            if self._check_prime(i):
+                primes.append(i)
+        print(f"primes in {min} to {max}: {primes}")
+    
+    def fermats(self):
+        print("formula: a^(p-1) ≡ 1 (mod p) for prime p")
+        print("use this: a^k mod p")
+
+        a = int(input("Enter a number for a: "))
+        k = int(input("Enter a number for k: "))
+        p = int(input("Enter a prime number for p: "))
+
+        if not self._check_prime(p):
+            print("p needs to be prime")
+        
+        exponent_result = pow(a, k)
+        answer = exponent_result % p
+        print(f"{a}^{k} mod {p} = {answer} mod {p}")
+
+    def primitive_roots(self):
+        p = int(input("Enter a prime number: "))
+        a = int(input("Enter a number to check if it is a primitive root: "))
+
+        if a <= 0 or p <= 0:
+            print("a and p must be positive integers")
+        if not self._check_prime(p):
+            print("p needs to be prime")
+        
+        required_set = set(range(1,p))
+        roots =[]
+
+        for g in range(2, p):
+            actual_set = set(pow(g, k, p) for k in range(1, p))
+            if actual_set == required_set:
+                roots.append(g)
+
+        # Check if 'a' is a primitive root of p
+        is_primitive = a in roots
+        print(f"Is {a} a primitive root of {p}? {'Yes' if is_primitive else 'No'}")
+        print(f"Primitive roots of {p}: {roots}")
+        
 # endregion
 
 # region GCD & LCM
@@ -638,12 +1118,16 @@ class GCD_LCM:
         print("1. GCD (Euclidean algorithm)")
         print("2. LCM (using GCD)")
         choice = int(input("Enter the number of your choice: "))
-        if choice == 1:
-            self.gcd()
-        elif choice == 2:
-            self.lcm()
-        else:
-            print("Invalid choice.")
+        
+        match choice:
+            case 1:
+                self.gcd()
+            case 2:
+                self.lcm()
+            case _:
+                print("invalid")
+        # else:
+        #     print("Invalid choice.")
 
     def gcd(self):
         a = int(input("Enter first number: "))
@@ -678,13 +1162,18 @@ class Searching:
         print("Pick a searching method:")
         print("1. Linear Search")
         print("2. Binary Search")
+        print("3. interpolation search")
         choice = int(input("Enter the number of your choice: "))
-        if choice == 1:
-            self.linear_search()
-        elif choice == 2:
-            self.binary_search()
-        else:
-            print("Invalid choice.")
+        
+        match choice:
+            case 1:
+                self.linear_search()
+            case 2:
+                self.binary_search()
+            case 3:
+                self.interpolation_search()
+            case _:
+                print("invalid")
 
     def linear_search(self):
         arr = list(map(int, input("Enter the elements of the array (space separated): ").split()))
@@ -717,6 +1206,55 @@ class Searching:
                 right = mid - 1
         if not found:
             print(f"{target} not found in the array.")
+
+    def interpolation_search(self):
+        arr = list(map(int, input("Enter the elements of the array (space separated): ").split()))
+        arr.sort()
+        print(f"Sorted array: {arr}")
+
+        target = int(input("Enter the number to search for: "))
+        key = target
+        low = 0
+        high = len(arr) - 1
+
+        while low <= high and arr[low] <= key <= arr[high]:
+
+
+            if arr[high] == arr[low]:
+                if arr[low] == key:
+                    return low
+                else:
+                    break
+            pos = low + int(((key - arr[low]) * (high - low)) / (arr[high] - arr[low]))
+            
+            #text
+            displayed_arr = ""
+            for i in range(len(arr)):
+                # if i = 0:
+                #     displayed_arr += f"{arr[i]}"
+                #     continue
+                if i == pos:
+                    displayed_arr += f", \033[93m{arr[pos]}\033[0m"
+                elif i == low:
+                    displayed_arr += f", \033[94m{arr[low]}\033[0m"
+                elif i == high:
+                    displayed_arr += f", \033[92m{arr[high]}\033[0m"
+                
+                else:
+                    displayed_arr += f", {arr[i]}"
+            displayed_arr = f"[{displayed_arr[2:]}]"
+            
+            print(displayed_arr)
+            sleep(0.1)
+            if pos < low or pos > high:
+                break
+            if arr[pos] < key:
+                low = pos + 1
+            elif arr[pos] > key:
+                high = pos - 1
+            else:
+                return pos
+        return -1
 # endregion
 
 # region Main Program Loop

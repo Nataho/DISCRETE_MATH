@@ -36,6 +36,9 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - Quick Sort (advanced)
   - Bucket Sort
   - Shell Sort
+  - Comb Sort
+  - Radix Sort
+  - Tree Sort
 
 - ## Conversion
   - ### Decimal
