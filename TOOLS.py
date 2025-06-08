@@ -23,7 +23,7 @@ class TOOLS:
             raise TypeError("Delay must be a number (int or float).")
 
     @staticmethod
-    def print_type(text, color=None):
+    def print_type(text, color=None, delay = _delay):
         match color:
             case "red":
                 text = f"\033[91m{text}\033[0m"
@@ -39,7 +39,6 @@ class TOOLS:
                 text = f"\033[96m{text}\033[0m"
             case _:
                 pass
-        delay = _delay
         for letter in text:
             print(letter, end='', flush=True)
             # print(delay)

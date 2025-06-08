@@ -55,23 +55,53 @@ class Sorting:
 
 #region bubble sort
     def _bubble_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        unsorted = arr.copy()
         self.bubble_sort(arr)
         TOOLS.sleep(0.5)
-        TOOLS.print_type(f"Sorted array: {arr}")
+        TOOLS.print_type(f"Unsorted array:\t {unsorted}", "blue")
+        TOOLS.print_type(f"Sorted array:\t {arr}", "yellow")
 
     def bubble_sort(self,arr):
         length = len(arr)
         for i in range(length):
             for j in range(0, length-i-1):
+                display_arr = ""
+                for k in range(length):
+                    if k == j:
+                        display_arr += f", \033[94m{arr[k]}\033[0m"
+                        continue
+                    if k == j+1:
+                        display_arr += f", \033[92m{arr[k]}\033[0m"
+                        continue
+
+                    display_arr += f", {arr[k]}"
+
+                display_arr = f"[{display_arr[2:]}]"
+                TOOLS.print_type(display_arr,None,0.001)
+                
                 if arr[j] > arr[j+1]:
                     arr[j], arr[j+1] = arr[j+1], arr[j] #swap
+
+                    # display_arr = f"[{display_arr[2:]}]"
+                    # TOOLS.print_type(display_arr,None,0.01)
+
+                    display_arr = ""
+                    for k in range(length):
+                        if k == j or k == j+1:
+                            display_arr += f", \033[93m{arr[k]}\033[0m"
+                            continue
+                        display_arr += f", {arr[k]}"
+
+                    display_arr = f"[{display_arr[2:]}]"
+                    TOOLS.print_type(display_arr, None, 0.001)
+                    continue
         return arr
 #endregion bubble sort
 
 #region selection sort
     def _selection_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         self.selection_sort(arr)
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {arr}")
@@ -89,7 +119,7 @@ class Sorting:
 
 #region insertion sort
     def _insertion_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         self.insertion_sort(arr)
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {arr}")
@@ -108,7 +138,7 @@ class Sorting:
 
 #region merge sort
     def _merge_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         self.merge_sort(arr)
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {arr}")
@@ -149,7 +179,7 @@ class Sorting:
 
 #region quick sort
     def _quick_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         self.quick_sort(arr, 0, len(arr) - 1)
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {arr}")
@@ -173,7 +203,7 @@ class Sorting:
 
 #region bucket sort
     def _bucket_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         sorted_arr = self.bucket_sort(arr)
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {sorted_arr}")
@@ -197,7 +227,7 @@ class Sorting:
 
 #region shell sort
     def _shell_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         self.shell_sort(arr)
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {arr}")
@@ -220,7 +250,7 @@ class Sorting:
 
 #region comb sort
     def _comb_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         self.comb_sort(arr)
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {arr}")
@@ -285,7 +315,7 @@ class Sorting:
 
 #region tree sort
     def _tree_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         sorted_arr = self.tree_sort(arr)
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {sorted_arr}")
@@ -324,7 +354,7 @@ class Sorting:
 
 #region tournament sort
     def _tournament_sort(self):
-        arr = list(map(float, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         sorted_arr = self.tournament_sort(arr)
         TOOLS.sleep(0.5)
         TOOLS.print_type(f"Sorted array: {sorted_arr}")

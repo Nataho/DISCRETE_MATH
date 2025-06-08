@@ -33,7 +33,7 @@ class Ciphers:
             TOOLS.print_type("Invalid choice. Please run the program again.")
             exit()
         picked_method = self.methods[choice]
-        TOOLS.print_type(f"You have selected: {picked_method}")
+        TOOLS.print_type(f"You have selected: {picked_method}", "blue")
         match picked_method:
             case "Caesar Cipher":
                 self._caesar()
@@ -63,7 +63,7 @@ class Ciphers:
         shift = int(TOOLS.input_type("Enter the shift value (1-25): "))
         if 1 <= shift <= 25:
             encrypted_text = self.caesar(text, shift)
-            TOOLS.print_type(f"Encrypted text: {encrypted_text}")
+            TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow")
         else:
             TOOLS.print_type("Invalid shift value. Please enter a number between 1 and 25.")
     
@@ -96,7 +96,7 @@ class Ciphers:
             TOOLS.print_type("Error: Keyword should not contain numbers.")
             return
         encrypted_text = self.vigenere(text, keyword)
-        TOOLS.print_type(f"Encrypted text: {encrypted_text}")
+        TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow")
 
     def vigenere(self, text, keyword):
         small = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
@@ -126,7 +126,7 @@ class Ciphers:
         text = TOOLS.input_type("Enter the text to encrypt: ")
         keyword = TOOLS.input_type("Enter the keyword: ")
         encrypted_text = self.playfair(text, keyword)
-        TOOLS.print_type(f"Encrypted text: {encrypted_text}")
+        TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow")
     
     def playfair(self, text, keyword):
         cipher = PlayfairCipher(text,keyword)
@@ -140,8 +140,8 @@ class Ciphers:
         key = TOOLS.input_type("Enter the key: ")
         key_repeated = (key * (len(text) // len(key) + 1))[:len(text)]
         encrypted_text = self.vernam_cipher(text, key_repeated)
-        TOOLS.print_type(f"Encrypted text(ascii): {encrypted_text}")
-        TOOLS.print_type(f"Encrypted text(hex): {encrypted_text.encode().hex()}")
+        TOOLS.print_type(f"Encrypted text(ascii): {encrypted_text}","yellow")
+        TOOLS.print_type(f"Encrypted text(hex): {encrypted_text.encode().hex()}", "magenta")
 
     def vernam_cipher(self, text, key):
         encrypted_text = ""
@@ -159,8 +159,8 @@ class Ciphers:
         for char, key_byte in zip(text, key):
             encrypted_char = ord(char) ^ key_byte
             encrypted_bytes.append(encrypted_char)
-        TOOLS.print_type(f"Random Key (hex): {key.hex()}")
-        TOOLS.print_type(f"Encrypted text (hex): {encrypted_bytes.hex()}")
+        TOOLS.print_type(f"Random Key (hex): {key.hex()}", "blue")
+        TOOLS.print_type(f"Encrypted text (hex): {encrypted_bytes.hex()}" "yellow")
 
     def one_time_pad(self, text, key):
         return bytes([ord(c) ^ k for c, k in zip(text, key)])
@@ -182,7 +182,7 @@ class Ciphers:
         encrypted_text = self.hill_cipher(key_matrix, text)
         for row in key_matrix:
             TOOLS.print_type(" ".join(map(str, row)))
-        TOOLS.print_type(f"Encrypted text: {encrypted_text}")
+        TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow")
 
     def hill_cipher(self,key_matrix, plaintext):
         small = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
@@ -232,7 +232,7 @@ class Ciphers:
         rails = int(TOOLS.input_type("Enter the number of rails (2-10): "))
         if 2 <= rails <= 10:
             encrypted_text = self.rail_fence(text, rails)
-            TOOLS.print_type(f"Encrypted text: {encrypted_text}")
+            TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow")
         else:
             TOOLS.print_type("Invalid number of rails. Please enter a number between 2 and 10.")
 
@@ -267,7 +267,7 @@ class Ciphers:
             return
 
         encrypted_text = self.columnar_cipher(text, rows, cols, key)
-        TOOLS.print_type(f"Encrypted text: {encrypted_text}")
+        TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow")
 
     def columnar_cipher(self, text, rows, cols, key):
         padded_length = rows * cols

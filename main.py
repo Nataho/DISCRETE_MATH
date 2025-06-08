@@ -39,7 +39,7 @@ while picked != -1: #-1 is used to exit the loop
     picked_class()
     while True:
         print()
-        decision = input("would you like to restart the class? (y/n): ")
+        decision = input("would you like to restart the class? (y/N): ")
         if decision.lower() == 'y':
             picked_class()
         else:

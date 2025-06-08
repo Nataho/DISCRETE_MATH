@@ -67,6 +67,11 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - ### LCM
     - Using GCD
 
+- ## Searching
+  - - Linear Search
+  - Binary Search
+  - Interpolation Search
+
 # Coming Soon
 - ## GCD/LCM
   - ~~Eular totients function~~
