@@ -29,7 +29,7 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
   - Columnar cipher
 
 - ## Sorting
-  - Bubble Sort
+  - Bubble Sort (p)
   - Selection Sort
   - Insertion Sort
   - Merge Sort (advanced)
@@ -68,9 +68,9 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
     - Using GCD
 
 - ## Searching
-  - - Linear Search
+  - Linear Search 
   - Binary Search
-  - Interpolation Search
+  - Interpolation Search (p)
 
 # Coming Soon
 - ## GCD/LCM
