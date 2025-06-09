@@ -994,13 +994,27 @@ class Prime:
         print("4. fermat's little theorem")
         print("5. primitive roots")
         choice = int(input("Enter the number of your choice: "))
-        if choice == 1:
-            self.check_prime()
-        elif choice == 2:
-            self.sieve()
         
-        else:
-            print("Invalid choice.")
+        match choice:
+            case 1:
+                self.check_prime()
+            case 2:
+                self.sieve()
+            case 3:
+                self.prime_factors()
+            case 4:
+                self.fermats()
+            case 5:
+                self.primitive_roots()
+            case _:
+                print("invalid")
+        # if choice == 1:
+        #     self.check_prime()
+        # elif choice == 2:
+        #     self.sieve()
+        
+        # else:
+        #     print("Invalid choice.")
 
     def check_prime(self):
         n = int(input("Enter a number: "))
@@ -1021,22 +1035,6 @@ class Prime:
             if n % i == 0:
                 return False
         return True
-
-    def list_primes(self):
-        low = int(input("Enter lower limit: "))
-        high = int(input("Enter upper limit: "))
-        primes = []
-        for num in range(low, high + 1):
-            if num < 2:
-                continue
-            is_prime = True
-            for i in range(2, int(num ** 0.5) + 1):
-                if num % i == 0:
-                    is_prime = False
-                    break
-            if is_prime:
-                primes.append(num)
-        print(f"Primes: {primes}")
     
     def prime_factors(self):
         num = int(input("Enter a number to check for primality: "))
