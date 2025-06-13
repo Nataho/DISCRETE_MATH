@@ -1,4 +1,33 @@
 from TOOLS import TOOLS
+
+def arrColor(arr, blue = [None], green = [None], yellow = [None], magenta = [None]):
+    #blue = [index]
+    length = len(arr)
+    display_arr = ""
+    for k in range(length):
+        if k in magenta:
+            display_arr += f", \033[95m{arr[k]}\033[0m"
+            continue
+        if k in yellow:
+            display_arr += f", \033[93m{arr[k]}\033[0m"
+            continue
+        if k in blue:
+            display_arr += f", \033[94m{arr[k]}\033[0m"
+            continue
+        if k in green:
+            display_arr += f", \033[92m{arr[k]}\033[0m"
+            continue
+        display_arr += f", {arr[k]}"
+    
+    display_arr = f"[{display_arr[2:]}]"
+    TOOLS.print_type(display_arr,None,0.001)
+
+    #use case
+    #myarr = [1,3,5,7,9,2,4,6,8,0]
+    #coloredArr = arrColor(myarr, [0], [8], [5,6])
+
+    return display_arr
+
 class Sorting:
     def __init__(self):
         TOOLS.clear_screen()
@@ -66,19 +95,18 @@ class Sorting:
         length = len(arr)
         for i in range(length):
             for j in range(0, length-i-1):
-                display_arr = ""
-                for k in range(length):
-                    if k == j:
-                        display_arr += f", \033[94m{arr[k]}\033[0m"
-                        continue
-                    if k == j+1:
-                        display_arr += f", \033[92m{arr[k]}\033[0m"
-                        continue
+                arrColor(arr,[j],[j+1])
+                # for k in range(length):
+                #     if k == j:
+                #         display_arr += f", \033[94m{arr[k]}\033[0m"
+                #         continue
+                #     if k == j+1:
+                #         display_arr += f", \033[92m{arr[k]}\033[0m"
+                #         continue
 
-                    display_arr += f", {arr[k]}"
+                #     display_arr += f", {arr[k]}"
 
-                display_arr = f"[{display_arr[2:]}]"
-                TOOLS.print_type(display_arr,None,0.001)
+                # display_arr = f"[{display_arr[2:]}]"
                 
                 if arr[j] > arr[j+1]:
                     arr[j], arr[j+1] = arr[j+1], arr[j] #swap
@@ -86,15 +114,14 @@ class Sorting:
                     # display_arr = f"[{display_arr[2:]}]"
                     # TOOLS.print_type(display_arr,None,0.01)
 
-                    display_arr = ""
-                    for k in range(length):
-                        if k == j or k == j+1:
-                            display_arr += f", \033[93m{arr[k]}\033[0m"
-                            continue
-                        display_arr += f", {arr[k]}"
+                    arrColor(arr,[],[],[j,j+1])
+                    # for k in range(length):
+                    #     if k == j or k == j+1:
+                    #         display_arr += f", \033[93m{arr[k]}\033[0m"
+                    #         continue
+                    #     display_arr += f", {arr[k]}"
 
-                    display_arr = f"[{display_arr[2:]}]"
-                    TOOLS.print_type(display_arr, None, 0.001)
+                    # display_arr = f"[{display_arr[2:]}]"
                     continue
         return arr
 #endregion bubble sort
@@ -111,8 +138,11 @@ class Sorting:
         for i in range(length):
             min_idx = i
             for j in range(i+1, length):
+
                 if arr[j] < arr[min_idx]:
                     min_idx = j
+                    # arrColor(arr, [],[], [], [min_idx])
+
             arr[i], arr[min_idx] = arr[min_idx], arr[i]
         return arr
 #endregion selection sort
@@ -131,6 +161,7 @@ class Sorting:
             j = i - 1
             while j >= 0 and key < arr[j]:
                 arr[j + 1] = arr[j]
+                arrColor(arr,[j], [key])
                 j -= 1
             arr[j + 1] = key
         return arr

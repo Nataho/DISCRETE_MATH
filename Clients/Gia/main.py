@@ -17,37 +17,38 @@ class SetTheory:
 
     def __init__(self):
         clear_screen()
-        print("Set Theory function opened!")
+        print("Set Theory module booted up. Let’s get logical!")
         sleep(1)
         self.start()
 
     def start(self):
-        print("Welcome to the Set Theory class!")
+        print("Welcome aboard the Set Theory explorer!")
         self.perform_operations()
 
     def perform_operations(self):
-        print("Let's begin by reading two sets from the user.")
+        print("We’ll start by gathering two sets from you.")
         sleep(1)
         A = self.read_set('A')
         B = self.read_set('B')
-        print("\nYou have entered:")
-        print(f"Set A: {A}")
-        print(f"Set B: {B}")
+        print("\nHere’s what you gave me:")
+        print(f"Set A ➤ {A}")
+        print(f"Set B ➤ {B}")
 
-        print("Performing set operations...")
+        print("\nRunning standard set operations...")
         sleep(1)
 
-        print("\nResults of set operations:")
-        print(f"Union (A ∪ B): {A | B}")
-        print(f"Intersection (A ∩ B): {A & B}")
-        print(f"Difference (A - B): {A - B}")
-        print(f"Is A a subset of B? {'Yes' if A <= B else 'No'}")
-        print(f"Are A and B equal? {'Yes' if A == B else 'No'}")
+        print("\n➤ Results:")
+        print(f"A ∪ B (Union): {A | B}")
+        print(f"A ∩ B (Intersection): {A & B}")
+        print(f"A - B (Difference): {A - B}")
+        print(f"Is A a subset of B? {'Definitely!' if A <= B else 'Nope!'}")
+        print(f"Are A and B the same? {'Exactly the same!' if A == B else 'Not quite.'}")
 
     def read_set(self, name):
-        elements = input(f"Enter the elements of set {name} (space separated): ")
+        elements = input(f"\nType in the elements for set {name} (space-separated): ")
         return set(elements.split())
 # endregion
+
 
 # region Ciphers
 class Ciphers:
@@ -313,7 +314,6 @@ class Ciphers:
             for r in range(rows):
                 ciphertext += matrix[r][col_idx]
         print(f"Encrypted text: {ciphertext}")
-
 # endregion
 
 # region Sorting
@@ -1269,27 +1269,35 @@ def main():
 
     while True:
         clear_screen()
-        print("Pick a number to open:")
+        print("=== Gia Balasabas' Math & Logic Toolkit ===\n")
+        print("Pick a number to open a module:")
         for i, cls in enumerate(classes):
-            print(f"{i + 1}. {cls.__name__}")
-        print("0. Exit")
+            print(f" {i + 1}. {cls.__name__}")
+        print(" 0. Exit")
+
         try:
-            picked = int(input("Enter the number of the class you want to open: "))
+            picked = int(input("\nEnter the number of the class you want to open: "))
         except ValueError:
-            print("Invalid input. Please enter a number.")
-            sleep(1)
+            print("\nInvalid input. Please enter a number.")
+            sleep(1.2)
             continue
+
         if picked == 0:
-            print("Goodbye!")
+            print("\nThank you for using the toolkit. Goodbye!")
             break
+
         if 1 <= picked <= len(classes):
-            classes[picked - 1]()
-            again = input("Would you like to restart the class? (y/N): ")
-            if again.lower() == 'y':
-                classes[picked - 1]()
+            while True:
+                clear_screen()
+                print(f"=== Opening: {classes[picked - 1].__name__} ===\n")
+                instance = classes[picked - 1]()  # Call the selected class
+                again = input("\nWould you like to restart this module? (y/N): ")
+                if again.strip().lower() != 'y':
+                    break
         else:
-            print("Invalid choice. Please try again.")
-            sleep(1)
+            print("\nInvalid choice. Please try again.")
+            sleep(1.2)
+
 
 if __name__ == "__main__":
     main()
