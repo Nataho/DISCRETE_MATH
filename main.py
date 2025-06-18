@@ -25,6 +25,7 @@ classes = [
 
 while picked != -1: #-1 is used to exit the loop
     TOOLS.clear_screen()
+    # print(TOOLS.clear_screen())
     TOOLS.print_type("pick a class to open")
     for i, cls in enumerate(classes):
         TOOLS.print_type(f"{i + 1}. {cls.__name__}")

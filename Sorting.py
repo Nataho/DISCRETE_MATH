@@ -96,32 +96,11 @@ class Sorting:
         for i in range(length):
             for j in range(0, length-i-1):
                 arrColor(arr,[j],[j+1])
-                # for k in range(length):
-                #     if k == j:
-                #         display_arr += f", \033[94m{arr[k]}\033[0m"
-                #         continue
-                #     if k == j+1:
-                #         display_arr += f", \033[92m{arr[k]}\033[0m"
-                #         continue
-
-                #     display_arr += f", {arr[k]}"
-
-                # display_arr = f"[{display_arr[2:]}]"
-                
                 if arr[j] > arr[j+1]:
                     arr[j], arr[j+1] = arr[j+1], arr[j] #swap
 
-                    # display_arr = f"[{display_arr[2:]}]"
-                    # TOOLS.print_type(display_arr,None,0.01)
-
                     arrColor(arr,[],[],[j,j+1])
-                    # for k in range(length):
-                    #     if k == j or k == j+1:
-                    #         display_arr += f", \033[93m{arr[k]}\033[0m"
-                    #         continue
-                    #     display_arr += f", {arr[k]}"
 
-                    # display_arr = f"[{display_arr[2:]}]"
                     continue
         return arr
 #endregion bubble sort

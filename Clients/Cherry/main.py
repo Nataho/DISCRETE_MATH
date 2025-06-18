@@ -1033,6 +1033,10 @@ class Searching:
         print(f"❌ {target} is not in the array.")
 # endregion
 
+#region test
+class test:
+    pass
+#endregion test
 
 # region Main Program Loop
 def main():
@@ -1044,6 +1048,7 @@ def main():
         GCD_LCM,
         Prime,
         Searching,
+        test
     ]
 
     while True:

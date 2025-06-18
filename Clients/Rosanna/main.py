@@ -1005,7 +1005,7 @@ class Conversion:
 
 # region Searching
 class Searching:
-    """A tool to demonstrate various search algorithms interactively."""
+    """A tool to demonstrate various search and sorting algorithms interactively."""
 
     def __init__(self):
         clear_screen()
@@ -1014,15 +1014,19 @@ class Searching:
         self.menu()
 
     def menu(self):
-        print("\nWhich search adventure shall we take on today?")
+        print("\nWhich search or sort adventure shall we take on today?")
         print(" 1. Interpolation Search")
         print(" 2. Linear Search")
         print(" 3. Binary Search")
+        print(" 4. Ternary Search")
+        print(" 5. Jump Search")
+        print(" 6. Interval Search")
+        print(" 7. Heap Sort")
 
         try:
-            choice = int(input("Pick a number (1–3) to dive in: "))
+            choice = int(input("Pick a number (1–7) to dive in: "))
         except ValueError:
-            print("⚠️ Oops! That’s not a number between 1 and 3. Try again.")
+            print("⚠️ Oops! That’s not a number between 1 and 7. Try again.")
             return self.menu()
 
         if choice == 1:
@@ -1031,6 +1035,14 @@ class Searching:
             self.linear_search()
         elif choice == 3:
             self.binary_search()
+        elif choice == 4:
+            self.ternary_search()
+        elif choice == 5:
+            self.jump_search()
+        elif choice == 6:
+            self.interval_search()
+        elif choice == 7:
+            self.heap_sort()
         else:
             print("⚠️ That choice isn’t on the menu. Give it another go!")
             self.menu()
@@ -1040,12 +1052,19 @@ class Searching:
             values = list(map(int, input("\nEnter your list of numbers (space-separated): ").split()))
             if sort_array:
                 values.sort()
-                print(f"🔢 Here’s the sorted array we’ll work with: {values}")
+                print(f"📂 Here’s the sorted array we’ll work with: {values}")
             target = int(input("🔍 Now, what number are you searching for? "))
             return values, target
         except ValueError:
             print("⚠️ Hmmm, looks like some input wasn’t an integer. Try again please!")
             return self.get_array_and_target(sort_array)
+
+    def get_array(self):
+        try:
+            return list(map(int, input("\nEnter your list of numbers (space-separated): ").split()))
+        except ValueError:
+            print("⚠️ Please enter integers only!")
+            return self.get_array()
 
     def linear_search(self):
         arr, target = self.get_array_and_target()
@@ -1077,10 +1096,10 @@ class Searching:
                 print(f"🎉 Found {target} right here at index {mid}!")
                 return
             elif arr[mid] < target:
-                print(f"{arr[mid]} is less than {target}, searching the right half...")
+                print(f"{arr[mid]} is less than {target}, searching the right half…")
                 left = mid + 1
             else:
-                print(f"{arr[mid]} is greater than {target}, searching the left half...")
+                print(f"{arr[mid]} is greater than {target}, searching the left half…")
                 right = mid - 1
 
         print(f"😞 No luck! {target} isn’t in the array.")
@@ -1112,14 +1131,131 @@ class Searching:
                 print(f"🎯 Bullseye! {target} found at index {pos}.")
                 return
             elif arr[pos] < target:
-                print(f"{arr[pos]} is less than {target}, shifting right...")
+                print(f"{arr[pos]} is less than {target}, shifting right…")
                 low = pos + 1
             else:
-                print(f"{arr[pos]} is greater than {target}, shifting left...")
+                print(f"{arr[pos]} is greater than {target}, shifting left…")
                 high = pos - 1
 
         print(f"😔 {target} wasn’t found this time.")
+
+    def ternary_search(self):
+        arr, target = self.get_array_and_target(sort_array=True)
+        print("\n🔎 Starting ternary search…\n")
+        sleep(0.5)
+
+        left, right = 0, len(arr) - 1
+        step = 1
+
+        while left <= right:
+            third = (right - left) // 3
+            mid1 = left + third
+            mid2 = right - third
+
+            print(f"Step {step}: left = {left}, mid1 = {mid1} (val: {arr[mid1]}), mid2 = {mid2} (val: {arr[mid2]}), right = {right}")
+            step += 1
+
+            if arr[mid1] == target:
+                print(f"🎉 Found {target} at index {mid1}!")
+                return
+            if arr[mid2] == target:
+                print(f"🎉 Found {target} at index {mid2}!")
+                return
+
+            if target < arr[mid1]:
+                print(f"{target} is less than {arr[mid1]}, narrowing to left third…")
+                right = mid1 - 1
+            elif target > arr[mid2]:
+                print(f"{target} is greater than {arr[mid2]}, narrowing to right third…")
+                left = mid2 + 1
+            else:
+                print(f"{target} is between {arr[mid1]} and {arr[mid2]}, narrowing to middle third…")
+                left = mid1 + 1
+                right = mid2 - 1
+
+        print(f"😞 Alas, {target} wasn’t in the array.")
+
+    def jump_search(self):
+        import math
+        arr, target = self.get_array_and_target(sort_array=True)
+        print("\n🔎 Starting jump search…\n")
+        sleep(0.5)
+
+        n = len(arr)
+        step = int(math.sqrt(n))
+        prev = 0
+
+        while prev < n and arr[min(n - 1, prev + step - 1)] < target:
+            print(f"Jumping from index {prev} to {min(n - 1, prev + step)}")
+            prev += step
+
+        print(f"Linear search in block starting at {prev - step} to {min(prev, n)}")
+        for i in range(prev - step, min(prev, n)):
+            print(f"Checking index {i} — value: {arr[i]}")
+            if arr[i] == target:
+                print(f"🎉 Found {target} at index {i}!")
+                return
+        print(f"😞 {target} not found using jump search.")
+
+    def interval_search(self):
+        arr, target = self.get_array_and_target(sort_array=True)
+        print("\n🔎 Starting interval search…\n")
+        sleep(0.5)
+
+        n = len(arr)
+        k = int(input("How many intervals to divide into? "))
+        interval_size = n // k
+
+        for i in range(0, n, interval_size):
+            start = i
+            end = min(i + interval_size - 1, n - 1)
+            print(f"Checking interval {start} to {end}")
+            if arr[start] <= target <= arr[end]:
+                for j in range(start, end + 1):
+                    print(f"Checking index {j} — value: {arr[j]}")
+                    if arr[j] == target:
+                        print(f"🎉 Found {target} at index {j}!")
+                        return
+                break
+
+        print(f"😞 {target} not found in any interval.")
+
+    def heap_sort(self):
+        arr = self.get_array()
+        print("\n🔄 Starting heap sort…\n")
+        sleep(0.5)
+
+        def heapify(arr, n, i):
+            largest = i
+            left = 2 * i + 1
+            right = 2 * i + 2
+
+            if left < n and arr[left] > arr[largest]:
+                largest = left
+            if right < n and arr[right] > arr[largest]:
+                largest = right
+
+            if largest != i:
+                print(f"Swapping {arr[i]} with {arr[largest]}")
+                arr[i], arr[largest] = arr[largest], arr[i]
+                heapify(arr, n, largest)
+
+        n = len(arr)
+
+        for i in range(n // 2 - 1, -1, -1):
+            print(f"Heapifying at index {i}…")
+            heapify(arr, n, i)
+
+        for i in range(n - 1, 0, -1):
+            print(f"Swapping {arr[0]} with {arr[i]} and heapifying root…")
+            arr[0], arr[i] = arr[i], arr[0]
+            heapify(arr, i, 0)
+
+        print(f"✅ Sorted array: {arr}")
 # endregion
+
+
+
 
 # region Prime
 class Prime:

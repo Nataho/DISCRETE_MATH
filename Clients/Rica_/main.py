@@ -1282,7 +1282,6 @@ class Prime:
         print(roots)
 # endregion
 
-
 # region Main Program Loop
 def main():
     modules = [
@@ -1298,12 +1297,12 @@ def main():
     while True:
         clear_screen()
         random.shuffle(modules)
-        print("🤖 Rica Mae Sabanal’s Algorithm Arena: Initializing Intelligence Sequence… 🤖\n")
+        print("🤖 Rica Mae Sabanal’s Algorithm Lobby: Initializing Intelligence Sequence… 🤖\n")
         print(random.choice([
-            "📚 Which module piques your curiosity today?",
-            "💡 Select a challenge to dive into:",
-            "🔍 Explore an algorithmic world below:",
-            "🎯 What topic shall we tackle next?",
+            "Which module piques your curiosity today?",
+            "Select a challenge to dive into:",
+            "Explore an algorithmic world below:",
+            "What topic shall we tackle next?",
         ]))
 
         for idx, module in enumerate(modules, start=1):
@@ -1314,9 +1313,9 @@ def main():
             choice = int(input("\n📥 Enter your choice (0 to quit): "))
         except ValueError:
             print(random.choice([
-                "\n⚠️ That wasn’t a number. Try again.",
-                "\n⚠️ Numbers only! Let’s go again.",
-                "\n⚠️ Input error — please choose by number.",
+                "\nThat wasn’t a number. Try again.",
+                "\nNumbers only! Let’s go again.",
+                "\nInput error — please choose by number.",
             ]))
             sleep(1.5)
             continue
