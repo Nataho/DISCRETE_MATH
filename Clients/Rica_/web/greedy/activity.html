@@ -5,66 +5,77 @@
   <title>Activity Selection Problem</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * {
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #f0f8ff;
-      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top left, #1a1a1a, #0a0a0a);
+      color: #e0e0e0;
       padding: 40px;
     }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem 3rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
     header {
       text-align: center;
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       color: #00e5ff;
       margin-bottom: 2rem;
-      text-shadow: 0 0 10px #00e5ff;
+      text-shadow: 0 0 10px #00e5ff88;
     }
-    main {
-      max-width: 1200px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-    }
+
     .input-group {
       display: flex;
       gap: 1rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       flex-wrap: wrap;
       justify-content: center;
     }
+
     .input-group input {
       flex: 1;
       padding: 0.6rem;
       font-size: 1rem;
-      border: 1px solid #0ff;
+      border: 1px solid #00e5ff;
       border-radius: 8px;
-      background: #0d1b2a;
-      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+      color: #00e5ff;
+      outline: none;
     }
+
     button {
-      background-color: #00e5ff;
-      color: #000;
-      border: none;
+      background-color: rgba(0, 229, 255, 0.1);
+      color: #00e5ff;
+      border: 2px solid #00e5ff;
       padding: 0.7rem 1.2rem;
       font-size: 1rem;
+      font-weight: bold;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      box-shadow: 0 0 10px #00e5ff;
+      box-shadow: 0 0 10px #00e5ff55;
+      transition: all 0.25s ease;
     }
+
     button:hover {
-      background-color: #1de9b6;
-      box-shadow: 0 0 20px #1de9b6, 0 0 30px #1de9b6;
+      background-color: #00e5ff;
+      color: #000;
+      box-shadow: 0 0 20px #00e5ffaa;
+      transform: translateY(-2px);
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -72,68 +83,86 @@
       background: rgba(255, 255, 255, 0.05);
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
     }
+
     th, td {
       padding: 0.75rem;
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #fff;
+      color: #e0e0e0;
     }
+
     th {
       background-color: rgba(0, 229, 255, 0.1);
       color: #00e5ff;
+      text-shadow: 0 0 6px #00e5ff;
     }
-    .chart-container {
+
+    .timeline {
+      position: relative;
+      width: 100%;
       overflow-x: auto;
       margin-top: 2rem;
+      padding-bottom: 0.5rem;
     }
-    .bar {
-      position: absolute;
-      height: 30px;
-      background-color: rgba(0, 229, 255, 0.5);
-      border: 1px solid #00e5ff;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
+
     .chart-wrapper {
       position: relative;
-      width: 1000px;
-      height: auto;
-      margin-top: 1rem;
+      min-width: 1000px;
     }
+
     .chart-row {
       position: relative;
       height: 40px;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
     }
-    .timeline {
-      position: relative;
-      width: 1000px;
-      overflow-x: scroll;
-      border-left: 2px solid #00e5ff;
+
+    .bar {
+      position: absolute;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #000;
+      font-weight: bold;
+      border-radius: 4px;
+      background: rgba(200, 200, 200, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
+
+    .bar.selected {
+      background: rgba(0, 229, 255, 0.6);
+      border-color: #00e5ff;
+      color: #000;
+      text-shadow: 0 0 2px #fff;
+    }
+
     .timeline-scale {
       display: flex;
       position: relative;
       font-size: 0.8rem;
+      color: #00e5ff;
       margin-top: 0.5rem;
-      color: #0ff;
     }
+
     .timeline-scale div {
       width: 40px;
       text-align: center;
     }
+
     @media (max-width: 600px) {
       body {
         padding: 20px;
       }
+
       main {
-        padding: 1rem;
+        padding: 1.5rem;
+      }
+
+      header {
+        font-size: 2rem;
       }
     }
   </style>
@@ -149,7 +178,7 @@
     </div>
     <button onclick="solveActivitySelection()">Solve</button>
 
-    <table id="activity-table">
+    <table>
       <thead>
         <tr>
           <th>Activity</th>
@@ -191,8 +220,8 @@
       tbody.innerHTML = '';
       const selectedSet = new Set(selectedActivities.map(a => `${a.start}-${a.end}`));
       activities.forEach(({ start, end }, index) => {
-        const row = document.createElement('tr');
         const selected = selectedSet.has(`${start}-${end}`) ? '✅' : '❌';
+        const row = document.createElement('tr');
         row.innerHTML = `<td>A${index + 1}</td><td>${start}</td><td>${end}</td><td>${selected}</td>`;
         tbody.appendChild(row);
       });
@@ -231,7 +260,6 @@
     function drawChart() {
       const container = document.getElementById('chart');
       container.innerHTML = '';
-
       const selectedSet = new Set(selectedActivities.map(a => `${a.start}-${a.end}`));
 
       activities.forEach((a, i) => {
@@ -240,10 +268,9 @@
 
         const bar = document.createElement('div');
         bar.className = 'bar';
+        if (selectedSet.has(`${a.start}-${a.end}`)) bar.classList.add('selected');
         bar.style.left = (a.start * 40) + 'px';
         bar.style.width = ((a.end - a.start) * 40) + 'px';
-        bar.style.top = '5px';
-        bar.style.backgroundColor = selectedSet.has(`${a.start}-${a.end}`) ? 'rgba(0,229,255,0.6)' : 'rgba(200,200,200,0.3)';
         bar.textContent = `A${i + 1}`;
 
         row.appendChild(bar);

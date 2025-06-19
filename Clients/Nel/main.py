@@ -1063,15 +1063,22 @@ class Ciphers:
         print(f"\n✅ Encrypted output: {result}")
 
     def vigenere_decrypt(self):
-        text = input("🔍 Encrypted text to decode: ")
-        key = input("🔑 Keyword used for encryption: ")
+        text = input("Enter encrypted text: ")
+        key = input("Enter keyword used: ")
         key_extended = (key * ((len(text) // len(key)) + 1))[:len(text)]
         result = ""
-        print("\n🔓 Decrypting with Vigenère Cipher...")
+        print("\n[Decrypting]")
         for i, char in enumerate(text):
             if char.isalpha():
                 base = ord('A') if char.isupper() else ord('a')
-                key_char = key_extended[i].upper() if char.isupper() else key_extended_
+                key_char = key_extended[i].upper() if char.isupper() else key_extended[i].lower()
+                shift = ord(key_char) - base
+                decrypted = chr((ord(char) - base - shift) % 26 + base)
+                print(f"{char} - {key_char} -> {decrypted}")
+                result += decrypted
+            else:
+                result += char
+        print(f"\nDecrypted → {result}")
 
 
     # Playfair Encrypt and Decrypt (decrypt method added)

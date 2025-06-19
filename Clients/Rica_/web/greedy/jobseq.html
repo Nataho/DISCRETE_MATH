@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Activity Selection Problem</title>
+  <title>Job Sequencing Problem</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
     * {
       margin: 0;
       padding: 0;
@@ -12,60 +14,46 @@
     }
     body {
       font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #f0f8ff;
+      background: linear-gradient(to right, #001f3f, #000428);
+      color: #f8f8ff;
       min-height: 100vh;
       padding: 40px;
     }
     header {
       text-align: center;
       font-size: 2.5rem;
-      color: #00e5ff;
+      color: #00ffff;
       margin-bottom: 2rem;
-      text-shadow: 0 0 10px #00e5ff;
+      text-shadow: 0 0 15px #00ffff;
     }
     main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 1200px;
+      max-width: 1000px;
       margin: auto;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 16px;
       padding: 2rem;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-    }
-    .panels {
-      display: flex;
-      width: 100%;
-      gap: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .left-panel, .right-panel {
-      flex: 1;
-      min-width: 280px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
     }
     .input-group {
       display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1rem;
-      flex-wrap: wrap;
       justify-content: center;
     }
     .input-group input {
       flex: 1 1 120px;
       padding: 0.6rem;
       font-size: 1rem;
-      border: 1px solid #0ff;
+      border: 1px solid #00ffff;
       border-radius: 8px;
-      background: #0d1b2a;
+      background: #001f3f;
       color: #fff;
     }
     button {
-      background-color: #00e5ff;
+      background-color: #00ffff;
       color: #000;
       border: none;
       padding: 0.7rem 1.2rem;
@@ -73,20 +61,20 @@
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s, box-shadow 0.3s;
-      box-shadow: 0 0 10px #00e5ff;
+      box-shadow: 0 0 12px #00ffff;
     }
     button:hover {
-      background-color: #1de9b6;
-      box-shadow: 0 0 20px #1de9b6, 0 0 30px #1de9b6;
+      background-color: #00bbff;
+      box-shadow: 0 0 20px #00bbff, 0 0 30px #00bbff;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
-      background: rgba(255, 255, 255, 0.05);
+      margin-top: 2rem;
+      background: rgba(255, 255, 255, 0.03);
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     }
     th, td {
       padding: 0.75rem;
@@ -95,87 +83,129 @@
       color: #fff;
     }
     th {
-      background-color: rgba(0, 229, 255, 0.1);
-      color: #00e5ff;
+      background-color: rgba(0, 255, 255, 0.15);
+      color: #00ffff;
     }
-    .chart-container {
-      margin-top: 2rem;
-      width: 100%;
-      display: flex;
-      justify-content: center;
+    ul {
+      margin-top: 1rem;
+      padding-left: 1.2rem;
     }
-    .bar {
-      position: absolute;
-      height: 30px;
-      background-color: rgba(0, 229, 255, 0.5);
-      border: 1px solid #00e5ff;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
-    .chart-wrapper {
-      position: relative;
-      width: 1000px;
-      height: auto;
-      margin: 1rem auto 0 auto;
-    }
-    .chart-row {
-      position: relative;
-      height: 40px;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
-    }
-    .timeline {
-      position: relative;
-      width: 100%;
-      overflow-x: auto;
-      border-left: 2px solid #00e5ff;
-      display: flex;
-      justify-content: center;
-    }
-    .timeline-scale {
-      display: flex;
-      font-size: 0.8rem;
-      margin-top: 0.5rem;
-      color: #0ff;
-      width: 100%;
-      justify-content: center;
-    }
-    .timeline-scale div {
-      width: 40px;
-      text-align: center;
-    }
-    @media (max-width: 800px) {
-      .panels {
-        flex-direction: column;
-      }
-      .timeline, .chart-wrapper, .timeline-scale {
-        width: 100%;
-      }
+    li {
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <header>Activity Selection Visualizer</header>
+  <header>Job Sequencing Problem</header>
   <main>
-    <div class="panels">
-      <div class="left-panel">
-        <!-- Controls go here -->
-      </div>
-      <div class="right-panel">
-        <!-- Table goes here -->
-      </div>
+    <div class="input-group">
+      <input type="text" id="job-id" placeholder="Job ID (e.g. J1)">
+      <input type="number" id="job-deadline" placeholder="Deadline" min="1">
+      <input type="number" id="job-profit" placeholder="Profit" min="0">
+      <button onclick="addJob()">Add Job</button>
+      <button onclick="generateRandomJobs()">Randomize</button>
     </div>
-    <div class="chart-container">
-      <div class="chart-wrapper">
-        <!-- Bars and timeline will be injected here -->
-      </div>
-    </div>
-    <div class="timeline-scale">
-      <!-- Time scale goes here -->
-    </div>
+    <button onclick="solveJobSequencing()">Solve</button>
+
+    <table id="job-table">
+      <thead>
+        <tr>
+          <th>Job ID</th>
+          <th>Deadline</th>
+          <th>Profit</th>
+        </tr>
+      </thead>
+      <tbody id="job-body"></tbody>
+    </table>
+
+    <div id="solution-process"></div>
+
+    <table id="result-table">
+      <thead>
+        <tr>
+          <th>Time Slot</th>
+          <th>Job ID</th>
+          <th>Deadline</th>
+          <th>Profit</th>
+        </tr>
+      </thead>
+      <tbody id="result-body"></tbody>
+    </table>
   </main>
+
+  <script>
+    let jobs = [];
+
+    function addJob() {
+      const id = document.getElementById('job-id').value.trim();
+      const deadline = parseInt(document.getElementById('job-deadline').value);
+      const profit = parseInt(document.getElementById('job-profit').value);
+
+      if (!id || isNaN(deadline) || isNaN(profit) || deadline <= 0 || profit < 0) {
+        alert('Please enter valid job data.');
+        return;
+      }
+
+      jobs.push({ id, deadline, profit });
+      document.getElementById('job-id').value = '';
+      document.getElementById('job-deadline').value = '';
+      document.getElementById('job-profit').value = '';
+      updateTable();
+    }
+
+    function updateTable() {
+      const tbody = document.getElementById('job-body');
+      tbody.innerHTML = '';
+      jobs.forEach(job => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${job.id}</td><td>${job.deadline}</td><td>${job.profit}</td>`;
+        tbody.appendChild(row);
+      });
+    }
+
+    function solveJobSequencing() {
+      const n = jobs.length;
+      if (n === 0) return;
+
+      const sortedJobs = [...jobs].sort((a, b) => b.profit - a.profit);
+      const maxDeadline = Math.max(...jobs.map(j => j.deadline));
+      const result = Array(maxDeadline).fill(null);
+      let totalProfit = 0;
+
+      let processLog = '<h3>Selection Process</h3><ul>';
+
+      for (const job of sortedJobs) {
+        for (let slot = job.deadline - 1; slot >= 0; slot--) {
+          if (!result[slot]) {
+            result[slot] = job;
+            totalProfit += job.profit;
+            processLog += `<li>Scheduled <strong>${job.id}</strong> at slot ${slot + 1}</li>`;
+            break;
+          }
+        }
+      }
+      processLog += `</ul><p><strong>Total Profit: ${totalProfit}</strong></p>`;
+      document.getElementById('solution-process').innerHTML = processLog;
+
+      const tbody = document.getElementById('result-body');
+      tbody.innerHTML = '';
+      result.forEach((job, i) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${i + 1}</td><td>${job ? job.id : '-'}</td><td>${job ? job.deadline : '-'}</td><td>${job ? job.profit : '-'}</td>`;
+        tbody.appendChild(row);
+      });
+    }
+
+    function generateRandomJobs() {
+      jobs = [];
+      const count = Math.floor(Math.random() * 5) + 5;
+      for (let i = 1; i <= count; i++) {
+        const deadline = Math.floor(Math.random() * 5) + 1;
+        const profit = Math.floor(Math.random() * 100) + 10;
+        jobs.push({ id: `J${i}`, deadline, profit });
+      }
+      updateTable();
+    }
+  </script>
 </body>
 </html>
