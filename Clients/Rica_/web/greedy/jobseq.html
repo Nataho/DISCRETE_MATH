@@ -5,70 +5,86 @@
   <title>Job Sequencing Problem</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
     body {
-      font-family: 'Verdana', sans-serif;
-      background: linear-gradient(to right, #fffaf0, #f0f8ff);
-      color: #333;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #001f3f, #000428);
+      color: #f8f8ff;
       min-height: 100vh;
       padding: 40px;
     }
     header {
       text-align: center;
-      font-size: 2rem;
-      color: #2c3e50;
+      font-size: 2.5rem;
+      color: #00ffff;
       margin-bottom: 2rem;
+      text-shadow: 0 0 15px #00ffff;
     }
     main {
       max-width: 1000px;
       margin: auto;
-      background: #ffffffcc;
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
       padding: 2rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
     }
     .input-group {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1rem;
+      justify-content: center;
     }
     .input-group input {
-      flex: 1;
-      padding: 0.5rem;
+      flex: 1 1 120px;
+      padding: 0.6rem;
       font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #00ffff;
+      border-radius: 8px;
+      background: #001f3f;
+      color: #fff;
     }
     button {
-      background-color: #1565c0;
-      color: white;
+      background-color: #00ffff;
+      color: #000;
       border: none;
       padding: 0.7rem 1.2rem;
       font-size: 1rem;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 12px #00ffff;
     }
     button:hover {
-      background-color: #0d47a1;
+      background-color: #00bbff;
+      box-shadow: 0 0 20px #00bbff, 0 0 30px #00bbff;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     }
     th, td {
       padding: 0.75rem;
       text-align: center;
-      border: 1px solid #ccc;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
     }
     th {
-      background-color: #e0f0ff;
+      background-color: rgba(0, 255, 255, 0.15);
+      color: #00ffff;
     }
     ul {
       margin-top: 1rem;
