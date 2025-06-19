@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Activity Selection Problem</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #f0f8ff;
+      min-height: 100vh;
+      padding: 40px;
+    }
+    header {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #00e5ff;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px #00e5ff;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+    }
+    .panels {
+      display: flex;
+      width: 100%;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .left-panel, .right-panel {
+      flex: 1;
+      min-width: 280px;
+    }
+    .input-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .input-group input {
+      flex: 1 1 120px;
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #0ff;
+      border-radius: 8px;
+      background: #0d1b2a;
+      color: #fff;
+    }
+    button {
+      background-color: #00e5ff;
+      color: #000;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 10px #00e5ff;
+    }
+    button:hover {
+      background-color: #1de9b6;
+      box-shadow: 0 0 20px #1de9b6, 0 0 30px #1de9b6;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    th, td {
+      padding: 0.75rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    th {
+      background-color: rgba(0, 229, 255, 0.1);
+      color: #00e5ff;
+    }
+    .chart-container {
+      margin-top: 2rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .bar {
+      position: absolute;
+      height: 30px;
+      background-color: rgba(0, 229, 255, 0.5);
+      border: 1px solid #00e5ff;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    .chart-wrapper {
+      position: relative;
+      width: 1000px;
+      height: auto;
+      margin: 1rem auto 0 auto;
+    }
+    .chart-row {
+      position: relative;
+      height: 40px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    }
+    .timeline {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      border-left: 2px solid #00e5ff;
+      display: flex;
+      justify-content: center;
+    }
+    .timeline-scale {
+      display: flex;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      color: #0ff;
+      width: 100%;
+      justify-content: center;
+    }
+    .timeline-scale div {
+      width: 40px;
+      text-align: center;
+    }
+    @media (max-width: 800px) {
+      .panels {
+        flex-direction: column;
+      }
+      .timeline, .chart-wrapper, .timeline-scale {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>Activity Selection Visualizer</header>
+  <main>
+    <div class="panels">
+      <div class="left-panel">
+        <!-- Controls go here -->
+      </div>
+      <div class="right-panel">
+        <!-- Table goes here -->
+      </div>
+    </div>
+    <div class="chart-container">
+      <div class="chart-wrapper">
+        <!-- Bars and timeline will be injected here -->
+      </div>
+    </div>
+    <div class="timeline-scale">
+      <!-- Time scale goes here -->
+    </div>
+  </main>
+</body>
+</html>
