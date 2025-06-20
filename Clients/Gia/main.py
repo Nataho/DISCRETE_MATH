@@ -987,6 +987,7 @@ class Conversion:
 # region Searching
 class Searching:
     """A tool to explore different search algorithms interactively."""
+
     def __init__(self):
         clear_screen()
         print("🔍 Welcome to the Interactive Search Tool!")
@@ -998,22 +999,24 @@ class Searching:
         print(" 1. Interpolation Search")
         print(" 2. Linear Search")
         print(" 3. Binary Search")
+        print(" 4. Ternary Search")
+        print(" 5. Jump Search")
+        print(" 6. Interval Search")
 
         try:
-            choice = int(input("Pick a number (1–3) to dive in: "))
+            choice = int(input("Pick a number (1–6) to dive in: "))
         except ValueError:
-            print("⚠️ Oops! That’s not a number between 1 and 3. Try again.")
+            print("⚠️ Oops! That’s not a number between 1 and 6. Try again.")
             return self.menu()
 
-        if choice == 1:
-            self.interpolation_search()
-        elif choice == 2:
-            self.linear_search()
-        elif choice == 3:
-            self.binary_search()
-        else:
-            print("⚠️ That choice isn’t on the menu. Give it another go!")
-            self.menu()
+        {
+            1: self.interpolation_search,
+            2: self.linear_search,
+            3: self.binary_search,
+            4: self.ternary_search,
+            5: self.jump_search,
+            6: self.interval_search,
+        }.get(choice, lambda: (print("⚠️ That choice isn’t on the menu. Give it another go!"), self.menu()))()
 
     def get_array_and_target(self, sort_array=False):
         try:
@@ -1099,6 +1102,97 @@ class Searching:
                 high = pos - 1
 
         print(f"😔 {target} wasn’t found this time.") 
+
+    def ternary_search(self):
+        arr, target = self.get_array_and_target(sort_array=True)
+        print("\n🔎 Starting ternary search…\n")
+        sleep(0.5)
+
+        left, right = 0, len(arr) - 1
+        step = 1
+        while left <= right:
+            mid1 = left + (right - left) // 3
+            mid2 = right - (right - left) // 3
+            print(f"Step {step}: left={left}, mid1={mid1}, mid2={mid2}, right={right} "
+                  f"(values: {arr[mid1]}, {arr[mid2]})")
+            step += 1
+
+            if arr[mid1] == target:
+                print(f"🎉 Found {target} at index {mid1}!")
+                return
+            if arr[mid2] == target:
+                print(f"🎉 Found {target} at index {mid2}!")
+                return
+
+            if target < arr[mid1]:
+                print(f"{target} < {arr[mid1]}: searching left third…")
+                right = mid1 - 1
+            elif target > arr[mid2]:
+                print(f"{target} > {arr[mid2]}: searching right third…")
+                left = mid2 + 1
+            else:
+                print(f"{target} is between {arr[mid1]} and {arr[mid2]}: searching middle third…")
+                left = mid1 + 1
+                right = mid2 - 1
+
+        print(f"😞 No luck! {target} wasn’t found.")
+
+    def jump_search(self):
+        arr, target = self.get_array_and_target(sort_array=True)
+        print("\n🔎 Starting jump search…\n")
+        sleep(0.5)
+
+        import math
+        n = len(arr)
+        step_size = int(math.sqrt(n))
+        prev = 0
+        step = 1
+
+        # Jump through blocks
+        while prev < n and arr[min(prev + step_size, n) - 1] < target:
+            print(f"Step {step}: jumping to block ending at index {min(prev+step_size, n)-1} "
+                  f"(value: {arr[min(prev+step_size, n)-1]})")
+            prev += step_size
+            step += 1
+
+        # Linear search in the block
+        print(f"🔎 Performing linear search in block starting at index {prev}…")
+        for idx in range(prev, min(prev + step_size, n)):
+            print(f"Checking index {idx} — value: {arr[idx]}")
+            if arr[idx] == target:
+                print(f"🎉 Found {target} at index {idx}!")
+                return
+
+        print(f"😞 Sorry, {target} isn’t in the list.")
+
+    def interval_search(self):
+        arr, target = self.get_array_and_target(sort_array=False)
+        print("\n🔎 Starting interval search…\n")
+        sleep(0.5)
+
+        left, right = 0, len(arr) - 1
+        step = 1
+        while left <= right:
+            print(f"Step {step}: checking interval from {left} to {right}")
+            # find min and max in interval
+            mini = min(arr[left:right+1])
+            maxi = max(arr[left:right+1])
+            print(f"Interval min={mini}, max={maxi}")
+            if target < mini or target > maxi:
+                print(f"{target} is outside this interval → narrowing...")
+                left += 1
+                right -= 1
+            else:
+                # fallback to linear in that interval
+                for idx in range(left, right+1):
+                    print(f"Checking index {idx} — value: {arr[idx]}")
+                    if arr[idx] == target:
+                        print(f"🎉 Found {target} at index {idx}!")
+                        return
+                break
+            step += 1
+
+        print(f"😞 No luck! {target} isn’t in this list.")
 # endregion
 
 
