@@ -11,7 +11,7 @@ def sleep(seconds):
     time.sleep(seconds)
 # endregion
 
-#region set theory
+# region set theory
 class SetTheory:
     """Handles user interaction and operations related to basic set theory."""
 
@@ -19,7 +19,7 @@ class SetTheory:
         self.set_a = set()
         self.set_b = set()
         clear_screen()
-        print("📘 Set Theory Module Activated!")
+        print("Set Theory Module Activated 📘")
         sleep(1)
         self.run()
 
@@ -30,31 +30,31 @@ class SetTheory:
         self.compute_results()
 
     def display_welcome(self):
-        print("🔎 Let's explore your sets A and B!")
+        print("Let's explore your sets A and B 🔎")
 
     def get_sets(self):
         self.set_a = self.input_set("A")
         self.set_b = self.input_set("B")
 
     def input_set(self, label):
-        raw = input(f"🧩 Enter elements of set {label} (separated by spaces): ")
+        raw = input(f"Enter elements of set {label} (space-separated) 🧩: ")
         return set(raw.strip().split())
 
     def display_sets(self):
-        print("\n✅ You entered:")
+        print("\nYou entered ✅")
         print(f"  • Set A: {self.set_a}")
         print(f"  • Set B: {self.set_b}")
 
     def compute_results(self):
-        print("\n⚙️ Computing set operations...")
+        print("\nComputing set operations ⚙️")
         sleep(1)
-        print("\n📊 Results:")
+        print("\nResults 📊")
         print(f"  A ∪ B = {self.set_a | self.set_b}")
         print(f"  A ∩ B = {self.set_a & self.set_b}")
         print(f"  A \\ B = {self.set_a - self.set_b}")
         print(f"  A ⊆ B? {'Yes' if self.set_a <= self.set_b else 'No'}")
         print(f"  A = B? {'Yes' if self.set_a == self.set_b else 'No'}")
-#endregion set theory
+# endregion set theory
 
 
 # region ciphers
@@ -63,12 +63,12 @@ class Ciphers:
 
     def __init__(self):
         clear_screen()
-        print("🛡️ Cipher Station Activated!")
+        print("🛡️ Cipher Station: Ready for action!")
         sleep(1)
         self.mode_menu()
 
     def mode_menu(self):
-        print("\n🔐 Choose Mode:")
+        print("\n🔐 Choose your mode:")
         modes = [("Encrypt 🔒", self.run_menu_encrypt), ("Decrypt 🔓", self.run_menu_decrypt)]
         random.shuffle(modes)
         for i, (label, _) in enumerate(modes, start=1):
@@ -77,11 +77,11 @@ class Ciphers:
             choice = int(input("Your pick (1 or 2): "))
             modes[choice - 1][1]()
         except (ValueError, IndexError):
-            print("⚠️ Invalid choice — please try again.")
+            print("⚠️ Invalid choice—let’s try again.")
             self.mode_menu()
 
     def run_menu_encrypt(self):
-        print("\n🧩 Select a cipher to encrypt with:")
+        print("\n🧩 Pick a cipher to encrypt with:")
         options = [
             ("Rail Fence Cipher", self.rail_fence_encrypt),
             ("Playfair Cipher", self.playfair_encrypt),
@@ -99,10 +99,10 @@ class Ciphers:
             choice = int(input("Enter cipher number: "))
             options[choice - 1][1]()
         except (ValueError, IndexError):
-            print("⚠️ That wasn't a valid option. Please try again.")
+            print("⚠️ Not a valid option—please try again.")
 
     def run_menu_decrypt(self):
-        print("\n🧩 Select a cipher to decrypt with:")
+        print("\n🧩 Pick a cipher to decrypt with:")
         options = [
             ("Rail Fence Cipher", self.rail_fence_decrypt),
             ("Playfair Cipher", self.playfair_decrypt),
@@ -120,55 +120,55 @@ class Ciphers:
             choice = int(input("Enter cipher number: "))
             options[choice - 1][1]()
         except (ValueError, IndexError):
-            print("⚠️ Invalid selection. Please try again.")
+            print("⚠️ Oops—invalid selection, please try again.")
 
     def caesar_encrypt(self):
-        text = input("Enter message to encrypt: ")
-        shift = int(input("Shift (1–25): "))
+        text = input("Enter text to encrypt: ")
+        shift = int(input("Shift amount (1–25): "))
         encrypted = ""
-        print("\n[🔒 Encrypting]")
+        print("\n[🔒 Encrypting...]")
         for char in text:
             ...
         print(f"\nEncrypted → {encrypted}")
 
     def caesar_decrypt(self):
-        text = input("Enter message to decrypt: ")
+        text = input("Enter text to decrypt: ")
         shift = int(input("Shift used (1–25): "))
         decrypted = ""
-        print("\n[🔓 Decrypting]")
+        print("\n[🔓 Decrypting...]")
         for char in text:
             ...
         print(f"\nDecrypted → {decrypted}")
 
     def vigenere_encrypt(self):
-        text = input("Enter message to encrypt: ")
+        text = input("Enter text to encrypt: ")
         key = input("Keyword: ")
-        print("\n[🔒 Encrypting]")
+        print("\n[🔒 Encrypting...]")
         ...
         print(f"\nEncrypted → {result}")
 
     def vigenere_decrypt(self):
         text = input("Enter encrypted text: ")
-        key = input("Keyword used: ")
-        print("\n[🔓 Decrypting]")
+        key = input("Keyword: ")
+        print("\n[🔓 Decrypting...]")
         ...
         print(f"\nDecrypted → {result}")
 
     def playfair_encrypt(self):
-        text = input("Enter message to encrypt: ")
+        text = input("Enter text to encrypt: ")
         keyword = input("Keyword: ")
-        print("\n[🧩 Matrix]")
+        print("\n[🧩 Setting up matrix...]")
         ...
-        print("\n[🔒 Encrypting Pairs]")
+        print("\n[🔒 Encrypting pairs...]")
         ...
         print(f"\nEncrypted → {encrypted}")
 
     def playfair_decrypt(self):
         text = input("Enter ciphertext to decrypt: ")
         keyword = input("Keyword: ")
-        print("\n[🧩 Matrix]")
+        print("\n[🧩 Setting up matrix...]")
         ...
-        print("\n[🔓 Decrypting Pairs]")
+        print("\n[🔓 Decrypting pairs...]")
         ...
         print(f"\nDecrypted → {decrypted}")
 
@@ -179,10 +179,10 @@ class Ciphers:
         matrix = self._generate_playfair_matrix(keyword)
         prepared = self._prepare_playfair_text(text)
         encrypted = ""
-        print("\n[🧩 Matrix]")
+        print("\n[🧩 Playfair Matrix]")
         for row in matrix:
             print(" ".join(row))
-        print("\n🔒 Encrypting pairs …")
+        print("\n🔒 Encrypting digraphs …")
         for i in range(0, len(prepared), 2):
             pair = prepared[i], prepared[i + 1]
             cipher_pair = self._playfair_encrypt_pair(matrix, *pair)
@@ -195,10 +195,10 @@ class Ciphers:
         keyword = input("Keyword for matrix: ")
         matrix = self._generate_playfair_matrix(keyword)
         decrypted = ""
-        print("\n[🧩 Matrix]")
+        print("\n[🧩 Playfair Matrix]")
         for row in matrix:
             print(" ".join(row))
-        print("\n🔓 Decrypting pairs …")
+        print("\n🔓 Decrypting digraphs …")
         for i in range(0, len(text), 2):
             pair = text[i], text[i + 1]
             plain_pair = self._playfair_decrypt_pair(matrix, *pair)
@@ -206,63 +206,28 @@ class Ciphers:
             decrypted += plain_pair
         print(f"\n✅ Decrypted text → {decrypted}")
 
-
-    # Playfair Encrypt & Decrypt
-    def playfair_encrypt(self):
-        text = input("Enter message to encrypt: ")
-        keyword = input("Keyword for matrix: ")
-        matrix = self._generate_playfair_matrix(keyword)
-        prepared = self._prepare_playfair_text(text)
-        encrypted = ""
-        print("\n[🧩 Matrix]")
-        for row in matrix:
-            print(" ".join(row))
-        print("\n[🔒 Encrypting Pairs]")
-        for i in range(0, len(prepared), 2):
-            pair = prepared[i], prepared[i + 1]
-            cipher_pair = self._playfair_encrypt_pair(matrix, *pair)
-            print(f"{pair[0]}{pair[1]} → {cipher_pair}")
-            encrypted += cipher_pair
-        print(f"\n✅ Encrypted Text → {encrypted}")
-
-    def playfair_decrypt(self):
-        text = input("Enter ciphertext to decrypt: ")
-        keyword = input("Keyword for matrix: ")
-        matrix = self._generate_playfair_matrix(keyword)
-        decrypted = ""
-        print("\n[🧩 Matrix]")
-        for row in matrix:
-            print(" ".join(row))
-        print("\n[🔓 Decrypting Pairs]")
-        for i in range(0, len(text), 2):
-            pair = text[i], text[i + 1]
-            plain_pair = self._playfair_decrypt_pair(matrix, *pair)
-            print(f"{pair[0]}{pair[1]} → {plain_pair}")
-            decrypted += plain_pair
-        print(f"\n✅ Decrypted Text → {decrypted}")
-
     # Vernam Encrypt & Decrypt
     def vernam_encrypt(self):
         text = input("Plaintext input: ")
-        key = input("Key (same length): ")
+        key = input("Key (matching length): ")
         key = (key * ((len(text) // len(key)) + 1))[:len(text)]
-        print("\n[🔒 Encrypting]")
+        print("\n🔒 Encrypting with Vernam …")
         for c, k in zip(text, key):
             print(f"{c} ⊕ {k} = {chr(ord(c) ^ ord(k))}")
         result = "".join(chr(ord(c) ^ ord(k)) for c, k in zip(text, key))
         print(f"\n✅ Encrypted → {result}")
-        print(f"(Hex) → {result.encode().hex()}")
+        print(f"(hex) → {result.encode().hex()}")
 
     def vernam_decrypt(self):
         text = input("Ciphertext input: ")
         key = input("Key used (same length): ")
         key = (key * ((len(text) // len(key)) + 1))[:len(text)]
-        print("\n[🔓 Decrypting]")
+        print("\n🔓 Decrypting with Vernam …")
         for c, k in zip(text, key):
             print(f"{c} ⊕ {k} = {chr(ord(c) ^ ord(k))}")
         result = "".join(chr(ord(c) ^ ord(k)) for c, k in zip(text, key))
         print(f"\n✅ Decrypted → {result}")
-        print(f"(Hex) → {result.encode().hex()}")
+        print(f"(hex) → {result.encode().hex()}")
 
     # One-Time Pad Encrypt & Decrypt
     def one_time_pad_encrypt(self):
@@ -282,7 +247,7 @@ class Ciphers:
             encrypted = bytes.fromhex(encrypted_hex)
             key = bytes.fromhex(key_hex)
         except ValueError:
-            print("⚠️ Invalid hex input — please try again.")
+            print("⚠️ Invalid hex input—please try again.")
             return
         decrypted = "".join(chr(e ^ k) for e, k in zip(encrypted, key))
         print("\n[🔓 Decrypting via One‑Time Pad]")
@@ -293,7 +258,7 @@ class Ciphers:
     # Hill Cipher Encrypt & Decrypt
     def hill_encrypt(self):
         text = input("Enter text to encrypt: ")
-        key_input = input("Enter 3×3 key matrix (9 numbers space-separated): ")
+        key_input = input("Enter 3×3 key matrix (9 numbers space‑separated): ")
         try:
             vals = list(map(int, key_input.split()))
             if len(vals) != 9:
@@ -301,7 +266,7 @@ class Ciphers:
                 return
             matrix = [vals[i:i+3] for i in range(0, 9, 3)]
         except ValueError:
-            print("⚠️ Invalid matrix input — enter 9 integers.")
+            print("⚠️ Invalid matrix input—enter 9 integers.")
             return
 
         small = [chr(i) for i in range(97, 123)]
@@ -326,7 +291,7 @@ class Ciphers:
 
     def hill_decrypt(self):
         text = input("Enter encrypted text: ")
-        key_input = input("Enter 3×3 key matrix (9 numbers space-separated): ")
+        key_input = input("Enter 3×3 key matrix (9 numbers space‑separated): ")
         try:
             vals = list(map(int, key_input.split()))
             if len(vals) != 9:
@@ -334,12 +299,12 @@ class Ciphers:
                 return
             matrix = [vals[i:i+3] for i in range(0, 9, 3)]
         except ValueError:
-            print("⚠️ Invalid matrix input — enter 9 integers.")
+            print("⚠️ Invalid matrix input—enter 9 integers.")
             return
 
         inv_matrix = self._hill_matrix_inverse(matrix)
         if inv_matrix is None:
-            print("⚠️ Matrix not invertible mod 26 — can't decrypt.")
+            print("⚠️ Matrix not invertible mod 26—can't decrypt.")
             return
 
         small = [chr(i) for i in range(97, 123)]
@@ -361,21 +326,21 @@ class Ciphers:
         for row in inv_matrix:
             print(row)
         print(f"\n📨 Hill Cipher Decrypted → {result}")
-
 #endregion cipher
 
-#region sorting
+
+# region sorting
 class Sorting:
     """A simple class for sorting algorithms."""
 
     def __init__(self):
         clear_screen()
-        print("📊 Sorting Algorithm Explorer is ready!")
+        print("📊 Sorting Algorithm Explorer is primed!")
         sleep(1)
         self.start()
 
     def start(self):
-        print("\n⚙️ Select a sorting method:")
+        print("\n⚙️ Pick a sorting method to run:")
         print(" 1. 🫧 Bubble Sort")
         print(" 2. 📍 Selection Sort")
         print(" 3. 📝 Insertion Sort")
@@ -386,8 +351,8 @@ class Sorting:
         print(" 8. ⚙️ Comb Sort")
         print(" 9. 🧮 Radix Sort")
         print("10. 🌳 Tree Sort")
-        choice = int(input("Your choice (1–10): "))
-        
+        choice = int(input("Enter your choice (1–10): "))
+
         match choice:
             case 1:
                 self.bubble_sort()
@@ -408,21 +373,22 @@ class Sorting:
             case 9:
                 self.radix_sort()
             case _:
-                print("❗ Invalid choice — please try again.")
+                print("❗ That choice is invalid—please try again.")
 #endregion
 
-#region conversion
+
+# region conversion
 class Conversion:
     """A simple class for number base conversions."""
 
     def __init__(self):
         clear_screen()
-        print("🔧 Welcome to the Base Conversion Tool!")
+        print("Base Conversion Toolkit is ready 🛠️")
         sleep(1)
         self.start()
 
     def start(self):
-        print("\n✨ Choose a conversion type:")
+        print("\nSelect a conversion type:")
         print(" 1️⃣ Decimal → Binary")
         print(" 2️⃣ Binary → Decimal")
         print(" 3️⃣ Decimal → Octal")
@@ -435,7 +401,7 @@ class Conversion:
         print("🔟 Octal → Hexadecimal")
         print("🟰 Hexadecimal → Binary")
         print("🧮 Hexadecimal → Octal")
-        choice = int(input("\nYour choice (1–12): "))
+        choice = int(input("\nEnter your choice (1–12): "))
 
         match choice:
             case 1:
@@ -463,124 +429,12 @@ class Conversion:
             case 12:
                 self.hex_to_octal()
             case _:
-                print("❗ Oops—that's not a valid choice.")
-
-    def decimal_to_binary(self):
-        decimal = int(input("🔢 Enter a decimal number: "))
-        output = ""
-        base = 2
-
-        while True:
-            remainder = decimal % base
-            decimal //= base
-            output = str(remainder) + output
-            if decimal == 0:
-                break
-
-        print(f"✅ Result in Binary: {output}")
-
-    def binary_to_decimal(self):
-        binary = input("🔢 Enter a binary number: ")
-        reversed_bin = binary[::-1]
-        decimal = sum(int(digit) * 2 ** idx for idx, digit in enumerate(reversed_bin))
-        print(f"✅ Converted to Decimal: {decimal}")
-
-    def decimal_to_octal(self):
-        decimal = int(input("🔢 Enter a decimal number: "))
-        output = ""
-        base = 8
-
-        while True:
-            remainder = decimal % base
-            decimal //= base
-            output = str(remainder) + output
-            if decimal == 0:
-                break
-
-        print(f"✅ Octal value: {output}")
-
-    def decimal_to_hex(self):
-        decimal = int(input("🔢 Enter a decimal number: "))
-        output = ""
-        base = 16
-
-        while True:
-            remainder = decimal % base
-            hex_digit = "0123456789ABCDEF"[remainder]
-            decimal //= base
-            output = hex_digit + output
-            if decimal == 0:
-                break
-
-        print(f"✅ Hexadecimal: {output}")
-
-    def octal_to_decimal(self):
-        octal = input("🔢 Enter an octal number: ")
-        reversed_octal = octal[::-1]
-        decimal = sum(int(digit) * 8 ** idx for idx, digit in enumerate(reversed_octal))
-        print(f"✅ Decimal result: {decimal}")
-
-    def hex_to_decimal(self):
-        hex_str = input("🔢 Enter a hexadecimal number: ")
-        reversed_hex = hex_str[::-1].upper()
-        hex_digits = "0123456789ABCDEF"
-        decimal = sum(hex_digits.index(char) * 16 ** idx for idx, char in enumerate(reversed_hex))
-        print(f"✅ Decimal result: {decimal}")
-
-    def binary_to_octal(self):
-        binary = input("🔢 Enter a binary number: ")
-        decimal = int(binary, 2)
-        octal = ""
-        while decimal:
-            octal = str(decimal % 8) + octal
-            decimal //= 8
-        print(f"✅ Octal value: {octal or '0'}")
-
-    def binary_to_hex(self):
-        binary = input("🔢 Enter a binary number: ")
-        decimal = int(binary, 2)
-        hex_value = ""
-        while decimal:
-            hex_value = "0123456789ABCDEF"[decimal % 16] + hex_value
-            decimal //= 16
-        print(f"✅ Hexadecimal: {hex_value or '0'}")
-
-    def octal_to_binary(self):
-        octal = input("🔢 Enter an octal number: ")
-        decimal = int(octal, 8)
-        binary = ""
-        while decimal:
-            binary = str(decimal % 2) + binary
-            decimal //= 2
-        print(f"✅ Binary value: {binary or '0'}")
-
-    def octal_to_hex(self):
-        octal = input("🔢 Enter an octal number: ")
-        decimal = int(octal, 8)
-        hex_value = ""
-        while decimal:
-            hex_value = "0123456789ABCDEF"[decimal % 16] + hex_value
-            decimal //= 16
-        print(f"✅ Hexadecimal: {hex_value or '0'}")
-
-    def hex_to_binary(self):
-        hex_str = input("🔢 Enter a hexadecimal number: ")
-        decimal = int(hex_str, 16)
-        binary = ""
-        while decimal:
-            binary = str(decimal % 2) + binary
-            decimal //= 2
-        print(f"✅ Binary value: {binary or '0'}")
-
-    def hex_to_octal(self):
-        hex_str = input("🔢 Enter a hexadecimal number: ")
-        decimal = int(hex_str, 16)
-        octal = ""
-        while decimal:
-            octal = str(decimal % 8) + octal
-            decimal //= 8
-        print(f"✅ Octal value: {octal or '0'}")
+                print("That isn’t a valid option ❗ Please restart the tool.")
+    ...
 #endregion conversion
+
+
+
 
 # region Prime
 class Prime:
@@ -588,19 +442,19 @@ class Prime:
 
     def __init__(self):
         clear_screen()
-        print("🔎 Prime Number Toolkit is ready!")
+        print("Prime Number Toolkit: Ready to dive in 🎯")
         sleep(1)
         self.start()
 
     def start(self):
-        print("\n🧮 What would you like to do?")
-        print(" 1️⃣  Check if a number is prime")
-        print(" 2️⃣  Generate primes (Sieve of Eratosthenes)")
-        print(" 3️⃣  Compute prime factors")
-        print(" 4️⃣  Fermat’s little theorem")
-        print(" 5️⃣  Find primitive roots")
-        choice = int(input("Select option (1–5): "))
-        
+        print("\nWhat would you like to explore today?")
+        print(" 1️⃣ Test if a number is prime")
+        print(" 2️⃣ Generate primes (Sieve of Eratosthenes)")
+        print(" 3️⃣ Compute prime factors")
+        print(" 4️⃣ Apply Fermat’s little theorem")
+        print(" 5️⃣ Discover primitive roots")
+        choice = int(input("Enter your choice (1–5): "))
+
         match choice:
             case 1:
                 self.check_prime()
@@ -613,76 +467,10 @@ class Prime:
             case 5:
                 self.primitive_roots()
             case _:
-                print("❗ Oops—that's not a valid option.")
-
-    def check_prime(self):
-        n = int(input("🔢 Enter a number to test: "))
-        if n < 2:
-            print("❌ Not prime.")
-            return
-        for i in range(2, int(n ** 0.5) + 1):
-            if n % i == 0:
-                print("❌ Not prime.")
-                return
-        print("✅ Prime!")
-
-    @staticmethod
-    def _check_prime(n):
-        if n < 2:
-            return False
-        for i in range(2, int(n ** 0.5) + 1):
-            if n % i == 0:
-                return False
-        return True
-    
-    def prime_factors(self):
-        num = int(input("🔢 Enter a number to factor: "))
-        factors = []
-        while n % 2 == 0:
-            factors.append(2)
-            n //= 2
-        for i in range(3, int(n**0.5) + 1, 2):
-            while n % i == 0:
-                if Prime._check_prime(i):
-                    factors.append(i)
-                n //= i
-        if n > 2:
-            factors.append(n)
-        print(f"🔍 Prime factors of {num}: {factors}")
-
-    def sieve(self):
-        low = int(input("📏 Enter the lower bound: "))
-        high = int(input("📏 Enter the upper bound: "))
-        primes = [i for i in range(low, high) if self._check_prime(i)]
-        print(f"✅ Primes between {low} and {high}: {primes}")
-    
-    def fermats(self):
-        print("🧠 Fermat’s little theorem: a^(p–1) ≡ 1 (mod p)")
-        a = int(input("🔢 Enter a (base): "))
-        k = int(input("🔢 Enter k (exponent): "))
-        p = int(input("🔢 Enter p (prime): "))
-        if not self._check_prime(p):
-            print("❗ p must be prime.")
-        answer = pow(a, k) % p
-        print(f"📊 {a}^{k} mod {p} = {answer}")
-
-    def primitive_roots(self):
-        p = int(input("🔢 Enter a prime p: "))
-        a = int(input("🔢 Enter a candidate for primitive root: "))
-        if a <= 0 or p <= 0:
-            print("❗ a and p must be positive.")
-        if not self._check_prime(p):
-            print("❗ p must be prime.")
-        
-        required = set(range(1, p))
-        roots = [
-            g for g in range(2, p)
-            if set(pow(g, k, p) for k in range(1, p)) == required
-        ]
-        is_prim = a in roots
-        print(f"🔑 Is {a} a primitive root mod {p}? {'Yes' if is_prim else 'No'}")
-        print(f"🌟 Primitive roots of {p}: {roots}")
+                print("That option isn’t valid—please try again ❗")
+    ...
 # endregion
+
 
 
 # region GCD & LCM
@@ -691,41 +479,42 @@ class GCD_LCM:
 
     def __init__(self):
         clear_screen()
-        print("🔢 GCD & LCM Calculator is ready!")
+        print("🎯 GCD & LCM Calculator is primed and ready!")
         sleep(1)
         self.start()
 
     def start(self):
-        print("\n🛠️ Choose an operation:")
-        print(" 1️⃣  Compute GCD (Euclidean method)")
-        print(" 2️⃣  Compute LCM (via GCD)")
-        choice = int(input("Your selection (1 or 2): "))
-        
+        print("\n⚙️ Let’s crunch some numbers—pick an operation:")
+        print(" 1️⃣  Calculate GCD (Euclidean algorithm)")
+        print(" 2️⃣  Calculate LCM (deriving via GCD)")
+        choice = int(input("Enter your selection (1 or 2): "))
+
         match choice:
             case 1:
                 self.gcd()
             case 2:
                 self.lcm()
             case _:
-                print("❗ Invalid choice, please restart.")
+                print("❗ That wasn’t a valid choice—please restart the tool.")
 
     def gcd(self):
-        a = int(input("📌 Enter the first number: "))
-        b = int(input("📌 Enter the second number: "))
+        a = int(input("🧮 First number, please: "))
+        b = int(input("🧮 Now a second number: "))
         while b:
             a, b = b, a % b
-        print(f"✅ GCD result: {a}")
+        print(f"✅ Your GCD is {a}!")
 
     def lcm(self):
-        a = int(input("📌 Enter the first number: "))
-        b = int(input("📌 Enter the second number: "))
+        a = int(input("🧮 First number, please: "))
+        b = int(input("🧮 Now a second number: "))
         orig_a, orig_b = a, b
         while b:
             a, b = b, a % b
         gcd = a
         lcm = (orig_a * orig_b) // gcd
-        print(f"✅ LCM result: {lcm}")
+        print(f"✅ The LCM is {lcm}!")
 # endregion
+
 
 
 # region Searching
@@ -734,23 +523,23 @@ class Searching:
 
     def __init__(self):
         clear_screen()
-        print("🔍 Welcome to the Search Algorithm Showcase!")
+        print("Dive into the Search Algorithm Explorer 🔎")
         sleep(1)
         self.menu()
 
     def menu(self):
-        print("\n➡️ Choose a search method:")
-        print(" 1. 🧭 Interpolation Search")
-        print(" 2. 🪜 Linear Search")
-        print(" 3. ⚖️ Binary Search")
-        print(" 4. 🔺 Ternary Search")
-        print(" 5. ⏩ Jump Search")
-        print(" 6. 📏 Interval Search")
+        print("\nPick your search adventure:")
+        print(" 1. Interpolation Search 🌐")
+        print(" 2. Linear Search 🚶")
+        print(" 3. Binary Search 🧠")
+        print(" 4. Ternary Search 🔺")
+        print(" 5. Jump Search 🏃")
+        print(" 6. Interval Search 📐")
 
         try:
-            choice = int(input("Select (1–6): "))
+            choice = int(input("Your pick (1–6): "))
         except ValueError:
-            print("❗ Invalid input. Please enter a number 1–6.")
+            print("That’s not a number. ⚠️ Please choose between 1 and 6.")
             return self.menu()
 
         if choice == 1:
@@ -766,55 +555,55 @@ class Searching:
         elif choice == 6:
             self.interval_search()
         else:
-            print("❗ That option isn’t available—please choose 1–6.")
+            print("Oops! ❗ Pick a number from 1 to 6.")
             self.menu()
 # endregion
 
 
-# region Main Program Loop
+
 def main():
     modules = [
-        Prime,
-        GCD_LCM,
-        Ciphers,
         Conversion,
         Searching,
         SetTheory,
         Sorting,
+        GCD_LCM,
+        Ciphers,
+        Prime,
     ]
 
     while True:
         clear_screen()
-        print("✨ Welcome to Jason Hangalay's Algorithm Explorer ✨")
-        print("\n🧭 Select a module to launch:")
+        print("🌟 Welcome to Melrich Catipay's Algorithm Adventure 🌟")
+        print("\n🧭 Choose a module to explore:")
         for index, mod in enumerate(modules, start=1):
             print(f" {index}. {mod.__name__}")
-        print(" 0. 🚪 Quit")
+        print(" 0. 🚪 Exit")
 
         try:
-            selection = int(input("\nEnter module number (0 to quit): "))
+            selection = int(input("\nEnter your choice (0 to exit): "))
         except ValueError:
-            print("\n⚠️ That wasn't a valid number. Try again!")
+            print("\n⚠️ Oops, that input wasn't a number. Give it another try!")
             sleep(1.2)
             continue
 
         if selection == 0:
-            print("\n👋 Thanks for exploring! See you next time.")
+            print("\n👋 Thanks for joining the exploration! Farewell!")
             break
 
         if 1 <= selection <= len(modules):
             while True:
                 clear_screen()
-                print(f"▶️ Launching: {modules[selection - 1].__name__}\n")
-                modules[selection - 1]()  # Instantiate and run
-                retry = input("\n🔁 Would you like to run this module again? (y/N): ")
-                if retry.strip().lower() != 'y':
+                chosen = modules[selection - 1]
+                print(f"▶️ Now running: {chosen.__name__}\n")
+                chosen()  # Instantiate and run
+                again = input("\n🔁 Run this module again? (y/N): ")
+                if again.strip().lower() != 'y':
                     break
         else:
-            print("\n❗ Not a valid choice—please choose from the list!")
+            print("\n❗ Invalid selection—please pick a valid option!")
             sleep(1.2)
 
 if __name__ == "__main__":
     main()
 # endregion
-#
