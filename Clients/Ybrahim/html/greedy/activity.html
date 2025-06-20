@@ -1,149 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Activity Selection Problem</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🏅 Activity Lineup Optimizer</title>
   <style>
-    *, *::before, *::after {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at top left, #1a1a1a, #0a0a0a);
-      color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e1f5fe);
+      color: #003366;
+      min-height: 100vh;
       padding: 40px;
+      position: relative;
     }
 
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem 3rem;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .profile-picture {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      border: 4px solid #0288d1;
+      border-radius: 50%;
+      padding: 3px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 90px;
+      height: 90px;
+      z-index: 10;
+    }
+
+    .profile-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     header {
       text-align: center;
-      font-size: 2.8rem;
-      color: #00e5ff;
+      font-size: 2rem;
+      color: #01579b;
       margin-bottom: 2rem;
-      text-shadow: 0 0 10px #00e5ff88;
+      text-shadow: 1px 1px #b3e5fc;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      background: #ffffffcc;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     }
 
     .input-group {
       display: flex;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       flex-wrap: wrap;
-      justify-content: center;
     }
 
     .input-group input {
       flex: 1;
-      padding: 0.6rem;
+      padding: 0.5rem;
       font-size: 1rem;
-      border: 1px solid #00e5ff;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      color: #00e5ff;
-      outline: none;
+      border: 1px solid #81d4fa;
+      border-radius: 5px;
     }
 
     button {
-      background-color: rgba(0, 229, 255, 0.1);
-      color: #00e5ff;
-      border: 2px solid #00e5ff;
+      background-color: #0288d1;
+      color: white;
+      border: none;
       padding: 0.7rem 1.2rem;
       font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      box-shadow: 0 0 10px #00e5ff55;
-      transition: all 0.25s ease;
+      transition: background-color 0.3s;
     }
 
     button:hover {
-      background-color: #00e5ff;
-      color: #000;
-      box-shadow: 0 0 20px #00e5ffaa;
-      transform: translateY(-2px);
+      background-color: #0277bd;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 2rem;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
+      background: #e1f5fe;
+      border: 1px solid #81d4fa;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
     }
 
     th, td {
       padding: 0.75rem;
       text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #e0e0e0;
+      border: 1px solid #b3e5fc;
     }
 
     th {
-      background-color: rgba(0, 229, 255, 0.1);
-      color: #00e5ff;
-      text-shadow: 0 0 6px #00e5ff;
+      background-color: #b3e5fc;
+      color: #01579b;
     }
 
-    .timeline {
-      position: relative;
-      width: 100%;
+    .chart-container {
       overflow-x: auto;
       margin-top: 2rem;
-      padding-bottom: 0.5rem;
-    }
-
-    .chart-wrapper {
-      position: relative;
-      min-width: 1000px;
-    }
-
-    .chart-row {
-      position: relative;
-      height: 40px;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
     }
 
     .bar {
       position: absolute;
       height: 30px;
+      border: 1px solid #0288d1;
+      background-color: rgba(2, 136, 209, 0.3);
+      color: #003366;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.9rem;
-      color: #000;
-      font-weight: bold;
       border-radius: 4px;
-      background: rgba(200, 200, 200, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
     }
 
-    .bar.selected {
-      background: rgba(0, 229, 255, 0.6);
-      border-color: #00e5ff;
-      color: #000;
-      text-shadow: 0 0 2px #fff;
+    .chart-wrapper {
+      position: relative;
+      width: 1000px;
+      height: auto;
+      margin-top: 1rem;
+    }
+
+    .chart-row {
+      position: relative;
+      height: 40px;
+      border-bottom: 1px dashed #90caf9;
+    }
+
+    .timeline {
+      position: relative;
+      width: 1000px;
+      overflow-x: scroll;
+      border-left: 2px solid #81d4fa;
     }
 
     .timeline-scale {
       display: flex;
       position: relative;
       font-size: 0.8rem;
-      color: #00e5ff;
       margin-top: 0.5rem;
     }
 
@@ -156,35 +163,41 @@
       body {
         padding: 20px;
       }
-
       main {
-        padding: 1.5rem;
+        padding: 1rem;
       }
-
-      header {
-        font-size: 2rem;
+      .profile-picture {
+        width: 70px;
+        height: 70px;
+        top: 10px;
+        right: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <header>Activity Selection Problem</header>
+
+  <div class="profile-picture">
+    <img src="https://scontent.fceb6-1.fna.fbcdn.net/v/t39.30808-1/500684316_1111722254322229_3570693525122643456_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=7V9lAMu0zQ0Q7kNvwFnPSAO&_nc_oc=AdkR53xhjKwlXrGcp2eR9RApDGbcrb4aq3hSR4ZLJ60szFhp8khCnza9rPvGSCdZgfMtK_N0y6hRAZBcTGXEyxds&_nc_zt=24&_nc_ht=scontent.fceb6-1.fna&_nc_gid=TxrEvXcPEfNSpKTdNExc3g&oh=00_AfM2O5OdpvYAzQ7vnhPJ4Lx5iII2xrRy2hwVVda7kDe_6g&oe=685AA0BB" alt="Profile" />
+  </div>
+
+  <header>🏅 Activity Lineup Optimizer</header>
   <main>
     <div class="input-group">
       <input type="number" id="start-time" placeholder="Start Time" min="0">
       <input type="number" id="end-time" placeholder="End Time" min="1">
-      <button onclick="addActivity()">Add Activity</button>
-      <button onclick="generateRandomActivities()">Randomize</button>
+      <button onclick="addActivity()">➕ Add Match</button>
+      <button onclick="generateRandomActivities()">🎲 Randomize Schedule</button>
     </div>
-    <button onclick="solveActivitySelection()">Solve</button>
+    <button onclick="solveActivitySelection()">🏁 Optimize Lineup</button>
 
-    <table>
+    <table id="activity-table">
       <thead>
         <tr>
-          <th>Activity</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-          <th>Selected</th>
+          <th>Match</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody id="activity-body"></tbody>
@@ -204,7 +217,7 @@
       const start = parseInt(document.getElementById('start-time').value);
       const end = parseInt(document.getElementById('end-time').value);
       if (isNaN(start) || isNaN(end) || start >= end) {
-        alert('Please enter valid start and end times (start < end).');
+        alert('⛔ Invalid times! Start must be less than End.');
         return;
       }
       activities.push({ start, end });
@@ -220,9 +233,9 @@
       tbody.innerHTML = '';
       const selectedSet = new Set(selectedActivities.map(a => `${a.start}-${a.end}`));
       activities.forEach(({ start, end }, index) => {
-        const selected = selectedSet.has(`${start}-${end}`) ? '✅' : '❌';
         const row = document.createElement('tr');
-        row.innerHTML = `<td>A${index + 1}</td><td>${start}</td><td>${end}</td><td>${selected}</td>`;
+        const status = selectedSet.has(`${start}-${end}`) ? '✅' : '❌';
+        row.innerHTML = `<td>Game ${index + 1}</td><td>${start}</td><td>${end}</td><td>${status}</td>`;
         tbody.appendChild(row);
       });
     }
@@ -260,6 +273,7 @@
     function drawChart() {
       const container = document.getElementById('chart');
       container.innerHTML = '';
+
       const selectedSet = new Set(selectedActivities.map(a => `${a.start}-${a.end}`));
 
       activities.forEach((a, i) => {
@@ -268,10 +282,11 @@
 
         const bar = document.createElement('div');
         bar.className = 'bar';
-        if (selectedSet.has(`${a.start}-${a.end}`)) bar.classList.add('selected');
         bar.style.left = (a.start * 40) + 'px';
         bar.style.width = ((a.end - a.start) * 40) + 'px';
-        bar.textContent = `A${i + 1}`;
+        bar.style.top = '5px';
+        bar.style.backgroundColor = selectedSet.has(`${a.start}-${a.end}`) ? 'rgba(2,136,209,0.5)' : 'rgba(144,202,249,0.4)';
+        bar.textContent = `G${i + 1}`;
 
         row.appendChild(bar);
         container.appendChild(row);

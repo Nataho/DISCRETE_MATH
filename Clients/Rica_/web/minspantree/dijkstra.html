@@ -5,18 +5,21 @@
   <title>Dijkstra's Algorithm</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
     * { box-sizing: border-box; }
     body {
-      font-family: 'Verdana', sans-serif;
-      background: linear-gradient(to right, #fffaf0, #f0f8ff);
-      color: #333;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #001f3f, #000428);
+      color: #f8f8ff;
       margin: 0;
       padding: 40px;
     }
     h1 {
       text-align: center;
-      color: #2c3e50;
+      color: #00ffff;
       margin-bottom: 2rem;
+      text-shadow: 0 0 15px #00ffff;
     }
     .controls {
       text-align: center;
@@ -27,36 +30,53 @@
       padding: 0.6rem 1.2rem;
       font-size: 1rem;
       border: none;
-      background-color: #1565c0;
-      color: white;
-      border-radius: 5px;
+      background-color: #00ffff;
+      color: #000;
+      border-radius: 8px;
       cursor: pointer;
+      box-shadow: 0 0 12px #00ffff;
+      transition: background-color 0.3s, box-shadow 0.3s;
     }
     button:hover {
-      background-color: #0d47a1;
+      background-color: #00bbff;
+      box-shadow: 0 0 20px #00bbff, 0 0 30px #00bbff;
     }
     canvas {
-      border: 1px solid #ccc;
+      border: 2px solid #00ffff55;
       display: block;
       margin: auto;
-      background: #fff;
-      border-radius: 10px;
+      background: #00091a;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #00ffff44;
     }
     .summary {
       margin-top: 2rem;
-      background: #ffffffcc;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 800px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      max-width: 900px;
       margin-left: auto;
       margin-right: auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
     }
     .summary h3 {
-      color: #1a237e;
+      color: #00ffff;
     }
-    .summary ul, .summary ol {
-      margin-bottom: 1rem;
+    .summary table {
+      width: 100%;
+      margin-top: 1rem;
+      border-collapse: collapse;
+      color: #fff;
+    }
+    .summary th, .summary td {
+      border: 1px solid #00ffff66;
+      padding: 0.5rem 1rem;
+      text-align: center;
+    }
+    .summary th {
+      background: #00ffff22;
     }
     .back-button {
       text-align: center;
@@ -87,7 +107,7 @@
   <canvas id="graphCanvas" width="900" height="600"></canvas>
   <div class="summary" id="summary"></div>
   <div class="back-button">
-    <a href="index.html">&larr; Back to Index</a>
+    <a href="../index.html">&larr; Back to Index</a>
   </div>
   <script>
     const canvas = document.getElementById('graphCanvas');
@@ -132,19 +152,19 @@
         drawArrow(edge.from, edge.to, edge.color || '#888');
         const midX = (edge.from.x + edge.to.x) / 2;
         const midY = (edge.from.y + edge.to.y) / 2;
-        ctx.fillStyle = '#333';
+        ctx.fillStyle = '#00ffff';
         ctx.fillRect(midX - 15, midY - 10, 30, 20);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = '#000';
         ctx.fillText(edge.weight, midX - 5, midY + 5);
       }
       for (const node of nodes) {
         ctx.beginPath();
         ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = node === startNode ? '#43a047' : '#1565c0';
+        ctx.fillStyle = node === startNode ? '#00ff99' : '#00ffff';
         ctx.fill();
-        ctx.strokeStyle = '#fff';
+        ctx.strokeStyle = '#000';
         ctx.stroke();
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = '#000';
         ctx.fillText(node.label, node.x - 5, node.y + 4);
       }
     }
@@ -232,7 +252,7 @@
           if (dist.get(u) + edge.weight < dist.get(v)) {
             dist.set(v, dist.get(u) + edge.weight);
             prev.set(v, u);
-            edge.color = 'green';
+            edge.color = 'lime';
             draw();
             await new Promise(r => setTimeout(r, 500));
           }
@@ -243,7 +263,13 @@
       for (const [node, d] of dist.entries()) {
         summary += `<li>${node.label}: ${d}</li>`;
       }
-      summary += '</ul>';
+      summary += '</ul><h3>Vertex Table:</h3><table><tr><th>Vertex</th><th>Cheapest From (Start)</th><th>Previous Vertex</th></tr>';
+      for (const node of nodes) {
+        const d = dist.get(node);
+        const p = prev.get(node);
+        summary += `<tr><td>${node.label}</td><td>${d === Infinity ? '∞' : d}</td><td>${p ? p.label : '-'}</td></tr>`;
+      }
+      summary += '</table>';
       document.getElementById('summary').innerHTML = summary;
       draw();
     }

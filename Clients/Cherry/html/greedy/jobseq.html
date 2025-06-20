@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Job Sequencing Problem</title>
+  <title>🌸 Job Sequencing Problem</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
@@ -10,77 +10,151 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: 'Verdana', sans-serif;
-      background: linear-gradient(to right, #fffaf0, #f0f8ff);
-      color: #333;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(to right, #fff0f5, #ffe4e1);
+      color: #4b2e2e;
       min-height: 100vh;
-      padding: 40px;
+      padding: 2rem;
+      position: relative;
     }
+
+    .profile-picture {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      border: 4px solid #f8bbd0;
+      border-radius: 50%;
+      padding: 3px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100px;
+      height: 100px;
+      z-index: 999;
+    }
+
+    .profile-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
     header {
       text-align: center;
-      font-size: 2rem;
-      color: #2c3e50;
+      font-size: 2.5rem;
+      color: #b03a2e;
+      text-shadow: 1px 1px #fce4ec;
       margin-bottom: 2rem;
     }
+
     main {
       max-width: 1000px;
       margin: auto;
-      background: #ffffffcc;
-      border-radius: 12px;
+      background: #fffafc;
+      border-radius: 14px;
       padding: 2rem;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid #f3cdd5;
     }
+
     .input-group {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1rem;
+      justify-content: center;
     }
+
     .input-group input {
-      flex: 1;
       padding: 0.5rem;
       font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #e8b4c4;
+      border-radius: 6px;
+      width: 150px;
     }
+
     button {
-      background-color: #1565c0;
-      color: white;
+      background-color: #f8bbd0;
+      color: #7e2d40;
       border: none;
-      padding: 0.7rem 1.2rem;
+      padding: 0.6rem 1rem;
       font-size: 1rem;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background 0.3s;
     }
+
     button:hover {
-      background-color: #0d47a1;
+      background-color: #f48fb1;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 2rem;
+      background: #fffafc;
+      border: 1px solid #f3cdd5;
+      border-radius: 8px;
+      overflow: hidden;
     }
+
     th, td {
       padding: 0.75rem;
       text-align: center;
-      border: 1px solid #ccc;
+      border: 1px solid #f9cbd2;
     }
+
     th {
-      background-color: #e0f0ff;
+      background-color: #fce4ec;
+      color: #7e2d40;
     }
+
     ul {
       margin-top: 1rem;
       padding-left: 1.2rem;
     }
+
     li {
       margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      margin-top: 2rem;
+      color: #8e3b46;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      .input-group {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .input-group input {
+        width: 100%;
+      }
+
+      .profile-picture {
+        width: 80px;
+        height: 80px;
+        top: 10px;
+        right: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>Job Sequencing Problem</header>
+  <!-- Profile Picture -->
+  <div class="profile-picture">
+    <img src="https://scontent.fceb6-3.fna.fbcdn.net/v/t39.30808-1/503771307_2130344287447423_5398269021153993843_n.jpg?stp=cp6_dst-jpg_s200x200_tt6&_nc_cat=101&ccb=1-7&_nc_sid=1d2534&_nc_ohc=rwEjTT1L5wgQ7kNvwF-xKrr&_nc_oc=AdkKHO8vdztbSnKt1r08UV9KFhcjwJt3OFTQ5eH6nVTIPqMhNG1p-d3aKl9J4fYSRnr51mN2dAeh_apQbNCC1SaB&_nc_zt=24&_nc_ht=scontent.fceb6-3.fna&_nc_gid=0GHYLEKlBBM2iGBuCwf5JQ&oh=00_AfM-MlNnsQheRp53reUkIndmQGJWLVnIlJBWgA60NHI9fQ&oe=6859B609" alt="Profile" />
+  </div>
+
+  <header>🌸 Job Sequencing Problem</header>
   <main>
     <div class="input-group">
       <input type="text" id="job-id" placeholder="Job ID (e.g. J1)">
@@ -89,7 +163,9 @@
       <button onclick="addJob()">Add Job</button>
       <button onclick="generateRandomJobs()">Randomize</button>
     </div>
-    <button onclick="solveJobSequencing()">Solve</button>
+    <div style="text-align:center;">
+      <button onclick="solveJobSequencing()">Solve</button>
+    </div>
 
     <table id="job-table">
       <thead>
@@ -168,6 +244,7 @@
           }
         }
       }
+
       processLog += `</ul><p><strong>Total Profit: ${totalProfit}</strong></p>`;
       document.getElementById('solution-process').innerHTML = processLog;
 
