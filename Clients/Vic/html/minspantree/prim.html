@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🌸 Prim's Algorithm</title>
+  <title>🌌 Prim's Mission</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
     * { box-sizing: border-box; }
     body {
-      font-family: 'Georgia', serif;
-      background: linear-gradient(to right, #fff0f5, #ffe4e1);
-      color: #4b2e2e;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png'), radial-gradient(ellipse at center, #000000 0%, #1a1a1a 100%);
+      color: #feda4a;
       padding: 2rem;
       max-width: 950px;
       margin: auto;
@@ -20,11 +22,11 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      border: 4px solid #f8bbd0;
+      border: 4px solid #ffe81f;
       border-radius: 50%;
       padding: 3px;
-      background: #fff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background: #000;
+      box-shadow: 0 0 12px #ffe81f;
       width: 90px;
       height: 90px;
       z-index: 10;
@@ -39,53 +41,58 @@
 
     h1 {
       text-align: center;
-      color: #b03a2e;
-      text-shadow: 1px 1px #fce4ec;
+      color: #ffe81f;
+      text-shadow: 0 0 10px #ffe81f;
       margin-bottom: 2rem;
+      font-size: 2.8rem;
     }
 
     .controls {
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     button {
       margin: 0.5rem;
       padding: 0.6rem 1.2rem;
       font-size: 1rem;
+      font-weight: bold;
       border: none;
-      background-color: #f8bbd0;
-      color: #7e2d40;
+      background-color: #00bcd4;
+      color: #fff;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 0 10px #00e5ff;
     }
 
     button:hover {
-      background-color: #f48fb1;
+      background-color: #00acc1;
+      transform: scale(1.05);
     }
 
     canvas {
-      border: 2px solid #f3cdd5;
+      border: 3px solid #00bcd4;
       display: block;
       margin: 1.5rem auto;
-      background: #fffafc;
+      background: rgba(0, 0, 0, 0.7);
       border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      box-shadow: 0 0 15px #00e5ff;
     }
 
     .summary {
       margin-top: 2rem;
-      background: #fffafc;
+      background: rgba(255, 255, 255, 0.05);
       padding: 1rem 2rem;
       border-radius: 10px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-      border: 1px solid #f3cdd5;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      border: 1px solid #00bcd4;
     }
 
     .summary h3 {
-      color: #7e2d40;
+      color: #00e5ff;
       margin-bottom: 1rem;
+      text-shadow: 0 0 5px #00e5ff;
     }
 
     ul {
@@ -97,13 +104,11 @@
     }
 
     strong {
-      color: #7e2d40;
+      color: #ffe81f;
     }
 
     @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-      }
+      body { padding: 1rem; }
       .profile-picture {
         width: 70px;
         height: 70px;
@@ -115,15 +120,17 @@
 </head>
 <body>
   <div class="profile-picture">
-    <img src="https://scontent.fceb6-3.fna.fbcdn.net/v/t39.30808-1/503771307_2130344287447423_5398269021153993843_n.jpg?stp=cp6_dst-jpg_s200x200_tt6&_nc_cat=101&ccb=1-7&_nc_sid=1d2534&_nc_ohc=rwEjTT1L5wgQ7kNvwF-xKrr&_nc_oc=AdkKHO8vdztbSnKt1r08UV9KFhcjwJt3OFTQ5eH6nVTIPqMhNG1p-d3aKl9J4fYSRnr51mN2dAeh_apQbNCC1SaB&_nc_zt=24&_nc_ht=scontent.fceb6-3.fna&_nc_gid=0GHYLEKlBBM2iGBuCwf5JQ&oh=00_AfM-MlNnsQheRp53reUkIndmQGJWLVnIlJBWgA60NHI9fQ&oe=6859B609" alt="Profile" />
+    <img src="https://scontent.fceb2-1.fna.fbcdn.net/v/t39.30808-1/497561792_2193043201196226_3703741751922292503_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e99d92&_nc_ohc=BKUH6jtusa8Q7kNvwEI5AGJ&_nc_oc=Admgh0Y7bzGoQHBx2yDi0H-Z01jomM6vobXLgsQcZxfIUiOVOETnHlp8QxJ-0Vt7ZF-LE65AVJWL3wAP6hckfytP&_nc_zt=24&_nc_ht=scontent.fceb2-1.fna&_nc_gid=CQBLn2Qts3PUEmmrM8JwSg&oh=00_AfN2s8Cc9tHNz9Bb112RKody4hvdyl-sCoSxbTfE7rCeQA&oe=685D323B" alt="Profile" />
   </div>
 
-  <h1>🌸 Prim's Algorithm</h1>
+  <h1>🚀 Prim's Star Mission</h1>
+
   <div class="controls">
-    <button onclick="addNode()">Add Node</button>
-    <button onclick="randomizeGraph()">Randomize</button>
-    <button onclick="startPrimMode()">Run Prim</button>
+    <button onclick="addNode()">Deploy Node</button>
+    <button onclick="randomizeGraph()">Randomize Sector</button>
+    <button onclick="startPrimMode()">Engage Prim Protocol</button>
   </div>
+
   <canvas id="graphCanvas" width="900" height="600"></canvas>
   <div class="summary" id="summary"></div>
 
@@ -137,7 +144,6 @@
   const edgeColors = new Map();
   let selectingStart = false;
 
-  // 👉 Dragging state
   let draggingNode = null;
   let offsetX = 0;
   let offsetY = 0;
@@ -157,7 +163,7 @@
 
       const midX = (from.x + to.x) / 2;
       const midY = (from.y + to.y) / 2;
-      ctx.fillStyle = '#b03a2e';
+      ctx.fillStyle = '#3f51b5';
       ctx.fillRect(midX - 15, midY - 10, 30, 20);
       ctx.fillStyle = 'white';
       ctx.fillText(weight, midX - 5, midY + 5);
@@ -166,12 +172,12 @@
     for (const node of nodes) {
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#f48fb1';
+      ctx.fillStyle = '#fbc02d';
       ctx.fill();
       ctx.strokeStyle = '#fff';
       ctx.lineWidth = 2;
       ctx.stroke();
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = '#000';
       ctx.fillText(node.label, node.x - 5, node.y + 4);
     }
   }
@@ -197,7 +203,6 @@
     }
 
     if (clickedNode) {
-      // 🖱️ Start dragging
       draggingNode = clickedNode;
       offsetX = x - clickedNode.x;
       offsetY = y - clickedNode.y;
@@ -205,7 +210,7 @@
       if (!selectedNode) {
         selectedNode = clickedNode;
       } else if (selectedNode !== clickedNode) {
-        const weight = parseInt(prompt('Enter weight:'), 10);
+        const weight = parseInt(prompt('Enter hyperspace distance:'), 10);
         if (!isNaN(weight)) {
           edges.push({ from: selectedNode, to: clickedNode, weight });
           draw();
@@ -245,14 +250,14 @@
 
   function startPrimMode() {
     selectingStart = true;
-    alert('🌸 Select a starting node by clicking on it.');
+    alert('🛰 Select a starting node by clicking a planet.');
   }
 
   async function runPrim(start) {
     const visited = new Set();
     const availableEdges = [];
     visited.add(start);
-    let summary = "<h3>🌸 Prim's MST Steps:</h3><ul>";
+    let summary = "<h3>🌠 Prim’s Hyperspace Log:</h3><ul>";
 
     function addEdges(node) {
       for (const edge of edges) {
@@ -276,14 +281,14 @@
       const newNode = visited.has(from) ? to : from;
       visited.add(newNode);
       mst.push(edge);
-      edgeColors.set(edge, 'green');
+      edgeColors.set(edge, 'lime');
       draw();
       await new Promise(r => setTimeout(r, 500));
-      summary += `<li>${from.label} - ${to.label} (Weight: ${weight})</li>`;
+      summary += `<li>${from.label} ➡ ${to.label} (Distance: ${weight})</li>`;
       addEdges(newNode);
     }
 
-    summary += `</ul><p><strong>Total Weight: ${mst.reduce((s, e) => s + e.weight, 0)}</strong></p>`;
+    summary += `</ul><p><strong>Total Distance: ${mst.reduce((s, e) => s + e.weight, 0)}</strong></p>`;
     document.getElementById('summary').innerHTML = summary;
     draw();
   }

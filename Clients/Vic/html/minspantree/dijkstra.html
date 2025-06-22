@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🏃 Dijkstra's Algorithm</title>
+  <title>🌌 Dijkstra's Algorithm</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * { box-sizing: border-box; }
     body {
-      font-family: 'Arial Black', sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
-      color: #003366;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at center, #0b0c10, #000000);
+      color: #ffee58;
       margin: 0;
       padding: 40px;
     }
@@ -17,13 +17,13 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      border: 5px solid #0288d1;
+      border: 4px solid #ffee58;
       border-radius: 50%;
-      padding: 3px;
-      background: #fff;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      width: 100px;
-      height: 100px;
+      padding: 4px;
+      background: #1c1c1c;
+      box-shadow: 0 0 20px #ffee58;
+      width: 90px;
+      height: 90px;
       z-index: 10;
     }
     .profile-picture img {
@@ -34,10 +34,10 @@
     }
     h1 {
       text-align: center;
-      color: #d50000;
+      color: #ffeb3b;
+      font-size: 3rem;
+      text-shadow: 0 0 8px #ffee58;
       margin-bottom: 2rem;
-      font-size: 2.5rem;
-      text-shadow: 1px 1px 2px #000;
     }
     .controls {
       text-align: center;
@@ -49,37 +49,40 @@
       font-size: 1rem;
       font-weight: bold;
       border: none;
-      background-color: #ff7043;
-      color: white;
+      background-color: #212121;
+      color: #ffee58;
       border-radius: 12px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      box-shadow: 0 0 8px #ffee58;
+      transition: background-color 0.3s ease, transform 0.2s;
     }
     button:hover {
-      background-color: #e64a19;
+      background-color: #424242;
+      transform: scale(1.05);
     }
     canvas {
-      border: 3px solid #0288d1;
+      border: 2px solid #ffee58;
       display: block;
       margin: auto;
-      background: #e3f2fd;
+      background: #121212;
       border-radius: 20px;
-      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 0 20px rgba(255, 235, 59, 0.4);
     }
     .summary {
       margin-top: 2rem;
-      background: #ffffffdd;
+      background: rgba(255, 255, 255, 0.05);
       padding: 1.2rem;
       border-radius: 14px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 14px rgba(255, 255, 0, 0.3);
       max-width: 800px;
       margin-left: auto;
       margin-right: auto;
-      border-left: 8px solid #0288d1;
+      border-left: 6px solid #ffee58;
+      color: #f0f0f0;
     }
     .summary h3 {
-      color: #00796b;
-      border-bottom: 2px solid #004d40;
+      color: #ffee58;
+      border-bottom: 2px solid #757575;
       padding-bottom: 5px;
     }
     .summary ul, .summary ol {
@@ -91,8 +94,8 @@
     }
     .back-button a {
       display: inline-block;
-      background-color: #00796b;
-      color: white;
+      background-color: #ffee58;
+      color: #212121;
       padding: 0.6rem 1.2rem;
       text-decoration: none;
       border-radius: 10px;
@@ -101,15 +104,18 @@
       transition: background-color 0.3s ease;
     }
     .back-button a:hover {
-      background-color: #004d40;
+      background-color: #fff176;
     }
+
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
   </style>
 </head>
 <body>
   <div class="profile-picture">
-    <img src="https://scontent.fceb6-1.fna.fbcdn.net/v/t39.30808-1/500684316_1111722254322229_3570693525122643456_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=7V9lAMu0zQ0Q7kNvwFnPSAO&_nc_oc=AdkR53xhjKwlXrGcp2eR9RApDGbcrb4aq3hSR4ZLJ60szFhp8khCnza9rPvGSCdZgfMtK_N0y6hRAZBcTGXEyxds&_nc_zt=24&_nc_ht=scontent.fceb6-1.fna&_nc_gid=TxrEvXcPEfNSpKTdNExc3g&oh=00_AfM2O5OdpvYAzQ7vnhPJ4Lx5iII2xrRy2hwVVda7kDe_6g&oe=685AA0BB" alt="Profile" />
+    <img src="https://scontent.fceb2-1.fna.fbcdn.net/v/t39.30808-1/497561792_2193043201196226_3703741751922292503_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e99d92&_nc_ohc=BKUH6jtusa8Q7kNvwEI5AGJ&_nc_oc=Admgh0Y7bzGoQHBx2yDi0H-Z01jomM6vobXLgsQcZxfIUiOVOETnHlp8QxJ-0Vt7ZF-LE65AVJWL3wAP6hckfytP&_nc_zt=24&_nc_ht=scontent.fceb2-1.fna&_nc_gid=CQBLn2Qts3PUEmmrM8JwSg&oh=00_AfN2s8Cc9tHNz9Bb112RKody4hvdyl-sCoSxbTfE7rCeQA&oe=685D323B" alt="Profile" />
   </div>
-  <h1>🏃 Dijkstra's Algorithm</h1>
+
+  <h1>🌌 Dijkstra's Algorithm</h1>
   <div class="controls">
     <button onclick="addNode()">Add Node</button>
     <button onclick="randomizeGraph()">Randomize</button>
@@ -119,7 +125,7 @@
   <canvas id="graphCanvas" width="900" height="600"></canvas>
   <div class="summary" id="summary"></div>
   <div class="back-button">
-    <a href="index.html">&larr; Back to Index</a>
+    <a href="index.html">&larr; Return to Galaxy Index</a>
   </div>
 
 <script>
@@ -131,7 +137,6 @@
   let selectedNode = null;
   let startNode = null;
 
-  // 🖱️ Drag support
   let draggingNode = null;
   let offsetX = 0;
   let offsetY = 0;
@@ -173,7 +178,7 @@
       ctx.fillStyle = '#333';
       ctx.fillRect(midX - 15, midY - 10, 30, 20);
       ctx.fillStyle = 'white';
-      ctx.fillText(edge.weight, midX - 5, midY + 5);
+      ctx.fillText(edge.weight, midX, midY + 5);
     }
     for (const node of nodes) {
       ctx.beginPath();
@@ -183,7 +188,7 @@
       ctx.strokeStyle = '#fff';
       ctx.stroke();
       ctx.fillStyle = 'white';
-      ctx.fillText(node.label, node.x - 5, node.y + 4);
+      ctx.fillText(node.label, node.x, node.y + 4);
     }
   }
 
@@ -202,11 +207,13 @@
     const clickedNode = nodes.find(n => Math.hypot(n.x - x, n.y - y) < radius);
 
     if (clickedNode) {
-      // Start dragging
+      // Prepare dragging
       draggingNode = clickedNode;
       offsetX = x - clickedNode.x;
       offsetY = y - clickedNode.y;
+    }
 
+    if (clickedNode) {
       if (!selectedNode) {
         selectedNode = clickedNode;
       } else if (selectedNode !== clickedNode) {
