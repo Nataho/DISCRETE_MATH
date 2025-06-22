@@ -1,5 +1,6 @@
 import os
 import time
+import random
 
 # region Helper Functions
 # Helper function to clear the screen
@@ -19,7 +20,7 @@ class SetTheory:
         self.set_a = set()
         self.set_b = set()
         clear_screen()
-        print("Set Theory Module Activated 📘")
+        print("🔬 Entering Set Theory Explorer!")
         sleep(1)
         self.run()
 
@@ -30,31 +31,93 @@ class SetTheory:
         self.compute_results()
 
     def display_welcome(self):
-        print("Let's explore your sets A and B 🔎")
+        print("🙌 Welcome! Ready to play with sets?")
 
     def get_sets(self):
         self.set_a = self.input_set("A")
         self.set_b = self.input_set("B")
 
     def input_set(self, label):
-        raw = input(f"Enter elements of set {label} (space-separated) 🧩: ")
+        raw = input(f"📝 Please provide elements for set {label}, separated by spaces: ")
         return set(raw.strip().split())
 
     def display_sets(self):
-        print("\nYou entered ✅")
-        print(f"  • Set A: {self.set_a}")
-        print(f"  • Set B: {self.set_b}")
+        print("\n📂 You’ve defined the following sets:")
+        print(f"• Set A = {self.set_a}")
+        print(f"• Set B = {self.set_b}")
 
     def compute_results(self):
-        print("\nComputing set operations ⚙️")
+        print("\n🔢 Let’s calculate set operations now...\n")
         sleep(1)
-        print("\nResults 📊")
-        print(f"  A ∪ B = {self.set_a | self.set_b}")
-        print(f"  A ∩ B = {self.set_a & self.set_b}")
-        print(f"  A \\ B = {self.set_a - self.set_b}")
-        print(f"  A ⊆ B? {'Yes' if self.set_a <= self.set_b else 'No'}")
-        print(f"  A = B? {'Yes' if self.set_a == self.set_b else 'No'}")
-# endregion set theory
+
+        operations = [
+            ("Union", self._union),
+            ("Intersection", self._intersection),
+            ("Difference (A − B)", self._difference),
+            ("Subset Check", self._subset_check),
+            ("Equality Check", self._equality_check),
+        ]
+        random.shuffle(operations)
+
+        for label, func in operations:
+            print(f"=== ➕ {label} ===")
+            func()
+            print()
+            
+    def _union(self):
+        result = self.set_a.copy()
+        for item in self.set_b:
+            if item not in result:
+                print(f"🌟 Including {item} in the union")
+                result.add(item)
+            else:
+                print(f"🔄 {item} is already present")
+        print(f"🧮 Union outcome: {result}")
+
+    def _intersection(self):
+        result = set()
+        for item in self.set_a:
+            if item in self.set_b:
+                print(f"🤝 {item} appears in both sets")
+                result.add(item)
+            else:
+                print(f"🚧 {item} exists only in A")
+        print(f"🧮 Intersection outcome: {result}")
+
+    def _difference(self):
+        result = set()
+        for item in self.set_a:
+            if item not in self.set_b:
+                print(f"🛡️ Keeping {item} (not in B)")
+                result.add(item)
+            else:
+                print(f"🗑️ Discarding {item} (found in B)")
+        print(f"🧮 A minus B = {result}")
+
+    def _subset_check(self):
+        print("🔍 Let’s see if A is contained within B...")
+        for item in self.set_a:
+            if item not in self.set_b:
+                print(f"🚫 {item} isn't in B — not a subset")
+                print("✅ Conclusion: A ⊈ B")
+                return
+            else:
+                print(f"✅ {item} is inside B")
+        print("✅ Conclusion: Yes, A ⊆ B")
+
+    def _equality_check(self):
+        print("⚖️ Comparing A and B for equality...")
+        all_items = self.set_a.union(self.set_b)
+        same = True
+        for item in all_items:
+            in_a = item in self.set_a
+            in_b = item in self.set_b
+            emoji = "✅" if in_a and in_b else "❌"
+            print(f"{emoji} {item} → A: {in_a}, B: {in_b}")
+            if in_a != in_b:
+                same = False
+        print(f"🧮 Equality check result: {'A == B' if same else 'A != B'}")
+# endregion set theory #######
 
 
 # region ciphers
@@ -63,25 +126,25 @@ class Ciphers:
 
     def __init__(self):
         clear_screen()
-        print("🛡️ Cipher Station: Ready for action!")
+        print("🛡️ Cipher Station Activated!")
         sleep(1)
         self.mode_menu()
 
     def mode_menu(self):
-        print("\n🔐 Choose your mode:")
+        print("\n🔐 Choose Mode:")
         modes = [("Encrypt 🔒", self.run_menu_encrypt), ("Decrypt 🔓", self.run_menu_decrypt)]
         random.shuffle(modes)
         for i, (label, _) in enumerate(modes, start=1):
             print(f" {i}. {label}")
         try:
-            choice = int(input("Your pick (1 or 2): "))
+            choice = int(input("Your pick (enter number): "))
             modes[choice - 1][1]()
         except (ValueError, IndexError):
-            print("⚠️ Invalid choice—let’s try again.")
+            print("⚠️ Invalid choice — please try again.")
             self.mode_menu()
 
     def run_menu_encrypt(self):
-        print("\n🧩 Pick a cipher to encrypt with:")
+        print("\n🧩 Select a cipher to Encrypt with:")
         options = [
             ("Rail Fence Cipher", self.rail_fence_encrypt),
             ("Playfair Cipher", self.playfair_encrypt),
@@ -96,13 +159,13 @@ class Ciphers:
         for i, (label, _) in enumerate(options, start=1):
             print(f" {i}. {label}")
         try:
-            choice = int(input("Enter cipher number: "))
+            choice = int(input("Enter number for your cipher: "))
             options[choice - 1][1]()
         except (ValueError, IndexError):
-            print("⚠️ Not a valid option—please try again.")
+            print("⚠️ That wasn't a valid option. Try again.")
 
     def run_menu_decrypt(self):
-        print("\n🧩 Pick a cipher to decrypt with:")
+        print("\n🧩 Select a cipher to Decrypt with:")
         options = [
             ("Rail Fence Cipher", self.rail_fence_decrypt),
             ("Playfair Cipher", self.playfair_decrypt),
@@ -117,128 +180,146 @@ class Ciphers:
         for i, (label, _) in enumerate(options, start=1):
             print(f" {i}. {label}")
         try:
-            choice = int(input("Enter cipher number: "))
+            choice = int(input("Enter number for decryption: "))
             options[choice - 1][1]()
         except (ValueError, IndexError):
-            print("⚠️ Oops—invalid selection, please try again.")
+            print("⚠️ That wasn't valid. Please try again.")
 
+    # Caesar Encrypt and Decrypt
     def caesar_encrypt(self):
-        text = input("Enter text to encrypt: ")
+        text = input("Enter your message to encrypt: ")
         shift = int(input("Shift amount (1–25): "))
         encrypted = ""
-        print("\n[🔒 Encrypting...]")
+        print("\n[🔒 Encrypting]")
         for char in text:
-            ...
-        print(f"\nEncrypted → {encrypted}")
+            if char.isalpha():
+                base = ord('A') if char.isupper() else ord('a')
+                shifted = chr((ord(char) - base + shift) % 26 + base)
+                print(f"{char} → {shifted}")
+                encrypted += shifted
+            else:
+                encrypted += char
+        print(f"\nEncrypted Result → {encrypted}")
 
     def caesar_decrypt(self):
-        text = input("Enter text to decrypt: ")
-        shift = int(input("Shift used (1–25): "))
+        text = input("Enter the encrypted text: ")
+        shift = int(input("Shift amount used (1–25): "))
         decrypted = ""
-        print("\n[🔓 Decrypting...]")
+        print("\n[🔓 Decrypting]")
         for char in text:
-            ...
-        print(f"\nDecrypted → {decrypted}")
+            if char.isalpha():
+                base = ord('A') if char.isupper() else ord('a')
+                shifted = chr((ord(char) - base - shift) % 26 + base)
+                print(f"{char} → {shifted}")
+                decrypted += shifted
+            else:
+                decrypted += char
+        print(f"\nDecrypted Result → {decrypted}")
 
+    # Vigenère Encrypt and Decrypt
     def vigenere_encrypt(self):
-        text = input("Enter text to encrypt: ")
+        text = input("Message to encrypt: ")
         key = input("Keyword: ")
-        print("\n[🔒 Encrypting...]")
-        ...
-        print(f"\nEncrypted → {result}")
+        key_extended = (key * ((len(text) // len(key)) + 1))[:len(text)]
+        result = ""
+        print("\n[🔒 Encrypting]")
+        for i, char in enumerate(text):
+            if char.isalpha():
+                base = ord('A') if char.isupper() else ord('a')
+                key_char = key_extended[i].upper() if char.isupper() else key_extended[i].lower()
+                shift = ord(key_char) - base
+                encrypted = chr((ord(char) - base + shift) % 26 + base)
+                print(f"{char} + {key_char} → {encrypted}")
+                result += encrypted
+            else:
+                result += char
+        print(f"\nEncrypted Result → {result}")
 
     def vigenere_decrypt(self):
-        text = input("Enter encrypted text: ")
-        key = input("Keyword: ")
-        print("\n[🔓 Decrypting...]")
-        ...
-        print(f"\nDecrypted → {result}")
+        text = input("Encrypted text to decrypt: ")
+        key = input("Keyword used: ")
+        key_extended = (key * ((len(text) // len(key)) + 1))[:len(text)]
+        result = ""
+        print("\n[🔓 Decrypting]")
+        for i, char in enumerate(text):
+            if char.isalpha():
+                base = ord('A') if char.isupper() else ord('a')
+                key_char = key_extended[i].upper() if char.isupper() else key_extended[i].lower()
+                shift = ord(key_char) - base
+                decrypted = chr((ord(char) - base - shift) % 26 + base)
+                print(f"{char} - {key_char} → {decrypted}")
+                result += decrypted
+            else:
+                result += char
+        print(f"\nDecrypted Result → {result}")
 
-    def playfair_encrypt(self):
-        text = input("Enter text to encrypt: ")
-        keyword = input("Keyword: ")
-        print("\n[🧩 Setting up matrix...]")
-        ...
-        print("\n[🔒 Encrypting pairs...]")
-        ...
-        print(f"\nEncrypted → {encrypted}")
-
-    def playfair_decrypt(self):
-        text = input("Enter ciphertext to decrypt: ")
-        keyword = input("Keyword: ")
-        print("\n[🧩 Setting up matrix...]")
-        ...
-        print("\n[🔓 Decrypting pairs...]")
-        ...
-        print(f"\nDecrypted → {decrypted}")
-
-    # Playfair Encrypt & Decrypt
+    # Playfair Encrypt and Decrypt
     def playfair_encrypt(self):
         text = input("Enter message to encrypt: ")
         keyword = input("Keyword for matrix: ")
         matrix = self._generate_playfair_matrix(keyword)
         prepared = self._prepare_playfair_text(text)
         encrypted = ""
-        print("\n[🧩 Playfair Matrix]")
+        print("\n[🧩 Matrix]")
         for row in matrix:
             print(" ".join(row))
-        print("\n🔒 Encrypting digraphs …")
+        print("\n[Encrypting Pairs]")
         for i in range(0, len(prepared), 2):
             pair = prepared[i], prepared[i + 1]
             cipher_pair = self._playfair_encrypt_pair(matrix, *pair)
             print(f"{pair[0]}{pair[1]} → {cipher_pair}")
             encrypted += cipher_pair
-        print(f"\n✅ Encrypted text → {encrypted}")
+        print(f"\nEncrypted Text → {encrypted}")
 
     def playfair_decrypt(self):
         text = input("Enter ciphertext to decrypt: ")
         keyword = input("Keyword for matrix: ")
         matrix = self._generate_playfair_matrix(keyword)
         decrypted = ""
-        print("\n[🧩 Playfair Matrix]")
+        print("\n[🧩 Matrix]")
         for row in matrix:
             print(" ".join(row))
-        print("\n🔓 Decrypting digraphs …")
+        print("\n[Decrypting Pairs]")
         for i in range(0, len(text), 2):
             pair = text[i], text[i + 1]
             plain_pair = self._playfair_decrypt_pair(matrix, *pair)
             print(f"{pair[0]}{pair[1]} → {plain_pair}")
             decrypted += plain_pair
-        print(f"\n✅ Decrypted text → {decrypted}")
+        print(f"\nDecrypted Text → {decrypted}")
 
-    # Vernam Encrypt & Decrypt
+    # Vernam encrypt/decrypt
     def vernam_encrypt(self):
         text = input("Plaintext input: ")
-        key = input("Key (matching length): ")
+        key = input("Key (same length): ")
         key = (key * ((len(text) // len(key)) + 1))[:len(text)]
-        print("\n🔒 Encrypting with Vernam …")
+        print("\n[🔒 Encrypting]")
         for c, k in zip(text, key):
             print(f"{c} ⊕ {k} = {chr(ord(c) ^ ord(k))}")
         result = "".join(chr(ord(c) ^ ord(k)) for c, k in zip(text, key))
-        print(f"\n✅ Encrypted → {result}")
-        print(f"(hex) → {result.encode().hex()}")
+        print(f"\nEncrypted → {result}")
+        print(f"(Hex) → {result.encode().hex()}")
 
     def vernam_decrypt(self):
         text = input("Ciphertext input: ")
         key = input("Key used (same length): ")
         key = (key * ((len(text) // len(key)) + 1))[:len(text)]
-        print("\n🔓 Decrypting with Vernam …")
+        print("\n[🔓 Decrypting]")
         for c, k in zip(text, key):
             print(f"{c} ⊕ {k} = {chr(ord(c) ^ ord(k))}")
         result = "".join(chr(ord(c) ^ ord(k)) for c, k in zip(text, key))
-        print(f"\n✅ Decrypted → {result}")
-        print(f"(hex) → {result.encode().hex()}")
+        print(f"\nDecrypted → {result}")
+        print(f"(Hex) → {result.encode().hex()}")
 
-    # One-Time Pad Encrypt & Decrypt
+    # One-Time Pad encrypt/decrypt (same operation)
     def one_time_pad_encrypt(self):
         text = input("Enter your message: ")
         key = os.urandom(len(text))
         encrypted = bytes([ord(c) ^ k for c, k in zip(text, key)])
-        print("\n[🔒 Encrypting via One‑Time Pad]")
+        print("\n[🔒 Encrypting via One-Time Pad]")
         for c, k in zip(text, key):
             print(f"{c} ⊕ {k} = {ord(c) ^ k}")
-        print(f"\n🔑 Key (hex): {key.hex()}")
-        print(f"🔐 Encrypted (hex): {encrypted.hex()}")
+        print(f"🔑 Generated key (hex): {key.hex()}")
+        print(f"🔐 Encrypted output (hex): {encrypted.hex()}")
 
     def one_time_pad_decrypt(self):
         encrypted_hex = input("Paste encrypted message (hex): ")
@@ -246,27 +327,27 @@ class Ciphers:
         try:
             encrypted = bytes.fromhex(encrypted_hex)
             key = bytes.fromhex(key_hex)
-        except ValueError:
+        except Exception:
             print("⚠️ Invalid hex input—please try again.")
             return
         decrypted = "".join(chr(e ^ k) for e, k in zip(encrypted, key))
-        print("\n[🔓 Decrypting via One‑Time Pad]")
+        print("\n[🔓 Decrypting via One-Time Pad]")
         for e, k in zip(encrypted, key):
             print(f"{e} ⊕ {k} = {e ^ k}")
         print(f"\n📨 Decrypted message → {decrypted}")
 
-    # Hill Cipher Encrypt & Decrypt
+    # Hill cipher encrypt/decrypt
     def hill_encrypt(self):
         text = input("Enter text to encrypt: ")
-        key_input = input("Enter 3×3 key matrix (9 numbers space‑separated): ")
+        key_input = input("Enter 3×3 key matrix (9 numbers space-separated): ")
         try:
-            vals = list(map(int, key_input.split()))
-            if len(vals) != 9:
+            values = list(map(int, key_input.split()))
+            if len(values) != 9:
                 print("⚠️ Expected exactly 9 numbers.")
                 return
-            matrix = [vals[i:i+3] for i in range(0, 9, 3)]
-        except ValueError:
-            print("⚠️ Invalid matrix input—enter 9 integers.")
+            matrix = [values[i:i+3] for i in range(0, 9, 3)]
+        except:
+            print("⚠️ Invalid matrix input—please enter 9 integers.")
             return
 
         small = [chr(i) for i in range(97, 123)]
@@ -284,27 +365,27 @@ class Ciphers:
                 orig = chars[i + j]
                 print(f"Block {block} → Col {j} = {val}")
                 result += big[val] if orig.isupper() else small[val]
-        print("\n🧮 Key matrix:")
+        print("\n🧮 Key matrix used:")
         for row in matrix:
             print(row)
-        print(f"\n🔐 Hill Cipher Encrypted → {result}")
+        print(f"\n🔐 Hill Cipher Encrypted result → {result}")
 
     def hill_decrypt(self):
         text = input("Enter encrypted text: ")
-        key_input = input("Enter 3×3 key matrix (9 numbers space‑separated): ")
+        key_input = input("Enter 3×3 key matrix (9 numbers space-separated): ")
         try:
-            vals = list(map(int, key_input.split()))
-            if len(vals) != 9:
+            values = list(map(int, key_input.split()))
+            if len(values) != 9:
                 print("⚠️ Expected exactly 9 numbers.")
                 return
-            matrix = [vals[i:i+3] for i in range(0, 9, 3)]
-        except ValueError:
-            print("⚠️ Invalid matrix input—enter 9 integers.")
+            matrix = [values[i:i+3] for i in range(0, 9, 3)]
+        except:
+            print("⚠️ Invalid matrix input—please enter 9 integers.")
             return
 
         inv_matrix = self._hill_matrix_inverse(matrix)
         if inv_matrix is None:
-            print("⚠️ Matrix not invertible mod 26—can't decrypt.")
+            print("⚠️ Matrix not invertible mod 26—cannot decrypt.")
             return
 
         small = [chr(i) for i in range(97, 123)]
@@ -322,10 +403,165 @@ class Ciphers:
                 orig = chars[i + j]
                 print(f"Block {block} → InvCol {j} = {val}")
                 result += big[val] if orig.isupper() else small[val]
-        print("\n🧮 Inverse matrix:")
+        print("\n🧮 Inverse matrix used:")
         for row in inv_matrix:
             print(row)
-        print(f"\n📨 Hill Cipher Decrypted → {result}")
+        print(f"\n📨 Hill Cipher Decrypted result → {result}")
+
+    def _hill_matrix_inverse(self, matrix):
+        # Calculate determinant mod 26
+        def det3(m):
+            return (m[0][0]*m[1][1]*m[2][2] + m[0][1]*m[1][2]*m[2][0] + m[0][2]*m[1][0]*m[2][1]
+                    - m[0][2]*m[1][1]*m[2][0] - m[0][1]*m[1][0]*m[2][2] - m[0][0]*m[1][2]*m[2][1]) % 26
+        det = det3(matrix)
+        det_inv = self._modular_inverse(det, 26)
+        if det_inv is None:
+            return None
+        cof = [[0]*3 for _ in range(3)]
+        cof[0][0] = (matrix[1][1]*matrix[2][2] - matrix[1][2]*matrix[2][1]) % 26
+        cof[0][1] = -(matrix[1][0]*matrix[2][2] - matrix[1][2]*matrix[2][0]) % 26
+        cof[0][2] = (matrix[1][0]*matrix[2][1] - matrix[1][1]*matrix[2][0]) % 26
+        cof[1][0] = -(matrix[0][1]*matrix[2][2] - matrix[0][2]*matrix[2][1]) % 26
+        cof[1][1] = (matrix[0][0]*matrix[2][2] - matrix[0][2]*matrix[2][0]) % 26
+        cof[1][2] = -(matrix[0][0]*matrix[2][1] - matrix[0][1]*matrix[2][0]) % 26
+        cof[2][0] = (matrix[0][1]*matrix[1][2] - matrix[0][2]*matrix[1][1]) % 26
+        cof[2][1] = -(matrix[0][0]*matrix[1][2] - matrix[0][2]*matrix[1][0]) % 26
+        cof[2][2] = (matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0]) % 26
+        adj = [[cof[j][i] % 26 for j in range(3)] for i in range(3)]
+        inv = [[(adj[i][j] * det_inv) % 26 for j in range(3)] for i in range(3)]
+        return inv
+
+    def _modular_inverse(self, a, m):
+        # Extended Euclidean Algorithm for modular inverse
+        a = a % m
+        if a == 0:
+            return None
+        m0, x0, x1 = m, 0, 1
+        while a > 1:
+            q = a // m
+            a, m = m, a % m
+            x0, x1 = x1 - q * x0, x0
+        return x1 + m0 if x1 < 0 else x1
+
+    # Rail Fence encrypt/decrypt
+    def rail_fence_encrypt(self):
+        text = input("🚂 Plaintext message: ")
+        if any(c.isdigit() for c in text):
+            print("⚠️ Digits are not allowed in this cipher.")
+            return
+        try:
+            rails = int(input("Specify number of rails (2–10): "))
+            if rails < 2 or rails > 10:
+                raise ValueError
+        except:
+            print("⚠️ Invalid rails—please enter 2 to 10.")
+            return
+
+        fence = [''] * rails
+        rail, direction = 0, 1
+        print("\n[🔒 Encrypting Zigzag]")
+        for char in text:
+            print(f"{char} → rail {rail}")
+            fence[rail] += char
+            rail += direction
+            if rail == 0 or rail == rails - 1:
+                direction *= -1
+        encrypted = ''.join(fence)
+        print(f"\n🔐 Encrypted text → {encrypted}")
+
+    def rail_fence_decrypt(self):
+        ciphertext = input("🚂 Ciphertext: ")
+        try:
+            rails = int(input("Rails used (2–10): "))
+            if rails < 2 or rails > 10:
+                raise ValueError
+        except:
+            print("⚠️ Invalid rails—please enter 2 to 10.")
+            return
+
+        n = len(ciphertext)
+        fence = [['' for _ in range(n)] for _ in range(rails)]
+        rail, direction = 0, 1
+        for i in range(n):
+            fence[rail][i] = '*'
+            rail += direction
+            if rail == 0 or rail == rails - 1:
+                direction *= -1
+
+        index = 0
+        print("\n[🗺️ Marking positions]")
+        for r in range(rails):
+            for c in range(n):
+                if fence[r][c] == '*' and index < n:
+                    fence[r][c] = ciphertext[index]
+                    print(f"Placing {ciphertext[index]} at rail {r}, pos {c}")
+                    index += 1
+
+        result = []
+        rail, direction = 0, 1
+        print("\n[🔓 Reading zigzag]")
+        for i in range(n):
+            result.append(fence[rail][i])
+            print(f"rail {rail}, pos {i} → {fence[rail][i]}")
+            rail += direction
+            if rail == 0 or rail == rails - 1:
+                direction *= -1
+        decrypted = ''.join(result)
+        print(f"\n📨 Decrypted text → {decrypted}")
+
+    # Columnar encrypt/decrypt
+    def columnar_encrypt(self):
+        text = input("📋 Plaintext (spaces removed automatically): ").replace(" ", "")
+        key = input("🔑 Keyword: ").lower()
+        n = len(key)
+        matrix = [list(text[i:i+n]) for i in range(0, len(text), n)]
+        while len(matrix[-1]) < n:
+            matrix[-1].append('x')
+        print("\n[🧩 Matrix layout]")
+        for row in matrix:
+            print("".join(row))
+
+        sorted_key = sorted(list(set(key)))
+        order = [sorted_key.index(k) for k in key]
+        print(f"Column order based on key: {order}")
+
+        result = ""
+        for col_num in sorted(order):
+            col_idx = order.index(col_num)
+            col_text = "".join(matrix[row][col_idx] for row in range(len(matrix)))
+            print(f"Column {col_idx} ('{key[col_idx]}') → {col_text}")
+            result += col_text
+        print(f"\n✅ Encrypted → {result}")
+
+    def columnar_decrypt(self):
+        ciphertext = input("🔐 Ciphertext: ")
+        key = input("🔑 Keyword used: ").lower()
+        n = len(key)
+        num_rows = len(ciphertext) // n
+        sorted_key = sorted(list(set(key)))
+        order = [sorted_key.index(k) for k in key]
+
+        cols = {}
+        start = 0
+        print("\n[📦 Extracting columns]")
+        for col_num in sorted(order):
+            length = num_rows
+            cols[col_num] = ciphertext[start:start+length]
+            print(f"Column {col_num} → {cols[col_num]}")
+            start += length
+
+        matrix = [[""]*n for _ in range(num_rows)]
+        for col_idx, col_num in enumerate(order):
+            col_text = cols[col_num]
+            for row in range(num_rows):
+                matrix[row][col_idx] = col_text[row]
+
+        print("\n[🧱 Reconstructed matrix]")
+        for row in matrix:
+            print("".join(row))
+
+        result = "".join(matrix[row][col] for row in range(num_rows) for col in range(n))
+        print(f"\n📨 Decrypted → {result}")
 #endregion cipher
 
 

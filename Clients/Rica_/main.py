@@ -193,6 +193,80 @@ class Ciphers:
         else:
             return matrix[row1][col2] + matrix[row2][col1]
 
+    def _generate_playfair_matrix(self, key):
+        # Normalize key: uppercase, merge I/J
+        key = key.upper().replace("J", "I")
+        # Build a sequence without duplicates: first from key, then A–Z (excluding J)
+        seen = set()
+        seq = []
+        for ch in key + "ABCDEFGHIKLMNOPQRSTUVWXYZ":
+            if ch.isalpha() and ch not in seen:
+                seen.add(ch)
+                seq.append(ch)
+        # Build 5×5 matrix
+        return [seq[i:i+5] for i in range(0, 25, 5)]
+
+    def _prepare_playfair_text(self, text):
+        # Normalize: uppercase, merge I/J, remove non‑letters
+        s = text.upper().replace("J", "I")
+        s = "".join(ch for ch in s if ch.isalpha())
+
+        # Build digraphs with filler 'X' for duplicates and pad at end
+        out = ""
+        i = 0
+        while i < len(s):
+            a = s[i]
+            b = s[i + 1] if i + 1 < len(s) else "X"
+
+            if a == b:
+                # Duplicate letter: insert filler after first
+                out += a + "X"
+                i += 1
+            else:
+                out += a + b
+                i += 2
+
+        # Odd length? Pad final filler
+        if len(out) % 2 == 1:
+            out += "X"
+
+        return out
+
+    def _playfair_encrypt_pair(self, matrix, a, b):
+        # Locate positions of a and b in the matrix
+        row1 = col1 = row2 = col2 = None
+        for i in range(5):
+            for j in range(5):
+                if matrix[i][j] == a:
+                    row1, col1 = i, j
+                if matrix[i][j] == b:
+                    row2, col2 = i, j
+
+        # Ensure both characters were found
+        if None in (row1, col1, row2, col2):
+            raise ValueError(f"Pair {a}{b} contains invalid character(s).")
+
+        # Apply Playfair encryption rules
+        if row1 == row2:
+            # Same row: shift right
+            return (
+                matrix[row1][(col1 + 1) % 5] +
+                matrix[row2][(col2 + 1) % 5]
+            )
+        elif col1 == col2:
+            # Same column: shift down
+            return (
+                matrix[(row1 + 1) % 5][col1] +
+                matrix[(row2 + 1) % 5][col2]
+            )
+        else:
+            # Rectangle rule: swap columns
+            return (
+                matrix[row1][col2] +
+                matrix[row2][col1]
+            )
+
+
     # Vernam encrypt/decrypt (same operation)
     def vernam_encrypt(self):
         text = input("Input text: ")
