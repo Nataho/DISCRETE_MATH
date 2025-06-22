@@ -119,7 +119,9 @@ class Searching:
                     return low
                 else:
                     break
+
             pos = low + int(((key - arr[low]) * (high - low)) / (arr[high] - arr[low]))
+            print(f"pos: {pos}; low: {low}; high: {high}; arr[low]:{arr[low]}; arr[high]: {arr[high]}")
             
             #text
             displayed_arr = ""
