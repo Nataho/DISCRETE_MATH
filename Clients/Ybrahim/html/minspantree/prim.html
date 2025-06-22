@@ -133,17 +133,20 @@
   const ctx = canvas.getContext('2d');
   const nodes = [];
   const edges = [];
-  let selectedNode = null;
   const radius = 20;
   const edgeColors = new Map();
+  let selectedNode = null;
   let selectingStart = false;
 
+  // For dragging
   let draggingNode = null;
   let offsetX = 0;
   let offsetY = 0;
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "14px Arial";
+    ctx.textAlign = "center";
 
     for (const edge of edges) {
       const { from, to, weight } = edge;
@@ -160,7 +163,7 @@
       ctx.fillStyle = '#3f51b5';
       ctx.fillRect(midX - 15, midY - 10, 30, 20);
       ctx.fillStyle = 'white';
-      ctx.fillText(weight, midX - 5, midY + 5);
+      ctx.fillText(weight, midX, midY + 5);
     }
 
     for (const node of nodes) {
@@ -172,7 +175,7 @@
       ctx.lineWidth = 2;
       ctx.stroke();
       ctx.fillStyle = '#000';
-      ctx.fillText(node.label, node.x - 5, node.y + 4);
+      ctx.fillText(node.label, node.x, node.y + 4);
     }
   }
 
@@ -188,6 +191,7 @@
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+
     const clickedNode = nodes.find(n => Math.hypot(n.x - x, n.y - y) < radius);
 
     if (selectingStart && clickedNode) {
@@ -197,10 +201,12 @@
     }
 
     if (clickedNode) {
+      // Enable dragging
       draggingNode = clickedNode;
       offsetX = x - clickedNode.x;
       offsetY = y - clickedNode.y;
 
+      // Edge creation logic
       if (!selectedNode) {
         selectedNode = clickedNode;
       } else if (selectedNode !== clickedNode) {

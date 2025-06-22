@@ -127,143 +127,166 @@
   <canvas id="graphCanvas" width="900" height="600"></canvas>
   <div class="summary" id="summary"></div>
 
-  <script>
-    const canvas = document.getElementById('graphCanvas');
-    const ctx = canvas.getContext('2d');
-    const nodes = [];
-    const edges = [];
-    let selectedNode = null;
-    const radius = 20;
-    const edgeColors = new Map();
-    let selectingStart = false;
+<script>
+  const canvas = document.getElementById('graphCanvas');
+  const ctx = canvas.getContext('2d');
+  const nodes = [];
+  const edges = [];
+  let selectedNode = null;
+  const radius = 20;
+  const edgeColors = new Map();
+  let selectingStart = false;
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // 👉 Dragging state
+  let draggingNode = null;
+  let offsetX = 0;
+  let offsetY = 0;
 
-      for (const edge of edges) {
-        const { from, to, weight } = edge;
-        const color = edgeColors.get(edge) || '#888';
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(from.x, from.y);
-        ctx.lineTo(to.x, to.y);
-        ctx.stroke();
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const midX = (from.x + to.x) / 2;
-        const midY = (from.y + to.y) / 2;
-        ctx.fillStyle = '#b03a2e';
-        ctx.fillRect(midX - 15, midY - 10, 30, 20);
-        ctx.fillStyle = 'white';
-        ctx.fillText(weight, midX - 5, midY + 5);
-      }
+    for (const edge of edges) {
+      const { from, to, weight } = edge;
+      const color = edgeColors.get(edge) || '#888';
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
 
-      for (const node of nodes) {
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#f48fb1';
-        ctx.fill();
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        ctx.fillStyle = '#fff';
-        ctx.fillText(node.label, node.x - 5, node.y + 4);
-      }
+      const midX = (from.x + to.x) / 2;
+      const midY = (from.y + to.y) / 2;
+      ctx.fillStyle = '#b03a2e';
+      ctx.fillRect(midX - 15, midY - 10, 30, 20);
+      ctx.fillStyle = 'white';
+      ctx.fillText(weight, midX - 5, midY + 5);
     }
 
-    function addNode() {
-      const label = `N${nodes.length + 1}`;
-      const x = Math.random() * (canvas.width - 100) + 50;
-      const y = Math.random() * (canvas.height - 100) + 50;
-      nodes.push({ label, x, y });
-      draw();
+    for (const node of nodes) {
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#f48fb1';
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#fff';
+      ctx.fillText(node.label, node.x - 5, node.y + 4);
+    }
+  }
+
+  function addNode() {
+    const label = `N${nodes.length + 1}`;
+    const x = Math.random() * (canvas.width - 100) + 50;
+    const y = Math.random() * (canvas.height - 100) + 50;
+    nodes.push({ label, x, y });
+    draw();
+  }
+
+  canvas.addEventListener('mousedown', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const clickedNode = nodes.find(n => Math.hypot(n.x - x, n.y - y) < radius);
+
+    if (selectingStart && clickedNode) {
+      selectingStart = false;
+      runPrim(clickedNode);
+      return;
     }
 
-    canvas.addEventListener('mousedown', (e) => {
+    if (clickedNode) {
+      // 🖱️ Start dragging
+      draggingNode = clickedNode;
+      offsetX = x - clickedNode.x;
+      offsetY = y - clickedNode.y;
+
+      if (!selectedNode) {
+        selectedNode = clickedNode;
+      } else if (selectedNode !== clickedNode) {
+        const weight = parseInt(prompt('Enter weight:'), 10);
+        if (!isNaN(weight)) {
+          edges.push({ from: selectedNode, to: clickedNode, weight });
+          draw();
+        }
+        selectedNode = null;
+      }
+    }
+  });
+
+  canvas.addEventListener('mousemove', (e) => {
+    if (draggingNode) {
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const clickedNode = nodes.find(n => Math.hypot(n.x - x, n.y - y) < radius);
-
-      if (selectingStart && clickedNode) {
-        selectingStart = false;
-        runPrim(clickedNode);
-        return;
-      }
-
-      if (clickedNode) {
-        if (!selectedNode) {
-          selectedNode = clickedNode;
-        } else if (selectedNode !== clickedNode) {
-          const weight = parseInt(prompt('Enter weight:'), 10);
-          if (!isNaN(weight)) {
-            edges.push({ from: selectedNode, to: clickedNode, weight });
-            draw();
-          }
-          selectedNode = null;
-        }
-      }
-    });
-
-    function randomizeGraph() {
-      nodes.length = 0;
-      edges.length = 0;
-      edgeColors.clear();
-      for (let i = 0; i < 6; i++) addNode();
-      for (let i = 0; i < 7; i++) {
-        const a = nodes[Math.floor(Math.random() * nodes.length)];
-        const b = nodes[Math.floor(Math.random() * nodes.length)];
-        if (a !== b && !edges.find(e => (e.from === a && e.to === b) || (e.from === b && e.to === a))) {
-          edges.push({ from: a, to: b, weight: Math.floor(Math.random() * 50) + 1 });
-        }
-      }
+      draggingNode.x = e.clientX - rect.left - offsetX;
+      draggingNode.y = e.clientY - rect.top - offsetY;
       draw();
     }
+  });
 
-    function startPrimMode() {
-      selectingStart = true;
-      alert('🌸 Select a starting node by clicking on it.');
+  canvas.addEventListener('mouseup', () => {
+    draggingNode = null;
+  });
+
+  function randomizeGraph() {
+    nodes.length = 0;
+    edges.length = 0;
+    edgeColors.clear();
+    for (let i = 0; i < 6; i++) addNode();
+    for (let i = 0; i < 7; i++) {
+      const a = nodes[Math.floor(Math.random() * nodes.length)];
+      const b = nodes[Math.floor(Math.random() * nodes.length)];
+      if (a !== b && !edges.find(e => (e.from === a && e.to === b) || (e.from === b && e.to === a))) {
+        edges.push({ from: a, to: b, weight: Math.floor(Math.random() * 50) + 1 });
+      }
     }
+    draw();
+  }
 
-    async function runPrim(start) {
-      const visited = new Set();
-      const availableEdges = [];
-      visited.add(start);
-      let summary = "<h3>🌸 Prim's MST Steps:</h3><ul>";
+  function startPrimMode() {
+    selectingStart = true;
+    alert('🌸 Select a starting node by clicking on it.');
+  }
 
-      function addEdges(node) {
-        for (const edge of edges) {
-          if ((edge.from === node && !visited.has(edge.to)) ||
-              (edge.to === node && !visited.has(edge.from))) {
-            availableEdges.push(edge);
-          }
+  async function runPrim(start) {
+    const visited = new Set();
+    const availableEdges = [];
+    visited.add(start);
+    let summary = "<h3>🌸 Prim's MST Steps:</h3><ul>";
+
+    function addEdges(node) {
+      for (const edge of edges) {
+        if ((edge.from === node && !visited.has(edge.to)) ||
+            (edge.to === node && !visited.has(edge.from))) {
+          availableEdges.push(edge);
         }
       }
-
-      addEdges(start);
-      const mst = [];
-
-      while (visited.size < nodes.length && availableEdges.length > 0) {
-        availableEdges.sort((a, b) => a.weight - b.weight);
-        const edge = availableEdges.shift();
-        const { from, to, weight } = edge;
-
-        if (visited.has(from) && visited.has(to)) continue;
-
-        const newNode = visited.has(from) ? to : from;
-        visited.add(newNode);
-        mst.push(edge);
-        edgeColors.set(edge, 'green');
-        draw();
-        await new Promise(r => setTimeout(r, 500));
-        summary += `<li>${from.label} - ${to.label} (Weight: ${weight})</li>`;
-        addEdges(newNode);
-      }
-
-      summary += `</ul><p><strong>Total Weight: ${mst.reduce((s, e) => s + e.weight, 0)}</strong></p>`;
-      document.getElementById('summary').innerHTML = summary;
-      draw();
     }
-  </script>
+
+    addEdges(start);
+    const mst = [];
+
+    while (visited.size < nodes.length && availableEdges.length > 0) {
+      availableEdges.sort((a, b) => a.weight - b.weight);
+      const edge = availableEdges.shift();
+      const { from, to, weight } = edge;
+
+      if (visited.has(from) && visited.has(to)) continue;
+
+      const newNode = visited.has(from) ? to : from;
+      visited.add(newNode);
+      mst.push(edge);
+      edgeColors.set(edge, 'green');
+      draw();
+      await new Promise(r => setTimeout(r, 500));
+      summary += `<li>${from.label} - ${to.label} (Weight: ${weight})</li>`;
+      addEdges(newNode);
+    }
+
+    summary += `</ul><p><strong>Total Weight: ${mst.reduce((s, e) => s + e.weight, 0)}</strong></p>`;
+    document.getElementById('summary').innerHTML = summary;
+    draw();
+  }
+</script>
 </body>
 </html>
