@@ -1452,34 +1452,34 @@ def main():
     while True:
         clear_screen()
         random.shuffle(modules)
-        print("🤖 Rica Mae Sabanal’s Algorithm Lobby: Initializing Intelligence Sequence… 🤖\n")
+        print("🧠 Welcome to Melrich Catipay’s Algorithm Arena: Powering Up Neural Engines… 🧠\n")
         print(random.choice([
-            "Which module piques your curiosity today?",
-            "Select a challenge to dive into:",
-            "Explore an algorithmic world below:",
-            "What topic shall we tackle next?",
+            "Which area of knowledge do you wish to conquer today?",
+            "Choose your computational quest:",
+            "Delve into a realm of logic and discovery:",
+            "Select your algorithmic path:",
         ]))
 
         for idx, module in enumerate(modules, start=1):
-            print(f" {idx}. 🔹 {module.__name__}")
-        print(" 0. 🔚 Exit Arena")
+            print(f" {idx}. ⚙️ {module.__name__}")
+        print(" 0. 🛑 Exit the Simulation")
 
         try:
-            choice = int(input("\n📥 Enter your choice (0 to quit): "))
+            choice = int(input("\n💬 Make your selection (0 to exit): "))
         except ValueError:
             print(random.choice([
-                "\nThat wasn’t a number. Try again.",
-                "\nNumbers only! Let’s go again.",
-                "\nInput error — please choose by number.",
+                "\n🚫 That’s not a valid number. Try again!",
+                "\n❌ Numbers only, please. Let's retry.",
+                "\n🌀 Input mismatch — use digits only.",
             ]))
             sleep(1.5)
             continue
 
         if choice == 0:
             print(random.choice([
-                "\n👋 Thanks for exploring with me! See you next time!",
-                "\n🚪 Exiting the arena. Until our next algorithm adventure!",
-                "\n🌟 You’ve been great! Come back soon.",
+                "\n👋 Mission complete. See you on the next algorithmic journey!",
+                "\n🔚 Logging out... Until next time, logic warrior!",
+                "\n🌌 Thanks for exploring the codeverse!",
             ]))
             break
 
@@ -1487,25 +1487,26 @@ def main():
             selected_module = modules[choice - 1]
             while True:
                 clear_screen()
-                print(f"🚀 Loading {selected_module.__name__} Module...\n")
+                print(f"🔍 Activating {selected_module.__name__} Module...\n")
                 selected_module()
 
                 again = input(random.choice([
-                    "\n🔁 Want to rerun this module? (y/N): ",
-                    "\n🔄 Try this one again? (y/N): ",
-                    "\n⏱️ Repeat this challenge? (y/N): ",
+                    "\n🔁 Would you like to run this module again? (y/N): ",
+                    "\n♻️ Try this one one more time? (y/N): ",
+                    "\n🔄 Want another round with this module? (y/N): ",
                 ])).strip().lower()
 
                 if again != 'y':
                     break
         else:
             print(random.choice([
-                "\n❗ Whoops, that number isn't in the list.",
-                "\n❗ Invalid pick. Please choose an available module.",
-                "\n❗ Try selecting from the options shown.",
+                "\n⚠️ That option isn’t listed. Please choose correctly.",
+                "\n🚫 Invalid choice. Pick one from the menu.",
+                "\n❗ That number's out of bounds. Try again.",
             ]))
             sleep(1.5)
 
 if __name__ == "__main__":
     main()
 # endregion
+
