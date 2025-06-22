@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🏀 Prim's Algorithm</title>
+  <title>🌌 Prim's Mission</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
     * { box-sizing: border-box; }
     body {
-      font-family: 'Arial Black', Gadget, sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
-      color: #0d47a1;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png'), radial-gradient(ellipse at center, #000000 0%, #1a1a1a 100%);
+      color: #feda4a;
       padding: 2rem;
       max-width: 950px;
       margin: auto;
@@ -20,11 +22,11 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      border: 4px solid #4fc3f7;
+      border: 4px solid #ffe81f;
       border-radius: 50%;
       padding: 3px;
-      background: #fff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background: #000;
+      box-shadow: 0 0 12px #ffe81f;
       width: 90px;
       height: 90px;
       z-index: 10;
@@ -39,14 +41,15 @@
 
     h1 {
       text-align: center;
-      color: #1565c0;
-      text-shadow: 1px 1px #e1f5fe;
+      color: #ffe81f;
+      text-shadow: 0 0 10px #ffe81f;
       margin-bottom: 2rem;
+      font-size: 2.8rem;
     }
 
     .controls {
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     button {
@@ -55,38 +58,41 @@
       font-size: 1rem;
       font-weight: bold;
       border: none;
-      background-color: #0288d1;
-      color: white;
+      background-color: #00bcd4;
+      color: #fff;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 0 10px #00e5ff;
     }
 
     button:hover {
-      background-color: #0277bd;
+      background-color: #00acc1;
+      transform: scale(1.05);
     }
 
     canvas {
-      border: 3px solid #81d4fa;
+      border: 3px solid #00bcd4;
       display: block;
       margin: 1.5rem auto;
-      background: #e1f5fe;
+      background: rgba(0, 0, 0, 0.7);
       border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      box-shadow: 0 0 15px #00e5ff;
     }
 
     .summary {
       margin-top: 2rem;
-      background: #f1f8ff;
+      background: rgba(255, 255, 255, 0.05);
       padding: 1rem 2rem;
       border-radius: 10px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-      border: 1px solid #90caf9;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      border: 1px solid #00bcd4;
     }
 
     .summary h3 {
-      color: #0d47a1;
+      color: #00e5ff;
       margin-bottom: 1rem;
+      text-shadow: 0 0 5px #00e5ff;
     }
 
     ul {
@@ -98,13 +104,11 @@
     }
 
     strong {
-      color: #1565c0;
+      color: #ffe81f;
     }
 
     @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-      }
+      body { padding: 1rem; }
       .profile-picture {
         width: 70px;
         height: 70px;
@@ -116,15 +120,17 @@
 </head>
 <body>
   <div class="profile-picture">
-    <img src="https://scontent.fceb6-1.fna.fbcdn.net/v/t39.30808-1/500684316_1111722254322229_3570693525122643456_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=7V9lAMu0zQ0Q7kNvwFnPSAO&_nc_oc=AdkR53xhjKwlXrGcp2eR9RApDGbcrb4aq3hSR4ZLJ60szFhp8khCnza9rPvGSCdZgfMtK_N0y6hRAZBcTGXEyxds&_nc_zt=24&_nc_ht=scontent.fceb6-1.fna&_nc_gid=TxrEvXcPEfNSpKTdNExc3g&oh=00_AfM2O5OdpvYAzQ7vnhPJ4Lx5iII2xrRy2hwVVda7kDe_6g&oe=685AA0BB" alt="Profile" />
+    <img src="https://scontent.fceb2-1.fna.fbcdn.net/v/t39.30808-1/497561792_2193043201196226_3703741751922292503_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e99d92&_nc_ohc=BKUH6jtusa8Q7kNvwEI5AGJ&_nc_oc=Admgh0Y7bzGoQHBx2yDi0H-Z01jomM6vobXLgsQcZxfIUiOVOETnHlp8QxJ-0Vt7ZF-LE65AVJWL3wAP6hckfytP&_nc_zt=24&_nc_ht=scontent.fceb2-1.fna&_nc_gid=CQBLn2Qts3PUEmmrM8JwSg&oh=00_AfN2s8Cc9tHNz9Bb112RKody4hvdyl-sCoSxbTfE7rCeQA&oe=685D323B" alt="Profile" />
   </div>
 
-  <h1>🏀 Prim's Algorithm</h1>
+  <h1>🚀 Prim's Star Mission</h1>
+
   <div class="controls">
-    <button onclick="addNode()">Add Node</button>
-    <button onclick="randomizeGraph()">Randomize</button>
-    <button onclick="startPrimMode()">Run Prim</button>
+    <button onclick="addNode()">Deploy Node</button>
+    <button onclick="randomizeGraph()">Randomize Sector</button>
+    <button onclick="startPrimMode()">Engage Prim Protocol</button>
   </div>
+
   <canvas id="graphCanvas" width="900" height="600"></canvas>
   <div class="summary" id="summary"></div>
 

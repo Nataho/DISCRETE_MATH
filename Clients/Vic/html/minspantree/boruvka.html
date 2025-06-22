@@ -2,148 +2,125 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🏀 Prim's Algorithm</title>
+  <title>✨ Borůvka's Algorithm (Star Wars Edition)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * { box-sizing: border-box; }
     body {
-      font-family: 'Arial Black', Gadget, sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
-      color: #0d47a1;
-      padding: 2rem;
-      max-width: 950px;
-      margin: auto;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(ellipse at center, #000 0%, #111 100%);
+      color: #00eaff;
+      margin: 0;
+      padding: 40px;
       position: relative;
     }
-
     .profile-picture {
       position: absolute;
       top: 20px;
       right: 20px;
-      border: 4px solid #4fc3f7;
+      border: 5px solid #ffe81f;
       border-radius: 50%;
       padding: 3px;
-      background: #fff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      width: 90px;
-      height: 90px;
+      background: #000;
+      box-shadow: 0 0 18px #ffe81f;
+      width: 100px;
+      height: 100px;
       z-index: 10;
     }
-
     .profile-picture img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
     }
-
     h1 {
       text-align: center;
-      color: #1565c0;
-      text-shadow: 1px 1px #e1f5fe;
-      margin-bottom: 2rem;
+      color: #ffe81f;
+      font-size: 3rem;
+      text-shadow: 0 0 10px #ffe81f, 0 0 20px #ffe81f;
     }
-
     .controls {
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
-
     button {
       margin: 0.5rem;
-      padding: 0.6rem 1.2rem;
+      padding: 0.7rem 1.4rem;
       font-size: 1rem;
       font-weight: bold;
       border: none;
-      background-color: #0288d1;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #0277bd;
-    }
-
-    canvas {
-      border: 3px solid #81d4fa;
-      display: block;
-      margin: 1.5rem auto;
-      background: #e1f5fe;
+      background-color: #ffe81f;
+      color: #000;
       border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffe81f;
+      transition: background-color 0.3s ease;
     }
-
+    button:hover {
+      background-color: #fff176;
+    }
+    canvas {
+      border: 3px solid #ffe81f;
+      display: block;
+      margin: auto;
+      background: #222;
+      border-radius: 18px;
+      box-shadow: 0 0 20px #00eaff;
+    }
     .summary {
       margin-top: 2rem;
-      background: #f1f8ff;
-      padding: 1rem 2rem;
-      border-radius: 10px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-      border: 1px solid #90caf9;
+      background: #111;
+      color: #00eaff;
+      padding: 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 0 15px #00eaff88;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      border-left: 8px solid #ffe81f;
     }
-
     .summary h3 {
-      color: #0d47a1;
+      color: #ffe81f;
+      border-bottom: 2px solid #00eaff;
+      padding-bottom: 6px;
+    }
+    .summary ul, .summary ol {
       margin-bottom: 1rem;
-    }
-
-    ul {
-      padding-left: 1.2rem;
-    }
-
-    li {
-      margin-bottom: 0.5rem;
-    }
-
-    strong {
-      color: #1565c0;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-      }
-      .profile-picture {
-        width: 70px;
-        height: 70px;
-        top: 10px;
-        right: 10px;
-      }
     }
   </style>
 </head>
 <body>
   <div class="profile-picture">
-    <img src="https://scontent.fceb6-1.fna.fbcdn.net/v/t39.30808-1/500684316_1111722254322229_3570693525122643456_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=7V9lAMu0zQ0Q7kNvwFnPSAO&_nc_oc=AdkR53xhjKwlXrGcp2eR9RApDGbcrb4aq3hSR4ZLJ60szFhp8khCnza9rPvGSCdZgfMtK_N0y6hRAZBcTGXEyxds&_nc_zt=24&_nc_ht=scontent.fceb6-1.fna&_nc_gid=TxrEvXcPEfNSpKTdNExc3g&oh=00_AfM2O5OdpvYAzQ7vnhPJ4Lx5iII2xrRy2hwVVda7kDe_6g&oe=685AA0BB" alt="Profile" />
+    <img src="https://scontent.fceb2-1.fna.fbcdn.net/v/t39.30808-1/497561792_2193043201196226_3703741751922292503_n.jpg?stp=dst-jpg_s200x200_tt6&amp;_nc_cat=108&amp;ccb=1-7&amp;_nc_sid=e99d92&amp;_nc_ohc=BKUH6jtusa8Q7kNvwEI5AGJ&amp;_nc_oc=Admgh0Y7bzGoQHBx2yDi0H-Z01jomM6vobXLgsQcZxfIUiOVOETnHlp8QxJ-0Vt7ZF-LE65AVJWL3wAP6hckfytP&amp;_nc_zt=24&amp;_nc_ht=scontent.fceb2-1.fna&amp;_nc_gid=CQBLn2Qts3PUEmmrM8JwSg&amp;oh=00_AfN2s8Cc9tHNz9Bb112RKody4hvdyl-sCoSxbTfE7rCeQA&amp;oe=685D323B" alt="Profile" />
   </div>
 
-  <h1>🏀 Prim's Algorithm</h1>
+  <h1>✨ Borůvka's Algorithm</h1>
   <div class="controls">
     <button onclick="addNode()">Add Node</button>
     <button onclick="randomizeGraph()">Randomize</button>
-    <button onclick="startPrimMode()">Run Prim</button>
+    <button onclick="runBoruvka()">Engage Hyperdrive</button>
   </div>
   <canvas id="graphCanvas" width="900" height="600"></canvas>
   <div class="summary" id="summary"></div>
-
+  
 <script>
   const canvas = document.getElementById('graphCanvas');
   const ctx = canvas.getContext('2d');
   const nodes = [];
   const edges = [];
-  let selectedNode = null;
   const radius = 20;
+  let selectedNode = null;
   const edgeColors = new Map();
-  let selectingStart = false;
 
+  // Dragging support
   let draggingNode = null;
   let offsetX = 0;
   let offsetY = 0;
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "14px Verdana";
+    ctx.textAlign = "center";
 
     for (const edge of edges) {
       const { from, to, weight } = edge;
@@ -157,22 +134,21 @@
 
       const midX = (from.x + to.x) / 2;
       const midY = (from.y + to.y) / 2;
-      ctx.fillStyle = '#3f51b5';
+      ctx.fillStyle = '#333';
       ctx.fillRect(midX - 15, midY - 10, 30, 20);
       ctx.fillStyle = 'white';
-      ctx.fillText(weight, midX - 5, midY + 5);
+      ctx.fillText(weight, midX, midY + 5);
     }
 
     for (const node of nodes) {
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#fbc02d';
+      ctx.fillStyle = '#ec407a';
       ctx.fill();
       ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 2;
       ctx.stroke();
-      ctx.fillStyle = '#000';
-      ctx.fillText(node.label, node.x - 5, node.y + 4);
+      ctx.fillStyle = 'white';
+      ctx.fillText(node.label, node.x, node.y + 5);
     }
   }
 
@@ -190,21 +166,19 @@
     const y = e.clientY - rect.top;
     const clickedNode = nodes.find(n => Math.hypot(n.x - x, n.y - y) < radius);
 
-    if (selectingStart && clickedNode) {
-      selectingStart = false;
-      runPrim(clickedNode);
-      return;
-    }
-
     if (clickedNode) {
+      // Start dragging
       draggingNode = clickedNode;
       offsetX = x - clickedNode.x;
       offsetY = y - clickedNode.y;
+    }
 
+    // Edge creation logic
+    if (clickedNode) {
       if (!selectedNode) {
         selectedNode = clickedNode;
       } else if (selectedNode !== clickedNode) {
-        const weight = parseInt(prompt('Enter hyperspace distance:'), 10);
+        const weight = parseInt(prompt('Enter weight:'), 10);
         if (!isNaN(weight)) {
           edges.push({ from: selectedNode, to: clickedNode, weight });
           draw();
@@ -242,47 +216,60 @@
     draw();
   }
 
-  function startPrimMode() {
-    selectingStart = true;
-    alert('🛰 Select a starting node by clicking a planet.');
-  }
+  async function runBoruvka() {
+    const parent = new Map(nodes.map(n => [n, n]));
+    function find(u) {
+      while (parent.get(u) !== u) u = parent.get(u);
+      return u;
+    }
+    function union(u, v) {
+      parent.set(find(v), find(u));
+    }
 
-  async function runPrim(start) {
-    const visited = new Set();
-    const availableEdges = [];
-    visited.add(start);
-    let summary = "<h3>🌠 Prim’s Hyperspace Log:</h3><ul>";
+    let mst = [];
+    let summary = '<h3>Borůvka Steps:</h3><ul>';
+    let components = nodes.length;
+    let round = 1;
 
-    function addEdges(node) {
+    while (components > 1) {
+      summary += `<li><strong>Round ${round}:</strong><ul>`;
+      const cheapest = new Map();
       for (const edge of edges) {
-        if ((edge.from === node && !visited.has(edge.to)) ||
-            (edge.to === node && !visited.has(edge.from))) {
-          availableEdges.push(edge);
+        const u = find(edge.from);
+        const v = find(edge.to);
+        if (u !== v) {
+          if (!cheapest.has(u) || cheapest.get(u).weight > edge.weight) cheapest.set(u, edge);
+          if (!cheapest.has(v) || cheapest.get(v).weight > edge.weight) cheapest.set(v, edge);
         }
       }
+
+      for (const edge of new Set(cheapest.values())) {
+        const u = find(edge.from);
+        const v = find(edge.to);
+        if (u !== v) {
+          union(u, v);
+          edgeColors.set(edge, 'green');
+          mst.push(edge);
+          summary += `<li>${edge.from.label} - ${edge.to.label} (Weight: ${edge.weight})</li>`;
+          components--;
+          draw();
+          await new Promise(r => setTimeout(r, 500));
+        }
+      }
+      summary += '</ul></li>';
+      round++;
     }
 
-    addEdges(start);
-    const mst = [];
-
-    while (visited.size < nodes.length && availableEdges.length > 0) {
-      availableEdges.sort((a, b) => a.weight - b.weight);
-      const edge = availableEdges.shift();
-      const { from, to, weight } = edge;
-
-      if (visited.has(from) && visited.has(to)) continue;
-
-      const newNode = visited.has(from) ? to : from;
-      visited.add(newNode);
-      mst.push(edge);
-      edgeColors.set(edge, 'lime');
-      draw();
-      await new Promise(r => setTimeout(r, 500));
-      summary += `<li>${from.label} ➡ ${to.label} (Distance: ${weight})</li>`;
-      addEdges(newNode);
-    }
-
-    summary += `</ul><p><strong>Total Distance: ${mst.reduce((s, e) => s + e.weight, 0)}</strong></p>`;
+    summary += `</ul><p><strong>Total Weight: ${mst.reduce((sum, e) => sum + e.weight, 0)}</strong></p>`;
+    summary += `
+      <h3>Algorithm Steps:</h3>
+      <ol>
+        <li>Each node starts as its own component.</li>
+        <li>Find the cheapest edge from each component to another.</li>
+        <li>Add those edges to the MST and merge components.</li>
+        <li>Repeat until one component remains.</li>
+      </ol>
+    `;
     document.getElementById('summary').innerHTML = summary;
     draw();
   }
