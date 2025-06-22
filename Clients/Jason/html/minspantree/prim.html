@@ -2,103 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🏈 Borůvka's Algorithm</title>
+  <title>🌌 Prim's Mission</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
     * { box-sizing: border-box; }
     body {
-      font-family: 'Arial Black', sans-serif;
-      background: linear-gradient(to right, #e1f5fe, #b3e5fc);
-      color: #1a237e;
-      margin: 0;
-      padding: 40px;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png'), radial-gradient(ellipse at center, #000000 0%, #1a1a1a 100%);
+      color: #feda4a;
+      padding: 2rem;
+      max-width: 950px;
+      margin: auto;
       position: relative;
     }
+
     .profile-picture {
       position: absolute;
       top: 20px;
       right: 20px;
-      border: 5px solid #0288d1;
+      border: 4px solid #ffe81f;
       border-radius: 50%;
       padding: 3px;
-      background: #fff;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      width: 100px;
-      height: 100px;
+      background: #000;
+      box-shadow: 0 0 12px #ffe81f;
+      width: 90px;
+      height: 90px;
       z-index: 10;
     }
+
     .profile-picture img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
     }
+
     h1 {
       text-align: center;
-      color: #d50000;
+      color: #ffe81f;
+      text-shadow: 0 0 10px #ffe81f;
       margin-bottom: 2rem;
-      font-size: 2.5rem;
-      text-shadow: 1px 1px 2px #000;
+      font-size: 2.8rem;
     }
+
     .controls {
       text-align: center;
       margin-bottom: 1.5rem;
     }
+
     button {
       margin: 0.5rem;
-      padding: 0.7rem 1.4rem;
+      padding: 0.6rem 1.2rem;
       font-size: 1rem;
       font-weight: bold;
       border: none;
-      background-color: #ff7043;
-      color: white;
-      border-radius: 12px;
+      background-color: #00bcd4;
+      color: #fff;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 0 10px #00e5ff;
     }
+
     button:hover {
-      background-color: #e64a19;
+      background-color: #00acc1;
+      transform: scale(1.05);
     }
+
     canvas {
-      border: 3px solid #0288d1;
+      border: 3px solid #00bcd4;
       display: block;
-      margin: auto;
-      background: #e3f2fd;
-      border-radius: 18px;
-      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+      margin: 1.5rem auto;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00e5ff;
     }
+
     .summary {
       margin-top: 2rem;
-      background: #ffffffee;
-      padding: 1.5rem;
-      border-radius: 14px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      border-left: 8px solid #0288d1;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      border: 1px solid #00bcd4;
     }
+
     .summary h3 {
-      color: #00796b;
-      border-bottom: 2px solid #004d40;
-      padding-bottom: 6px;
-    }
-    .summary ul, .summary ol {
+      color: #00e5ff;
       margin-bottom: 1rem;
+      text-shadow: 0 0 5px #00e5ff;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    strong {
+      color: #ffe81f;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 1rem; }
+      .profile-picture {
+        width: 70px;
+        height: 70px;
+        top: 10px;
+        right: 10px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="profile-picture">
-    <img src="https://scontent.fceb6-1.fna.fbcdn.net/v/t39.30808-1/500684316_1111722254322229_3570693525122643456_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=7V9lAMu0zQ0Q7kNvwFnPSAO&_nc_oc=AdkR53xhjKwlXrGcp2eR9RApDGbcrb4aq3hSR4ZLJ60szFhp8khCnza9rPvGSCdZgfMtK_N0y6hRAZBcTGXEyxds&_nc_zt=24&_nc_ht=scontent.fceb6-1.fna&_nc_gid=TxrEvXcPEfNSpKTdNExc3g&oh=00_AfM2O5OdpvYAzQ7vnhPJ4Lx5iII2xrRy2hwVVda7kDe_6g&oe=685AA0BB" alt="Profile" />
+    <img src="https://scontent.fceb2-1.fna.fbcdn.net/v/t39.30808-1/497561792_2193043201196226_3703741751922292503_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e99d92&_nc_ohc=BKUH6jtusa8Q7kNvwEI5AGJ&_nc_oc=Admgh0Y7bzGoQHBx2yDi0H-Z01jomM6vobXLgsQcZxfIUiOVOETnHlp8QxJ-0Vt7ZF-LE65AVJWL3wAP6hckfytP&_nc_zt=24&_nc_ht=scontent.fceb2-1.fna&_nc_gid=CQBLn2Qts3PUEmmrM8JwSg&oh=00_AfN2s8Cc9tHNz9Bb112RKody4hvdyl-sCoSxbTfE7rCeQA&oe=685D323B" alt="Profile" />
   </div>
 
-  <h1>🏈 Kruskal’s Algorithm</h1>
+  <h1>🚀 Prim's Star Mission</h1>
+
   <div class="controls">
-    <button onclick="addNode()">Add Node</button>
-    <button onclick="randomizeGraph()">Randomize</button>
-    <button onclick="runBoruvka()">Run Borůvka</button>
+    <button onclick="addNode()">Deploy Node</button>
+    <button onclick="randomizeGraph()">Randomize Sector</button>
+    <button onclick="startPrimMode()">Engage Prim Protocol</button>
   </div>
+
   <canvas id="graphCanvas" width="900" height="600"></canvas>
   <div class="summary" id="summary"></div>
 
@@ -107,19 +139,17 @@
   const ctx = canvas.getContext('2d');
   const nodes = [];
   const edges = [];
-  const radius = 20;
   let selectedNode = null;
+  const radius = 20;
   const edgeColors = new Map();
+  let selectingStart = false;
 
-  // 👇 Draggable node variables
   let draggingNode = null;
   let offsetX = 0;
   let offsetY = 0;
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "14px Verdana";
-    ctx.textAlign = "center";
 
     for (const edge of edges) {
       const { from, to, weight } = edge;
@@ -133,21 +163,22 @@
 
       const midX = (from.x + to.x) / 2;
       const midY = (from.y + to.y) / 2;
-      ctx.fillStyle = '#333';
+      ctx.fillStyle = '#3f51b5';
       ctx.fillRect(midX - 15, midY - 10, 30, 20);
       ctx.fillStyle = 'white';
-      ctx.fillText(weight, midX, midY + 5);
+      ctx.fillText(weight, midX - 5, midY + 5);
     }
 
     for (const node of nodes) {
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#ec407a';
+      ctx.fillStyle = '#fbc02d';
       ctx.fill();
       ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
       ctx.stroke();
-      ctx.fillStyle = 'white';
-      ctx.fillText(node.label, node.x, node.y + 5);
+      ctx.fillStyle = '#000';
+      ctx.fillText(node.label, node.x - 5, node.y + 4);
     }
   }
 
@@ -165,17 +196,21 @@
     const y = e.clientY - rect.top;
     const clickedNode = nodes.find(n => Math.hypot(n.x - x, n.y - y) < radius);
 
+    if (selectingStart && clickedNode) {
+      selectingStart = false;
+      runPrim(clickedNode);
+      return;
+    }
+
     if (clickedNode) {
-      // Start dragging
       draggingNode = clickedNode;
       offsetX = x - clickedNode.x;
       offsetY = y - clickedNode.y;
 
-      // Handle edge creation
       if (!selectedNode) {
         selectedNode = clickedNode;
       } else if (selectedNode !== clickedNode) {
-        const weight = parseInt(prompt('Enter weight:'), 10);
+        const weight = parseInt(prompt('Enter hyperspace distance:'), 10);
         if (!isNaN(weight)) {
           edges.push({ from: selectedNode, to: clickedNode, weight });
           draw();
@@ -213,60 +248,47 @@
     draw();
   }
 
-  async function runBoruvka() {
-    const parent = new Map(nodes.map(n => [n, n]));
-    function find(u) {
-      while (parent.get(u) !== u) u = parent.get(u);
-      return u;
-    }
-    function union(u, v) {
-      parent.set(find(v), find(u));
-    }
+  function startPrimMode() {
+    selectingStart = true;
+    alert('🛰 Select a starting node by clicking a planet.');
+  }
 
-    let mst = [];
-    let summary = '<h3>Borůvka Steps:</h3><ul>';
-    let components = nodes.length;
-    let round = 1;
+  async function runPrim(start) {
+    const visited = new Set();
+    const availableEdges = [];
+    visited.add(start);
+    let summary = "<h3>🌠 Prim’s Hyperspace Log:</h3><ul>";
 
-    while (components > 1) {
-      summary += `<li><strong>Round ${round}:</strong><ul>`;
-      const cheapest = new Map();
+    function addEdges(node) {
       for (const edge of edges) {
-        const u = find(edge.from);
-        const v = find(edge.to);
-        if (u !== v) {
-          if (!cheapest.has(u) || cheapest.get(u).weight > edge.weight) cheapest.set(u, edge);
-          if (!cheapest.has(v) || cheapest.get(v).weight > edge.weight) cheapest.set(v, edge);
+        if ((edge.from === node && !visited.has(edge.to)) ||
+            (edge.to === node && !visited.has(edge.from))) {
+          availableEdges.push(edge);
         }
       }
-
-      for (const edge of new Set(cheapest.values())) {
-        const u = find(edge.from);
-        const v = find(edge.to);
-        if (u !== v) {
-          union(u, v);
-          edgeColors.set(edge, 'green');
-          mst.push(edge);
-          summary += `<li>${edge.from.label} - ${edge.to.label} (Weight: ${edge.weight})</li>`;
-          components--;
-          draw();
-          await new Promise(r => setTimeout(r, 500));
-        }
-      }
-      summary += '</ul></li>';
-      round++;
     }
 
-    summary += `</ul><p><strong>Total Weight: ${mst.reduce((sum, e) => sum + e.weight, 0)}</strong></p>`;
-    summary += `
-      <h3>Algorithm Steps:</h3>
-      <ol>
-        <li>Each node starts as its own component.</li>
-        <li>Find the cheapest edge from each component to another.</li>
-        <li>Add those edges to the MST and merge components.</li>
-        <li>Repeat until one component remains.</li>
-      </ol>
-    `;
+    addEdges(start);
+    const mst = [];
+
+    while (visited.size < nodes.length && availableEdges.length > 0) {
+      availableEdges.sort((a, b) => a.weight - b.weight);
+      const edge = availableEdges.shift();
+      const { from, to, weight } = edge;
+
+      if (visited.has(from) && visited.has(to)) continue;
+
+      const newNode = visited.has(from) ? to : from;
+      visited.add(newNode);
+      mst.push(edge);
+      edgeColors.set(edge, 'lime');
+      draw();
+      await new Promise(r => setTimeout(r, 500));
+      summary += `<li>${from.label} ➡ ${to.label} (Distance: ${weight})</li>`;
+      addEdges(newNode);
+    }
+
+    summary += `</ul><p><strong>Total Distance: ${mst.reduce((s, e) => s + e.weight, 0)}</strong></p>`;
     document.getElementById('summary').innerHTML = summary;
     draw();
   }

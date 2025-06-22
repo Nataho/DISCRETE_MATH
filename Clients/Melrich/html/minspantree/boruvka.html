@@ -2,98 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🏈 Borůvka's Algorithm</title>
+  <title>Borůvka's Mission</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * { box-sizing: border-box; }
+
     body {
-      font-family: 'Arial Black', sans-serif;
-      background: linear-gradient(to right, #e1f5fe, #b3e5fc);
-      color: #1a237e;
-      margin: 0;
-      padding: 40px;
-      position: relative;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #000;
+      color: #e6d784;
+      padding: 2rem;
+      max-width: 950px;
+      margin: auto;
     }
-    .profile-picture {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      border: 5px solid #0288d1;
-      border-radius: 50%;
-      padding: 3px;
-      background: #fff;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      width: 100px;
-      height: 100px;
-      z-index: 10;
-    }
-    .profile-picture img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
+
     h1 {
       text-align: center;
-      color: #d50000;
+      color: #d6c64b;
+      font-size: 2.7rem;
       margin-bottom: 2rem;
-      font-size: 2.5rem;
-      text-shadow: 1px 1px 2px #000;
+      text-transform: uppercase;
+      border: 2px dashed #d6c64b;
+      padding: 0.5rem 1rem;
+      display: inline-block;
     }
+
     .controls {
       text-align: center;
       margin-bottom: 1.5rem;
     }
+
     button {
       margin: 0.5rem;
       padding: 0.7rem 1.4rem;
       font-size: 1rem;
       font-weight: bold;
       border: none;
-      background-color: #ff7043;
-      color: white;
-      border-radius: 12px;
+      background-color: #d6c64b;
+      color: #000;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      box-shadow: 0 0 10px #d6c64b;
+      transition: background-color 0.3s, transform 0.2s;
     }
+
     button:hover {
-      background-color: #e64a19;
+      background-color: #b5a832;
+      transform: scale(1.05);
     }
+
     canvas {
-      border: 3px solid #0288d1;
+      border: 3px solid #d6c64b;
       display: block;
-      margin: auto;
-      background: #e3f2fd;
-      border-radius: 18px;
-      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+      margin: 1.5rem auto;
+      background: #1a1a1a;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(214,198,75,0.4);
     }
+
     .summary {
       margin-top: 2rem;
-      background: #ffffffee;
+      background: #1a1a1a;
       padding: 1.5rem;
-      border-radius: 14px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(214,198,75,0.2);
+      border: 1px dashed #d6c64b;
       max-width: 800px;
       margin-left: auto;
       margin-right: auto;
-      border-left: 8px solid #0288d1;
     }
+
     .summary h3 {
-      color: #00796b;
-      border-bottom: 2px solid #004d40;
+      color: #fff;
+      border-bottom: 2px solid #d6c64b;
       padding-bottom: 6px;
     }
+
     .summary ul, .summary ol {
       margin-bottom: 1rem;
+    }
+
+    strong {
+      color: #d6c64b;
     }
   </style>
 </head>
 <body>
-  <div class="profile-picture">
-    <img src="https://scontent.fceb6-1.fna.fbcdn.net/v/t39.30808-1/500684316_1111722254322229_3570693525122643456_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=7V9lAMu0zQ0Q7kNvwFnPSAO&_nc_oc=AdkR53xhjKwlXrGcp2eR9RApDGbcrb4aq3hSR4ZLJ60szFhp8khCnza9rPvGSCdZgfMtK_N0y6hRAZBcTGXEyxds&_nc_zt=24&_nc_ht=scontent.fceb6-1.fna&_nc_gid=TxrEvXcPEfNSpKTdNExc3g&oh=00_AfM2O5OdpvYAzQ7vnhPJ4Lx5iII2xrRy2hwVVda7kDe_6g&oe=685AA0BB" alt="Profile" />
-  </div>
-
-  <h1>🏈 Kruskal’s Algorithm</h1>
+  <h1>Borůvka's Mission</h1>
   <div class="controls">
     <button onclick="addNode()">Add Node</button>
     <button onclick="randomizeGraph()">Randomize</button>
@@ -101,7 +96,7 @@
   </div>
   <canvas id="graphCanvas" width="900" height="600"></canvas>
   <div class="summary" id="summary"></div>
-
+  
 <script>
   const canvas = document.getElementById('graphCanvas');
   const ctx = canvas.getContext('2d');
@@ -111,19 +106,18 @@
   let selectedNode = null;
   const edgeColors = new Map();
 
-  // 👇 Draggable node variables
   let draggingNode = null;
   let offsetX = 0;
   let offsetY = 0;
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "14px Verdana";
+    ctx.font = "14px 'Segoe UI'";
     ctx.textAlign = "center";
 
     for (const edge of edges) {
       const { from, to, weight } = edge;
-      const color = edgeColors.get(edge) || '#888';
+      const color = edgeColors.get(edge) || '#999';
       ctx.strokeStyle = color;
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -135,18 +129,18 @@
       const midY = (from.y + to.y) / 2;
       ctx.fillStyle = '#333';
       ctx.fillRect(midX - 15, midY - 10, 30, 20);
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = '#d6c64b';
       ctx.fillText(weight, midX, midY + 5);
     }
 
     for (const node of nodes) {
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#ec407a';
+      ctx.fillStyle = '#d6c64b';
       ctx.fill();
       ctx.strokeStyle = '#fff';
       ctx.stroke();
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = '#000';
       ctx.fillText(node.label, node.x, node.y + 5);
     }
   }
@@ -166,16 +160,14 @@
     const clickedNode = nodes.find(n => Math.hypot(n.x - x, n.y - y) < radius);
 
     if (clickedNode) {
-      // Start dragging
       draggingNode = clickedNode;
       offsetX = x - clickedNode.x;
       offsetY = y - clickedNode.y;
 
-      // Handle edge creation
       if (!selectedNode) {
         selectedNode = clickedNode;
       } else if (selectedNode !== clickedNode) {
-        const weight = parseInt(prompt('Enter weight:'), 10);
+        const weight = parseInt(prompt('Enter edge weight:'), 10);
         if (!isNaN(weight)) {
           edges.push({ from: selectedNode, to: clickedNode, weight });
           draw();
@@ -224,7 +216,7 @@
     }
 
     let mst = [];
-    let summary = '<h3>Borůvka Steps:</h3><ul>';
+    let summary = '<h3>Mission Log:</h3><ul>';
     let components = nodes.length;
     let round = 1;
 
@@ -245,9 +237,9 @@
         const v = find(edge.to);
         if (u !== v) {
           union(u, v);
-          edgeColors.set(edge, 'green');
+          edgeColors.set(edge, 'lime');
           mst.push(edge);
-          summary += `<li>${edge.from.label} - ${edge.to.label} (Weight: ${edge.weight})</li>`;
+          summary += `<li>${edge.from.label} ➞ ${edge.to.label} (Weight: ${edge.weight})</li>`;
           components--;
           draw();
           await new Promise(r => setTimeout(r, 500));
@@ -259,12 +251,12 @@
 
     summary += `</ul><p><strong>Total Weight: ${mst.reduce((sum, e) => sum + e.weight, 0)}</strong></p>`;
     summary += `
-      <h3>Algorithm Steps:</h3>
+      <h3>Protocol Steps:</h3>
       <ol>
-        <li>Each node starts as its own component.</li>
-        <li>Find the cheapest edge from each component to another.</li>
-        <li>Add those edges to the MST and merge components.</li>
-        <li>Repeat until one component remains.</li>
+        <li>Initialize each node as its own set</li>
+        <li>Find cheapest edge for each component</li>
+        <li>Union components via those edges</li>
+        <li>Repeat until fully connected</li>
       </ol>
     `;
     document.getElementById('summary').innerHTML = summary;

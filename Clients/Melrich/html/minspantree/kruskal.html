@@ -1,51 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>🌌 Kruskal's Starbound</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Kruskal's Algorithm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
-
     * { box-sizing: border-box; }
 
     body {
-      font-family: 'Orbitron', sans-serif;
-      background: url('https://www.transparenttextures.com/patterns/stardust.png'), radial-gradient(ellipse at center, #000000 0%, #1a1a1a 100%);
-      color: #feda4a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #000;
+      color: #e6d784;
       padding: 2rem;
       max-width: 950px;
       margin: auto;
-      position: relative;
-    }
-
-    .profile-picture {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      border: 4px solid #ffe81f;
-      border-radius: 50%;
-      padding: 3px;
-      background: #000;
-      box-shadow: 0 0 12px #ffe81f;
-      width: 90px;
-      height: 90px;
-      z-index: 10;
-    }
-
-    .profile-picture img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
     }
 
     h1 {
       text-align: center;
-      color: #ffe81f;
-      text-shadow: 0 0 10px #ffe81f;
+      color: #d6c64b;
+      font-size: 2.8rem;
       margin-bottom: 2rem;
-      font-size: 2.6rem;
+      text-transform: uppercase;
+      border: 2px dashed #d6c64b;
+      padding: 0.5rem 1rem;
+      display: inline-block;
     }
 
     .controls {
@@ -59,41 +38,41 @@
       font-size: 1rem;
       font-weight: bold;
       border: none;
-      background-color: #00bcd4;
-      color: #fff;
-      border-radius: 8px;
+      background-color: #d6c64b;
+      color: #000;
+      border-radius: 4px;
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
-      box-shadow: 0 0 10px #00e5ff;
+      box-shadow: 0 0 10px #d6c64b;
     }
 
     button:hover {
-      background-color: #00acc1;
+      background-color: #b5a832;
       transform: scale(1.05);
     }
 
     canvas {
-      border: 3px solid #00bcd4;
+      border: 3px solid #d6c64b;
       display: block;
       margin: 1.5rem auto;
-      background: rgba(0, 0, 0, 0.7);
+      background: #1a1a1a;
       border-radius: 12px;
-      box-shadow: 0 0 15px #00e5ff;
+      box-shadow: 0 0 15px rgba(214,198,75,0.4);
     }
 
     .summary {
       margin-top: 2rem;
-      background: rgba(255, 255, 255, 0.05);
+      background: #1a1a1a;
       padding: 1rem 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
-      border: 1px solid #00bcd4;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(214,198,75,0.2);
+      border: 1px dashed #d6c64b;
     }
 
     .summary h3 {
-      color: #00e5ff;
+      color: #fff;
       margin-bottom: 1rem;
-      text-shadow: 0 0 5px #00e5ff;
+      text-shadow: 1px 1px 0 #000;
     }
 
     ul {
@@ -105,31 +84,21 @@
     }
 
     strong {
-      color: #ffe81f;
+      color: #d6c64b;
     }
 
     @media (max-width: 600px) {
       body { padding: 1rem; }
-      .profile-picture {
-        width: 70px;
-        height: 70px;
-        top: 10px;
-        right: 10px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="profile-picture">
-    <img src="https://scontent.fceb2-1.fna.fbcdn.net/v/t39.30808-1/497561792_2193043201196226_3703741751922292503_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e99d92&_nc_ohc=BKUH6jtusa8Q7kNvwEI5AGJ&_nc_oc=Admgh0Y7bzGoQHBx2yDi0H-Z01jomM6vobXLgsQcZxfIUiOVOETnHlp8QxJ-0Vt7ZF-LE65AVJWL3wAP6hckfytP&_nc_zt=24&_nc_ht=scontent.fceb2-1.fna&_nc_gid=CQBLn2Qts3PUEmmrM8JwSg&oh=00_AfN2s8Cc9tHNz9Bb112RKody4hvdyl-sCoSxbTfE7rCeQA&oe=685D323B" alt="Profile" />
-  </div>
-
-  <h1>🛰 Kruskal's Starbound</h1>
+  <h1>Kruskal's Algorithm</h1>
 
   <div class="controls">
-    <button onclick="addNode()">Deploy Node</button>
-    <button onclick="randomizeGraph()">Randomize Sector</button>
-    <button onclick="runKruskal()">Engage Kruskal Protocol</button>
+    <button onclick="addNode()">Add Node</button>
+    <button onclick="randomizeGraph()">Randomize</button>
+    <button onclick="runKruskal()">Run Kruskal</button>
   </div>
 
   <canvas id="graphCanvas" width="900" height="600"></canvas>
@@ -153,7 +122,7 @@
 
       for (const edge of edges) {
         const { from, to, weight } = edge;
-        const color = edgeColors.get(edge) || '#888';
+        const color = edgeColors.get(edge) || '#666';
         ctx.strokeStyle = color;
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -163,18 +132,18 @@
 
         const midX = (from.x + to.x) / 2;
         const midY = (from.y + to.y) / 2;
-        ctx.fillStyle = '#3f51b5';
+        ctx.fillStyle = '#d6c64b';
         ctx.fillRect(midX - 15, midY - 10, 30, 20);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = '#000';
         ctx.fillText(weight, midX - 5, midY + 5);
       }
 
       for (const node of nodes) {
         ctx.beginPath();
         ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#fbc02d';
+        ctx.fillStyle = '#e6d784';
         ctx.fill();
-        ctx.strokeStyle = '#fff';
+        ctx.strokeStyle = '#000';
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.fillStyle = '#000';
@@ -200,7 +169,7 @@
         if (!selectedNode) {
           selectedNode = clickedNode;
         } else if (selectedNode !== clickedNode) {
-          const weight = parseInt(prompt('Enter hyperspace distance:'), 10);
+          const weight = parseInt(prompt('Enter weight:'), 10);
           if (!isNaN(weight)) {
             edges.push({ from: selectedNode, to: clickedNode, weight });
             draw();
@@ -260,7 +229,7 @@
 
       const sorted = [...edges].sort((a, b) => a.weight - b.weight);
       const result = [];
-      let summary = '<h3>🚀 MST Path Log:</h3><ul>';
+      let summary = '<h3>MST Edges:</h3><ul>';
       for (const edge of sorted) {
         const { from, to, weight } = edge;
         if (find(from) !== find(to)) {
@@ -269,10 +238,10 @@
           edgeColors.set(edge, 'lime');
           draw();
           await new Promise(r => setTimeout(r, 500));
-          summary += `<li>${from.label} ➡ ${to.label} (Distance: ${weight})</li>`;
+          summary += `<li>${from.label} - ${to.label} (Weight: ${weight})</li>`;
         }
       }
-      summary += `</ul><p><strong>Total Distance: ${result.reduce((s, e) => s + e.weight, 0)}</strong></p>`;
+      summary += `</ul><p><strong>Total Weight: ${result.reduce((s, e) => s + e.weight, 0)}</strong></p>`;
       document.getElementById('summary').innerHTML = summary;
       draw();
     }

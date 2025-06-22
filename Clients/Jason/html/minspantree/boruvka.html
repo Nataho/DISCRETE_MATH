@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🏈 Borůvka's Algorithm</title>
+  <title>✨ Borůvka's Algorithm (Star Wars Edition)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * { box-sizing: border-box; }
     body {
-      font-family: 'Arial Black', sans-serif;
-      background: linear-gradient(to right, #e1f5fe, #b3e5fc);
-      color: #1a237e;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(ellipse at center, #000 0%, #111 100%);
+      color: #00eaff;
       margin: 0;
       padding: 40px;
       position: relative;
@@ -18,11 +18,11 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      border: 5px solid #0288d1;
+      border: 5px solid #ffe81f;
       border-radius: 50%;
       padding: 3px;
-      background: #fff;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      background: #000;
+      box-shadow: 0 0 18px #ffe81f;
       width: 100px;
       height: 100px;
       z-index: 10;
@@ -35,10 +35,9 @@
     }
     h1 {
       text-align: center;
-      color: #d50000;
-      margin-bottom: 2rem;
-      font-size: 2.5rem;
-      text-shadow: 1px 1px 2px #000;
+      color: #ffe81f;
+      font-size: 3rem;
+      text-shadow: 0 0 10px #ffe81f, 0 0 20px #ffe81f;
     }
     .controls {
       text-align: center;
@@ -50,37 +49,39 @@
       font-size: 1rem;
       font-weight: bold;
       border: none;
-      background-color: #ff7043;
-      color: white;
+      background-color: #ffe81f;
+      color: #000;
       border-radius: 12px;
       cursor: pointer;
+      box-shadow: 0 0 10px #ffe81f;
       transition: background-color 0.3s ease;
     }
     button:hover {
-      background-color: #e64a19;
+      background-color: #fff176;
     }
     canvas {
-      border: 3px solid #0288d1;
+      border: 3px solid #ffe81f;
       display: block;
       margin: auto;
-      background: #e3f2fd;
+      background: #222;
       border-radius: 18px;
-      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 0 20px #00eaff;
     }
     .summary {
       margin-top: 2rem;
-      background: #ffffffee;
+      background: #111;
+      color: #00eaff;
       padding: 1.5rem;
       border-radius: 14px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px #00eaff88;
       max-width: 800px;
       margin-left: auto;
       margin-right: auto;
-      border-left: 8px solid #0288d1;
+      border-left: 8px solid #ffe81f;
     }
     .summary h3 {
-      color: #00796b;
-      border-bottom: 2px solid #004d40;
+      color: #ffe81f;
+      border-bottom: 2px solid #00eaff;
       padding-bottom: 6px;
     }
     .summary ul, .summary ol {
@@ -90,18 +91,18 @@
 </head>
 <body>
   <div class="profile-picture">
-    <img src="https://scontent.fceb6-1.fna.fbcdn.net/v/t39.30808-1/500684316_1111722254322229_3570693525122643456_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=7V9lAMu0zQ0Q7kNvwFnPSAO&_nc_oc=AdkR53xhjKwlXrGcp2eR9RApDGbcrb4aq3hSR4ZLJ60szFhp8khCnza9rPvGSCdZgfMtK_N0y6hRAZBcTGXEyxds&_nc_zt=24&_nc_ht=scontent.fceb6-1.fna&_nc_gid=TxrEvXcPEfNSpKTdNExc3g&oh=00_AfM2O5OdpvYAzQ7vnhPJ4Lx5iII2xrRy2hwVVda7kDe_6g&oe=685AA0BB" alt="Profile" />
+    <img src="https://scontent.fceb2-1.fna.fbcdn.net/v/t39.30808-1/497561792_2193043201196226_3703741751922292503_n.jpg?stp=dst-jpg_s200x200_tt6&amp;_nc_cat=108&amp;ccb=1-7&amp;_nc_sid=e99d92&amp;_nc_ohc=BKUH6jtusa8Q7kNvwEI5AGJ&amp;_nc_oc=Admgh0Y7bzGoQHBx2yDi0H-Z01jomM6vobXLgsQcZxfIUiOVOETnHlp8QxJ-0Vt7ZF-LE65AVJWL3wAP6hckfytP&amp;_nc_zt=24&amp;_nc_ht=scontent.fceb2-1.fna&amp;_nc_gid=CQBLn2Qts3PUEmmrM8JwSg&amp;oh=00_AfN2s8Cc9tHNz9Bb112RKody4hvdyl-sCoSxbTfE7rCeQA&amp;oe=685D323B" alt="Profile" />
   </div>
 
-  <h1>🏈 Kruskal’s Algorithm</h1>
+  <h1>✨ Borůvka's Algorithm</h1>
   <div class="controls">
     <button onclick="addNode()">Add Node</button>
     <button onclick="randomizeGraph()">Randomize</button>
-    <button onclick="runBoruvka()">Run Borůvka</button>
+    <button onclick="runBoruvka()">Engage Hyperdrive</button>
   </div>
   <canvas id="graphCanvas" width="900" height="600"></canvas>
   <div class="summary" id="summary"></div>
-
+  
 <script>
   const canvas = document.getElementById('graphCanvas');
   const ctx = canvas.getContext('2d');
@@ -111,7 +112,7 @@
   let selectedNode = null;
   const edgeColors = new Map();
 
-  // 👇 Draggable node variables
+  // Dragging support
   let draggingNode = null;
   let offsetX = 0;
   let offsetY = 0;
@@ -170,8 +171,10 @@
       draggingNode = clickedNode;
       offsetX = x - clickedNode.x;
       offsetY = y - clickedNode.y;
+    }
 
-      // Handle edge creation
+    // Edge creation logic
+    if (clickedNode) {
       if (!selectedNode) {
         selectedNode = clickedNode;
       } else if (selectedNode !== clickedNode) {
