@@ -1,32 +1,41 @@
 from TOOLS import TOOLS
 
-def arrColor(arr, blue = [None], green = [None], yellow = [None], magenta = [None]):
-    #blue = [index]
-    length = len(arr)
-    display_arr = ""
-    for k in range(length):
-        if k in magenta:
-            display_arr += f", \033[95m{arr[k]}\033[0m"
-            continue
-        if k in yellow:
-            display_arr += f", \033[93m{arr[k]}\033[0m"
-            continue
-        if k in blue:
-            display_arr += f", \033[94m{arr[k]}\033[0m"
-            continue
-        if k in green:
-            display_arr += f", \033[92m{arr[k]}\033[0m"
-            continue
-        display_arr += f", {arr[k]}"
-    
-    display_arr = f"[{display_arr[2:]}]"
-    TOOLS.print_type(display_arr,None,0.001)
+def arrColor(arr, blue=None, green=None, yellow=None, magenta=None, label="", delay=0.001):
+    blue = blue or []
+    green = green or []
+    yellow = yellow or []
+    magenta = magenta or []
 
-    #use case
-    #myarr = [1,3,5,7,9,2,4,6,8,0]
-    #coloredArr = arrColor(myarr, [0], [8], [5,6])
+    color_codes = {
+        'blue': '\033[94m',
+        'green': '\033[92m',
+        'yellow': '\033[93m',
+        'magenta': '\033[95m'
+    }
 
-    return display_arr
+    display_arr = "["
+    for i, val in enumerate(arr):
+        color = None
+        if i in magenta:
+            color = color_codes['magenta']
+        elif i in yellow:
+            color = color_codes['yellow']
+        elif i in blue:
+            color = color_codes['blue']
+        elif i in green:
+            color = color_codes['green']
+
+        if color:
+            display_arr += f"{color}{val}\033[0m, "
+        else:
+            display_arr += f"{val}, "
+
+    display_arr = display_arr.rstrip(", ") + "]"
+    if label:
+        display_arr = f"{label}\t{display_arr}"
+
+    TOOLS.print_type(display_arr, None, delay)
+
 
 class Sorting:
     def __init__(self):
@@ -41,7 +50,7 @@ class Sorting:
             "Shell Sort",
             "Comb Sort",
             "Radix Sort",
-            "Tree Sort",
+            # "Tree Sort",
         ]
         self.start()
         # self.selection_sort()  # For testing purposes, directly calling bubble_sort
@@ -91,17 +100,14 @@ class Sorting:
         TOOLS.print_type(f"Unsorted array:\t {unsorted}", "blue")
         TOOLS.print_type(f"Sorted array:\t {arr}", "yellow")
 
-    def bubble_sort(self,arr):
+    def bubble_sort(self, arr):
         length = len(arr)
         for i in range(length):
-            for j in range(0, length-i-1):
-                arrColor(arr,[j],[j+1])
-                if arr[j] > arr[j+1]:
-                    arr[j], arr[j+1] = arr[j+1], arr[j] #swap
-
-                    arrColor(arr,[],[],[j,j+1])
-
-                    continue
+            for j in range(0, length - i - 1):
+                arrColor(arr, [j], [j + 1], label="Comparing:")
+                if arr[j] > arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]  # swap
+                    arrColor(arr, [], [], [j, j + 1], label="Swapped:")
         return arr
 #endregion bubble sort
 
@@ -110,19 +116,20 @@ class Sorting:
         arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         self.selection_sort(arr)
         TOOLS.sleep(0.5)
-        TOOLS.print_type(f"Sorted array: {arr}")
+        TOOLS.print_type(f"Sorted array: {arr}", "yellow")
 
-    def selection_sort(self,arr):
+    def selection_sort(self, arr):
         length = len(arr)
         for i in range(length):
             min_idx = i
-            for j in range(i+1, length):
-
+            for j in range(i + 1, length):
+                arrColor(arr, [i], [j], [], [min_idx], label="Checking:")
                 if arr[j] < arr[min_idx]:
                     min_idx = j
-                    # arrColor(arr, [],[], [], [min_idx])
+                    arrColor(arr, [i], [j], [], [min_idx], label="New min found:")
 
             arr[i], arr[min_idx] = arr[min_idx], arr[i]
+            arrColor(arr, [], [], [i, min_idx], label="Swapped:")
         return arr
 #endregion selection sort
 
@@ -131,18 +138,20 @@ class Sorting:
         arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         self.insertion_sort(arr)
         TOOLS.sleep(0.5)
-        TOOLS.print_type(f"Sorted array: {arr}")
+        TOOLS.print_type(f"Sorted array: {arr}", "yellow")
 
-    def insertion_sort(self,arr):
+    def insertion_sort(self, arr, visualize=False):
         length = len(arr)
         for i in range(1, length):
             key = arr[i]
             j = i - 1
             while j >= 0 and key < arr[j]:
                 arr[j + 1] = arr[j]
-                arrColor(arr,[j], [key])
+                if visualize:
+                    arrColor(arr, [j], [key])
                 j -= 1
             arr[j + 1] = key
+
         return arr
 #endregion insertion sort
 
@@ -151,7 +160,7 @@ class Sorting:
         arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
         self.merge_sort(arr)
         TOOLS.sleep(0.5)
-        TOOLS.print_type(f"Sorted array: {arr}")
+        TOOLS.print_type(f"Sorted array: {arr}", "yellow")
 
     @staticmethod
     def merge_sort(arr):
@@ -172,27 +181,44 @@ class Sorting:
         while i < len(L) and j < len(R):
             if L[i] < R[j]:
                 arr[k] = L[i]
+                arrColor(arr, [], [], [], [k], label="Placing from L:")
                 i += 1
             else:
                 arr[k] = R[j]
+                arrColor(arr, [], [], [], [k], label="Placing from R:")
                 j += 1
             k += 1
+
         while i < len(L):
             arr[k] = L[i]
+            arrColor(arr, [], [], [], [k], label="Placing remaining from L:")
             i += 1
             k += 1
+
         while j < len(R):
             arr[k] = R[j]
+            arrColor(arr, [], [], [], [k], label="Placing remaining from R:")
             j += 1
             k += 1
+
 #endregion merge sort
 
 #region quick sort
     def _quick_sort(self):
-        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ", "cyan").split()))
+
+        # Color legend
+        TOOLS.print_type("\nLegend:", "yellow", delay=0.001)
+        TOOLS.print_type("  \033[94mi\033[0m - Partition index (left of pivot)", None, delay=0.001)
+        TOOLS.print_type("  \033[92mj\033[0m - Scanning element", None, delay=0.001)
+        TOOLS.print_type("  \033[95mPivot\033[0m - Pivot element", None, delay=0.001)
+        TOOLS.print_type("  \033[93mSwapped\033[0m - Elements that were swapped", None, delay=0.001)
+        TOOLS.print_type("", None)
+
         self.quick_sort(arr, 0, len(arr) - 1)
+
         TOOLS.sleep(0.5)
-        TOOLS.print_type(f"Sorted array: {arr}")
+        TOOLS.print_type(f"Sorted array: {arr}", "yellow")
 
     def quick_sort(self, arr, low, high):
         if low < high:
@@ -204,66 +230,112 @@ class Sorting:
         pivot = arr[high]
         i = low - 1
         for j in range(low, high):
+            arrColor(arr, [i], [j], [], [high], label="Comparing with pivot:")
             if arr[j] < pivot:
                 i += 1
                 arr[i], arr[j] = arr[j], arr[i]
+                arrColor(arr, [], [], [i, j], [], label="Swapped:           ")
         arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        arrColor(arr, [], [], [i + 1, high], [], label="Pivot placed:       ")
         return i + 1
 #endregion quick sort
 
 #region bucket sort
     def _bucket_sort(self):
-        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ", "cyan").split()))
+        
+        TOOLS.print_type("\nLegend:", "yellow", delay=0.001)
+        TOOLS.print_type("  \033[94mBlue\033[0m - Current number being bucketed", None, delay=0.001)
+        TOOLS.print_type("  \033[92mGreen\033[0m - Element currently sorted in a bucket", None, delay=0.001)
+        TOOLS.print_type("  \033[93mYellow\033[0m - Final assembly of sorted array", None, delay=0.001)
+        TOOLS.print_type("", None)
+
         sorted_arr = self.bucket_sort(arr)
         TOOLS.sleep(0.5)
-        TOOLS.print_type(f"Sorted array: {sorted_arr}")
+        TOOLS.print_type(f"Sorted array: {sorted_arr}", "yellow")
 
     def bucket_sort(self, arr):
-        bucket = []
-        for i in range(len(arr)):
-            bucket.append([])
+        n = len(arr)
+        bucket = [[] for _ in range(n)]
 
+        # Bucket allocation with color
         for j in arr:
-            index_b = min(int(10 * j), len(arr) - 1)
+            index_b = min(int(10 * j), n - 1)
             bucket[index_b].append(j)
-        for i in range(len(arr)):
-            self.insertion_sort(bucket[i])
+            arrColor(arr, [arr.index(j)], [], [], [], label=f"Placing {j} into bucket {index_b}")
+
+        # Sort each bucket
+        for i in range(n):
+            if bucket[i]:
+                TOOLS.print_type(f"\nSorting bucket {i}: {bucket[i]}", "blue", delay=0.001)
+                self.insertion_sort(bucket[i], visualize=True)
+
+        # Concatenate all sorted buckets
         sorted_arr = []
-        for i in range(len(arr)):
-            sorted_arr = sorted_arr + bucket[i]
-        arr = sorted_arr.copy()
+        for i in range(n):
+            if bucket[i]:
+                arrColor(bucket[i], [], [], [], [], label=f"Adding bucket {i} to final array:")
+            sorted_arr += bucket[i]
+
+        arrColor(sorted_arr, [], [], list(range(len(sorted_arr))), [], label="Final Sorted Array:")
         return sorted_arr
+
 #endregion bucket sort
 
 #region shell sort
     def _shell_sort(self):
-        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ", "cyan").split()))
+
+        TOOLS.print_type("\nLegend:", "yellow", delay=0.001)
+        TOOLS.print_type("  \033[94mBlue\033[0m - Index currently being considered", None, delay=0.001)
+        TOOLS.print_type("  \033[92mGreen\033[0m - Key being inserted", None, delay=0.001)
+        TOOLS.print_type("  \033[93mYellow\033[0m - Subarray being merged back", None, delay=0.001)
+        TOOLS.print_type("", None)
+
         self.shell_sort(arr)
         TOOLS.sleep(0.5)
-        TOOLS.print_type(f"Sorted array: {arr}")
+        TOOLS.print_type(f"Sorted array: {arr}", "yellow")
 
     def shell_sort(self, arr):
         n = len(arr)
         gap = n // 2
+
         while gap > 0:
+            TOOLS.print_type(f"\nGap: {gap}", "magenta", delay=0.001)
             for start in range(gap):
                 subarray_indices = list(range(start, n, gap))
                 subarray = [arr[i] for i in subarray_indices]
-                self.insertion_sort(subarray)
-                TOOLS.print_type(subarray)
-                TOOLS.sleep(0.5)
-            for idx, val in zip(subarray_indices, subarray):
-                arr[idx] = val
+
+                TOOLS.print_type(f"Subarray from indices {subarray_indices}:", "blue", delay=0.001)
+                arrColor(subarray, list(range(len(subarray))), [], [], [], label="Before sorting:")
+
+                self.insertion_sort(subarray, visualize=True)
+
+                TOOLS.print_type(f"Sorted subarray: {subarray}", "green", delay=0.001)
+
+                for idx, val in zip(subarray_indices, subarray):
+                    arr[idx] = val
+
+                arrColor(arr, [], [], subarray_indices, [], label="Merged into main array:")
+
             gap //= 2
+
         return arr
 #endregion shell sort
 
 #region comb sort
     def _comb_sort(self):
-        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ", "cyan").split()))
+
+        TOOLS.print_type("\nLegend:", "yellow", delay=0.001)
+        TOOLS.print_type("  \033[94mBlue\033[0m - Comparing pair", delay=0.001)
+        TOOLS.print_type("  \033[93mYellow\033[0m - Swapping pair", delay=0.001)
+        TOOLS.print_type("  \033[92mGreen\033[0m - Final sorted array", delay=0.001)
+        TOOLS.print_type("", None)
+
         self.comb_sort(arr)
         TOOLS.sleep(0.5)
-        TOOLS.print_type(f"Sorted array: {arr}")
+        TOOLS.print_type(f"Sorted array: {arr}", "green")
 
     def comb_sort(self, arr):
         n = len(arr)
@@ -275,32 +347,50 @@ class Sorting:
             gap = int(gap / shrink)
             if gap < 1:
                 gap = 1
+
+            TOOLS.print_type(f"\nCurrent gap: {gap}", "magenta", delay=0.001)
             sorted_flag = True
 
             for i in range(n - gap):
+                arrColor(arr, [i], [i + gap])
                 if arr[i] > arr[i + gap]:
                     arr[i], arr[i + gap] = arr[i + gap], arr[i]
                     sorted_flag = False
+                    arrColor(arr, [], [], [i, i + gap])
         return arr
 #endregion comb sort
 
 #region radix sort
     def _radix_sort(self):
-        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated):").split()))
+        arr = list(map(int, TOOLS.input_type("Enter the items to sort (space-separated): ", "cyan").split()))
+
+        TOOLS.print_type("\nLegend:", "yellow", delay=0.001)
+        TOOLS.print_type("  \033[94mBlue\033[0m - Current digit pass", delay=0.001)
+        TOOLS.print_type("  \033[92mGreen\033[0m - Final sorted list (vertical)", delay=0.001)
+        TOOLS.print_type("", None)
+
         self.radix_sort(arr)
+
         TOOLS.sleep(0.5)
-        TOOLS.print_type(f"Sorted array: {arr}")
-        for i in arr:
-            TOOLS.print_type(f"{arr.index(i) + 1}. {i}")
+        TOOLS.print_type("\nSorted array (vertical):", "green", delay=0.001)
+        for i, val in enumerate(arr, 1):
+            TOOLS.print_type(f"{i}. {val}", "green", delay=0.001)
 
     def radix_sort(self, arr):
+        if not arr:
+            return arr
         max_num = max(arr)
         exp = 1
+        pass_num = 1
         while max_num // exp > 0:
+            TOOLS.print_type(f"\nPass {pass_num} (sorting by digit at place {exp}):", "blue", delay=0.001)
             self.counting_sort(arr, exp)
+            arrColor(arr, blue=list(range(len(arr))))
+            TOOLS.sleep(0.4)
             exp *= 10
+            pass_num += 1
         return arr
-    
+
     def counting_sort(self, arr, exp):
         n = len(arr)
         output = [0] * n
@@ -321,6 +411,7 @@ class Sorting:
         for i in range(n):
             arr[i] = output[i]
         return arr
+
 #endregion radix sort
 
 #region tree sort

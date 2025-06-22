@@ -170,6 +170,7 @@ class Ciphers:
     def _hill_cipher(self):
         text = TOOLS.input_type("Enter the plaintext to encrypt: ")
         key_matrix_input = TOOLS.input_type("Enter the key matrix (3x3) as space-separated values (e.g., '1 2 3 4 5 6 7 8 9'): ")
+        
         key_matrix = []
         try:
             key_matrix_values = list(map(int, key_matrix_input.split()))
@@ -177,12 +178,18 @@ class Ciphers:
                 raise ValueError("Key matrix must have 9 values for a 3x3 matrix.")
             key_matrix = [key_matrix_values[i:i+3] for i in range(0, 9, 3)]
         except ValueError as e:
-            TOOLS.print_type(f"Invalid input for key matrix: {e}")
+            TOOLS.print_type(f"Invalid input for key matrix: {e}", "red", delay=0.001)
             return
-        encrypted_text = self.hill_cipher(key_matrix, text)
+
+        TOOLS.print_type("Using the following key matrix:", "cyan", delay=0.001)
         for row in key_matrix:
-            TOOLS.print_type(" ".join(map(str, row)))
-        TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow")
+            TOOLS.print_type(" ".join(map(str, row)), "green", delay=0.001)
+
+        TOOLS.print_type("Encrypting using Hill Cipher...", "cyan", delay=0.001)
+        TOOLS.sleep(0.5)
+        encrypted_text = self.hill_cipher(key_matrix, text)
+        TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow", delay=0.001)
+
 
     def hill_cipher(self,key_matrix, plaintext):
         small = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
@@ -219,7 +226,6 @@ class Ciphers:
                     ciphertext += big[num]
                 else:
                     ciphertext += small[num]
-
         return ciphertext
 #endregion hill cipher
 
@@ -227,14 +233,17 @@ class Ciphers:
     def _rail_fence_cipher(self):
         text = TOOLS.input_type("Enter the text to encrypt: ")
         if any(char.isdigit() for char in text):
-            TOOLS.print_type("Error: Text should not contain numbers.")
+            TOOLS.print_type("Error: Text should not contain numbers.", "red", delay=0.001)
             return
+
         rails = int(TOOLS.input_type("Enter the number of rails (2-10): "))
         if 2 <= rails <= 10:
+            TOOLS.print_type("Encrypting using Rail Fence Cipher...", "cyan", delay=0.001)
+            TOOLS.sleep(0.5)
             encrypted_text = self.rail_fence(text, rails)
-            TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow")
+            TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow", delay=0.001)
         else:
-            TOOLS.print_type("Invalid number of rails. Please enter a number between 2 and 10.")
+            TOOLS.print_type("Invalid number of rails. Please enter a number between 2 and 10.", "red", delay=0.001)
 
     def rail_fence(self, text, rails):
         fence = [''] * rails
@@ -244,7 +253,7 @@ class Ciphers:
         for char in text:
             fence[rail] += char
             rail += direction
-            
+
             if rail == 0 or rail == rails - 1:
                 direction *= -1
 
@@ -254,24 +263,31 @@ class Ciphers:
 #region columnar cipher
     def _columnar_cipher(self):
         text = TOOLS.input_type("Enter the text to encrypt: ")
-        TOOLS.print_type(f"Need {len(text)} cells for the given text.")
+        TOOLS.print_type(f"Need {len(text)} cells for the given text.", "cyan", delay=0.001)
+        
         rows = int(TOOLS.input_type("Enter the number of rows for the matrix: "))
         cols = int(TOOLS.input_type("Enter the number of columns for the matrix: "))
+        
         key_input = TOOLS.input_type(f"Enter the key as {cols} numbers (1 to {cols}) separated by spaces (e.g., '3 1 2'): ")
         key = [int(k) for k in key_input.strip().split()]
+        
         if len(key) != cols or sorted(key) != list(range(1, cols + 1)):
-            TOOLS.print_type(f"Key must be {cols} unique numbers from 1 to {cols}.")
+            TOOLS.print_type(f"Key must be {cols} unique numbers from 1 to {cols}.", "red", delay=0.001)
             return
+        
         if rows <= 0 or cols <= 0:
-            TOOLS.print_type("Rows and columns must be positive integers.")
+            TOOLS.print_type("Rows and columns must be positive integers.", "red", delay=0.001)
             return
 
+        TOOLS.print_type("Encrypting using Columnar Transposition Cipher...", "cyan", delay=0.001)
+        TOOLS.sleep(0.5)
         encrypted_text = self.columnar_cipher(text, rows, cols, key)
-        TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow")
+        TOOLS.print_type(f"Encrypted text: {encrypted_text}", "yellow", delay=0.001)
 
     def columnar_cipher(self, text, rows, cols, key):
         padded_length = rows * cols
         padded_text = text.ljust(padded_length, 'x')[:padded_length]
+        
         matrix = []
         idx = 0
         for r in range(rows):
@@ -280,10 +296,12 @@ class Ciphers:
                 row.append(padded_text[idx])
                 idx += 1
             matrix.append(row)
+
         ciphertext = ""
         for k in key:
             col_idx = k - 1
             for r in range(rows):
                 ciphertext += matrix[r][col_idx]
         return ciphertext
+
 #endregion columnar cipher

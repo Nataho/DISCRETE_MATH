@@ -1,6 +1,43 @@
 from TOOLS import TOOLS
 from Sorting import Sorting
 
+def arrColor(arr, blue=None, green=None, yellow=None, magenta=None, label="", delay=0.001):
+    blue = blue or []
+    green = green or []
+    yellow = yellow or []
+    magenta = magenta or []
+
+    color_codes = {
+        'blue': '\033[94m',
+        'green': '\033[92m',
+        'yellow': '\033[93m',
+        'magenta': '\033[95m'
+    }
+
+    display_arr = "["
+    for i, val in enumerate(arr):
+        color = None
+        if i in magenta:
+            color = color_codes['magenta']
+        elif i in yellow:
+            color = color_codes['yellow']
+        elif i in blue:
+            color = color_codes['blue']
+        elif i in green:
+            color = color_codes['green']
+
+        if color:
+            display_arr += f"{color}{val}\033[0m, "
+        else:
+            display_arr += f"{val}, "
+
+    display_arr = display_arr.rstrip(", ") + "]"
+    if label:
+        display_arr = f"{label}\t{display_arr}"
+
+    TOOLS.print_type(display_arr, None, delay)
+
+
 class Searching:
     def __init__(self):
         TOOLS.clear_screen()
@@ -36,53 +73,72 @@ class Searching:
                 self._interpolation_search()
     
     def _linear_search(self): 
-        """Perform linear search on a list."""
-        TOOLS.print_type("Performing Linear Search...")
-        # Example implementation
-        arr = list(map(int, TOOLS.input_type("Enter the elements of the array(space sepparated): ").split()))
-        target = int(TOOLS.input_type("Enter the number to search for: "))
-        found = False
-        for i, num in enumerate(arr):
-            if num == target:
-                found = True
-                TOOLS.print_type(f"Found {target} at index {i}.", "yellow")
-                break
-        if not found:
-            TOOLS.print_type(f"{target} not found in the array.")
-    
+        TOOLS.print_type("Performing Linear Search...", "cyan", delay=0.001)
+
+        TOOLS.print_type("\nLegend:", "yellow", delay=0.001)
+        TOOLS.print_type("  \033[94mBlue\033[0m   - Currently checking", delay=0.001)
+        TOOLS.print_type("  \033[93mYellow\033[0m - Match found", delay=0.001)
+        TOOLS.print_type("", None)
+
+        arr = list(map(int, TOOLS.input_type("Enter the elements of the array (space separated): ", "cyan").split()))
+        target = int(TOOLS.input_type("Enter the number to search for: ", "cyan"))
+        
+        index = self.linear_search(arr, target)
+        if index != -1:
+            TOOLS.print_type(f"\nFound {target} at index {index}.", "yellow", delay=0.001)
+        else:
+            TOOLS.print_type(f"\n{target} not found in the array.", "red", delay=0.001)
+
     def linear_search(self, arr, target):
-        length = len(arr)
-        for i in range(length):
+        for i in range(len(arr)):
             if arr[i] == target:
+                arrColor(arr, yellow=[i])
                 return i
+            arrColor(arr, blue=[i])
+            TOOLS.sleep(0.1)
+        return -1
+
     
     def _binary_search(self):
-        """Perform binary search on a sorted list."""
         print()
-        TOOLS.print_type("Performing Binary Search...")
-        # Example implementation
-        arr = list(map(int, TOOLS.input_type("Enter the elements of the array(space sepparated): ").split()))
+        TOOLS.print_type("Performing Binary Search...", "cyan", delay=0.001)
+
+        TOOLS.print_type("\nLegend:", "yellow", delay=0.001)
+        TOOLS.print_type("  \033[94mBlue\033[0m    - Current left/right bounds", delay=0.001)
+        TOOLS.print_type("  \033[95mMagenta\033[0m - Middle element", delay=0.001)
+        TOOLS.print_type("  \033[93mYellow\033[0m  - Match found", delay=0.001)
+        TOOLS.print_type("")
+
+        arr = list(map(int, TOOLS.input_type("Enter the elements of the array (space separated): ", "cyan").split()))
         Sorting.merge_sort(arr)
-        TOOLS.print_type(f"Sorted array: {arr}", "green")
-        target = int(TOOLS.input_type("Enter the number to search for: "))
+        TOOLS.print_type(f"Sorted array: {arr}", "green", delay=0.001)
+
+        target = int(TOOLS.input_type("Enter the number to search for: ", "cyan"))
         index = self.binary_search(arr, target)
+
         if index != -1:
-            TOOLS.print_type(f"Found {target} at index {index}.", "yellow")
+            TOOLS.print_type(f"\nFound {target} at index {index}.", "yellow", delay=0.001)
         else:
-            TOOLS.print_type(f"{target} not found in the array.")
+            TOOLS.print_type(f"\n{target} not found in the array.", "red", delay=0.001)
 
     def binary_search(self, arr, target):
-        """Perform binary search on a sorted list."""
         left, right = 0, len(arr) - 1
         while left <= right:
             mid = (left + right) // 2
+
             if arr[mid] == target:
+                arrColor(arr, yellow=[mid])
                 return mid
-            elif arr[mid] < target:
+            else:
+                arrColor(arr, blue=[left, right], magenta=[mid])
+                TOOLS.sleep(0.5)
+
+            if arr[mid] < target:
                 left = mid + 1
             else:
                 right = mid - 1
         return -1
+
     
     #region interpolation search
     def _interpolation_search(self):

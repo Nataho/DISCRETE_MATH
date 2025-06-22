@@ -145,7 +145,6 @@ class Ciphers:
                 result += char
         print(f"\nDecrypted → {result}")
 
-    # Playfair Encrypt and Decrypt (decrypt method added)
     def playfair_encrypt(self):
         text = input("Message to encrypt: ")
         keyword = input("Keyword to construct matrix: ")
@@ -157,9 +156,9 @@ class Ciphers:
             print(" ".join(row))
         print("\n[Pairs]")
         for i in range(0, len(prepared), 2):
-            pair = prepared[i], prepared[i + 1]
-            cipher_pair = self._playfair_encrypt_pair(matrix, *pair)
-            print(f"{pair[0]}{pair[1]} -> {cipher_pair}")
+            a, b = prepared[i], prepared[i + 1]
+            cipher_pair = self._playfair_encrypt_pair(matrix, a, b)
+            print(f"{a}{b} -> {cipher_pair}")
             encrypted += cipher_pair
         print(f"\nCiphertext → {encrypted}")
 
@@ -173,98 +172,92 @@ class Ciphers:
             print(" ".join(row))
         print("\n[Pairs]")
         for i in range(0, len(text), 2):
-            pair = text[i], text[i + 1]
-            plain_pair = self._playfair_decrypt_pair(matrix, *pair)
-            print(f"{pair[0]}{pair[1]} -> {plain_pair}")
+            a, b = text[i], text[i + 1]
+            plain_pair = self._playfair_decrypt_pair(matrix, a, b)
+            print(f"{a}{b} -> {plain_pair}")
             decrypted += plain_pair
         print(f"\nDecrypted Text → {decrypted}")
 
-    def _playfair_decrypt_pair(self, matrix, a, b):
+
+    def _find_position(self, matrix, ch):
         for i in range(5):
             for j in range(5):
-                if matrix[i][j] == a:
-                    row1, col1 = i, j
-                if matrix[i][j] == b:
-                    row2, col2 = i, j
+                if matrix[i][j] == ch:
+                    return i, j
+        raise ValueError(f"Character {ch} not found in matrix")
+
+
+    def _playfair_encrypt_pair(self, matrix, a, b):
+        row1, col1 = self._find_position(matrix, a)
+        row2, col2 = self._find_position(matrix, b)
+
         if row1 == row2:
-            return matrix[row1][(col1 - 1) % 5] + matrix[row2][(col2 - 1) % 5]
+            return (
+                matrix[row1][(col1 + 1) % 5] +
+                matrix[row2][(col2 + 1) % 5]
+            )
         elif col1 == col2:
-            return matrix[(row1 - 1) % 5][col1] + matrix[(row2 - 1) % 5][col2]
+            return (
+                matrix[(row1 + 1) % 5][col1] +
+                matrix[(row2 + 1) % 5][col2]
+            )
         else:
-            return matrix[row1][col2] + matrix[row2][col1]
+            return (
+                matrix[row1][col2] +
+                matrix[row2][col1]
+            )
+
+
+    def _playfair_decrypt_pair(self, matrix, a, b):
+        row1, col1 = self._find_position(matrix, a)
+        row2, col2 = self._find_position(matrix, b)
+
+        if row1 == row2:
+            return (
+                matrix[row1][(col1 - 1) % 5] +
+                matrix[row2][(col2 - 1) % 5]
+            )
+        elif col1 == col2:
+            return (
+                matrix[(row1 - 1) % 5][col1] +
+                matrix[(row2 - 1) % 5][col2]
+            )
+        else:
+            return (
+                matrix[row1][col2] +
+                matrix[row2][col1]
+            )
+
 
     def _generate_playfair_matrix(self, key):
-        # Normalize key: uppercase, merge I/J
         key = key.upper().replace("J", "I")
-        # Build a sequence without duplicates: first from key, then A–Z (excluding J)
         seen = set()
         seq = []
         for ch in key + "ABCDEFGHIKLMNOPQRSTUVWXYZ":
             if ch.isalpha() and ch not in seen:
                 seen.add(ch)
                 seq.append(ch)
-        # Build 5×5 matrix
         return [seq[i:i+5] for i in range(0, 25, 5)]
 
+
     def _prepare_playfair_text(self, text):
-        # Normalize: uppercase, merge I/J, remove non‑letters
         s = text.upper().replace("J", "I")
         s = "".join(ch for ch in s if ch.isalpha())
-
-        # Build digraphs with filler 'X' for duplicates and pad at end
         out = ""
         i = 0
         while i < len(s):
             a = s[i]
             b = s[i + 1] if i + 1 < len(s) else "X"
-
             if a == b:
-                # Duplicate letter: insert filler after first
                 out += a + "X"
                 i += 1
             else:
                 out += a + b
                 i += 2
-
-        # Odd length? Pad final filler
         if len(out) % 2 == 1:
             out += "X"
-
         return out
 
-    def _playfair_encrypt_pair(self, matrix, a, b):
-        # Locate positions of a and b in the matrix
-        row1 = col1 = row2 = col2 = None
-        for i in range(5):
-            for j in range(5):
-                if matrix[i][j] == a:
-                    row1, col1 = i, j
-                if matrix[i][j] == b:
-                    row2, col2 = i, j
-
-        # Ensure both characters were found
-        if None in (row1, col1, row2, col2):
-            raise ValueError(f"Pair {a}{b} contains invalid character(s).")
-
-        # Apply Playfair encryption rules
-        if row1 == row2:
-            # Same row: shift right
-            return (
-                matrix[row1][(col1 + 1) % 5] +
-                matrix[row2][(col2 + 1) % 5]
-            )
-        elif col1 == col2:
-            # Same column: shift down
-            return (
-                matrix[(row1 + 1) % 5][col1] +
-                matrix[(row2 + 1) % 5][col2]
-            )
-        else:
-            # Rectangle rule: swap columns
-            return (
-                matrix[row1][col2] +
-                matrix[row2][col1]
-            )
 
 
     # Vernam encrypt/decrypt (same operation)
@@ -1108,6 +1101,12 @@ class Searching:
             self.linear_search()
         elif choice == 3:
             self.binary_search()
+        elif choice == 4:
+            self.ternary_search()
+        elif choice == 5:
+            self.jump_search()
+        elif choice == 6:
+            self.interval_search()
         else:
             print("⚠️ That choice isn’t on the menu. Give it another go!")
             self.menu()

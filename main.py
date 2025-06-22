@@ -9,11 +9,11 @@ from Searching import Searching
 #region main
 from basic_math import bMath
 from TOOLS import TOOLS
-TOOLS.clear_screen()    
-passkey = input("input password: ")
-if passkey != password:
-    print("you are not the owner of this code.")
-    quit()
+# TOOLS.clear_screen()    
+# passkey = input("input password: ")
+# if passkey != password:
+#     print("you are not the owner of this code.")
+#     quit()
 
 TOOLS.clear_screen()
 
