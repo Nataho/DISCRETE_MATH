@@ -19,7 +19,7 @@ class SetTheory:
         self.set_a = set()
         self.set_b = set()
         clear_screen()
-        print("📘 Set Theory Module Activated!")
+        print("Set Theory Module is now active")  # no emoji at start
         sleep(1)
         self.run()
 
@@ -30,25 +30,25 @@ class SetTheory:
         self.compute_results()
 
     def display_welcome(self):
-        print("🔎 Let's explore your sets A and B!")
+        print("Let’s explore your sets A and B")  # clear and friendly
 
     def get_sets(self):
         self.set_a = self.input_set("A")
         self.set_b = self.input_set("B")
 
     def input_set(self, label):
-        raw = input(f"🧩 Enter elements of set {label} (separated by spaces): ")
+        raw = input(f"Enter elements of set {label} (space-separated): ")
         return set(raw.strip().split())
 
     def display_sets(self):
-        print("\n✅ You entered:")
+        print("\nHere are the sets you entered:")
         print(f"  • Set A: {self.set_a}")
         print(f"  • Set B: {self.set_b}")
 
     def compute_results(self):
-        print("\n⚙️ Computing set operations...")
+        print("\nComputing set operations now")  # concise prompt
         sleep(1)
-        print("\n📊 Results:")
+        print("\nHere are the results:")
         print(f"  A ∪ B = {self.set_a | self.set_b}")
         print(f"  A ∩ B = {self.set_a & self.set_b}")
         print(f"  A \\ B = {self.set_a - self.set_b}")
@@ -361,8 +361,7 @@ class Ciphers:
         for row in inv_matrix:
             print(row)
         print(f"\n📨 Hill Cipher Decrypted → {result}")
-
-#endregion cipher
+#endregion  @@@
 
 #region sorting
 class Sorting:
@@ -370,24 +369,28 @@ class Sorting:
 
     def __init__(self):
         clear_screen()
-        print("📊 Sorting Algorithm Explorer is ready!")
+        print("Sorting Algorithm Explorer is ready!")  # No emoji at start
         sleep(1)
         self.start()
 
     def start(self):
-        print("\n⚙️ Select a sorting method:")
-        print(" 1. 🫧 Bubble Sort")
-        print(" 2. 📍 Selection Sort")
-        print(" 3. 📝 Insertion Sort")
-        print(" 4. 🔀 Merge Sort")
-        print(" 5. 🚀 Quick Sort")
-        print(" 6. 🪣 Bucket Sort")
-        print(" 7. 🐚 Shell Sort")
-        print(" 8. ⚙️ Comb Sort")
-        print(" 9. 🧮 Radix Sort")
-        print("10. 🌳 Tree Sort")
-        choice = int(input("Your choice (1–10): "))
-        
+        print("\nSelect a sorting method:")  
+        print("1. Bubble Sort 🫧")  
+        print("2. Selection Sort 📍")  
+        print("3. Insertion Sort 📝")  
+        print("4. Merge Sort 🔀")  
+        print("5. Quick Sort 🚀")  
+        print("6. Bucket Sort 🪣")  
+        print("7. Shell Sort 🐚")  
+        print("8. Comb Sort ⚙️")  
+        print("9. Radix Sort 🧮")  
+        print("10. Tree Sort 🌳")  
+        try:
+            choice = int(input("Enter your choice (1–10): "))
+        except ValueError:
+            print("That wasn’t a valid number—please try again.")  
+            return self.start()
+
         match choice:
             case 1:
                 self.bubble_sort()
@@ -407,9 +410,12 @@ class Sorting:
                 self.comb_sort()
             case 9:
                 self.radix_sort()
+            case 10:
+                self.tree_sort()
             case _:
-                print("❗ Invalid choice — please try again.")
+                print("Invalid choice—please restart.")  
 #endregion
+
 
 #region conversion
 class Conversion:
@@ -417,25 +423,29 @@ class Conversion:
 
     def __init__(self):
         clear_screen()
-        print("🔧 Welcome to the Base Conversion Tool!")
+        print("⚙️ Welcome to the Base Conversion Toolbox!")  # Emoji at end
         sleep(1)
         self.start()
 
     def start(self):
-        print("\n✨ Choose a conversion type:")
-        print(" 1️⃣ Decimal → Binary")
-        print(" 2️⃣ Binary → Decimal")
-        print(" 3️⃣ Decimal → Octal")
-        print(" 4️⃣ Decimal → Hexadecimal")
-        print(" 5️⃣ Octal → Decimal")
-        print(" 6️⃣ Hexadecimal → Decimal")
-        print(" 7️⃣ Binary → Octal")
-        print(" 8️⃣ Binary → Hexadecimal")
-        print(" 9️⃣ Octal → Binary")
-        print("🔟 Octal → Hexadecimal")
-        print("🟰 Hexadecimal → Binary")
-        print("🧮 Hexadecimal → Octal")
-        choice = int(input("\nYour choice (1–12): "))
+        print("\nChoose a conversion:")  # Clear and concise
+        print(" 1. Decimal → Binary")
+        print(" 2. Binary → Decimal")
+        print(" 3. Decimal → Octal")
+        print(" 4. Decimal → Hexadecimal")
+        print(" 5. Octal → Decimal")
+        print(" 6. Hexadecimal → Decimal")
+        print(" 7. Binary → Octal")
+        print(" 8. Binary → Hexadecimal")
+        print(" 9. Octal → Binary")
+        print("10. Octal → Hexadecimal")
+        print("11. Hexadecimal → Binary")
+        print("12. Hexadecimal → Octal")
+        try:
+            choice = int(input("Enter your choice (1–12): "))
+        except ValueError:
+            print("Sorry, that wasn’t a number—please try again.")
+            return self.start()
 
         match choice:
             case 1:
@@ -463,47 +473,42 @@ class Conversion:
             case 12:
                 self.hex_to_octal()
             case _:
-                print("❗ Oops—that's not a valid choice.")
+                print("Sorry, that choice isn’t valid. Please restart.")
 
     def decimal_to_binary(self):
-        decimal = int(input("🔢 Enter a decimal number: "))
+        decimal = int(input("Enter a decimal number: "))
         output = ""
         base = 2
-
         while True:
             remainder = decimal % base
             decimal //= base
             output = str(remainder) + output
             if decimal == 0:
                 break
-
-        print(f"✅ Result in Binary: {output}")
+        print(f"Binary result: {output}")  # clean output
 
     def binary_to_decimal(self):
-        binary = input("🔢 Enter a binary number: ")
+        binary = input("Enter a binary number: ")
         reversed_bin = binary[::-1]
-        decimal = sum(int(digit) * 2 ** idx for idx, digit in enumerate(reversed_bin))
-        print(f"✅ Converted to Decimal: {decimal}")
+        decimal = sum(int(d) * 2**i for i, d in enumerate(reversed_bin))
+        print(f"Decimal result: {decimal}")
 
     def decimal_to_octal(self):
-        decimal = int(input("🔢 Enter a decimal number: "))
+        decimal = int(input("Enter a decimal number: "))
         output = ""
         base = 8
-
         while True:
             remainder = decimal % base
             decimal //= base
             output = str(remainder) + output
             if decimal == 0:
                 break
-
-        print(f"✅ Octal value: {output}")
+        print(f"Octal result: {output}")
 
     def decimal_to_hex(self):
-        decimal = int(input("🔢 Enter a decimal number: "))
+        decimal = int(input("Enter a decimal number: "))
         output = ""
         base = 16
-
         while True:
             remainder = decimal % base
             hex_digit = "0123456789ABCDEF"[remainder]
@@ -511,76 +516,76 @@ class Conversion:
             output = hex_digit + output
             if decimal == 0:
                 break
-
-        print(f"✅ Hexadecimal: {output}")
+        print(f"Hexadecimal result: {output}")
 
     def octal_to_decimal(self):
-        octal = input("🔢 Enter an octal number: ")
+        octal = input("Enter an octal number: ")
         reversed_octal = octal[::-1]
-        decimal = sum(int(digit) * 8 ** idx for idx, digit in enumerate(reversed_octal))
-        print(f"✅ Decimal result: {decimal}")
+        decimal = sum(int(d) * 8**i for i, d in enumerate(reversed_octal))
+        print(f"Decimal result: {decimal}")
 
     def hex_to_decimal(self):
-        hex_str = input("🔢 Enter a hexadecimal number: ")
-        reversed_hex = hex_str[::-1].upper()
-        hex_digits = "0123456789ABCDEF"
-        decimal = sum(hex_digits.index(char) * 16 ** idx for idx, char in enumerate(reversed_hex))
-        print(f"✅ Decimal result: {decimal}")
+        hex_str = input("Enter a hexadecimal number: ").upper()
+        reversed_hex = hex_str[::-1]
+        digits = "0123456789ABCDEF"
+        decimal = sum(digits.index(c) * 16**i for i, c in enumerate(reversed_hex))
+        print(f"Decimal result: {decimal}")
 
     def binary_to_octal(self):
-        binary = input("🔢 Enter a binary number: ")
+        binary = input("Enter a binary number: ")
         decimal = int(binary, 2)
         octal = ""
         while decimal:
             octal = str(decimal % 8) + octal
             decimal //= 8
-        print(f"✅ Octal value: {octal or '0'}")
+        print(f"Octal result: {octal or '0'}")
 
     def binary_to_hex(self):
-        binary = input("🔢 Enter a binary number: ")
+        binary = input("Enter a binary number: ")
         decimal = int(binary, 2)
         hex_value = ""
         while decimal:
             hex_value = "0123456789ABCDEF"[decimal % 16] + hex_value
             decimal //= 16
-        print(f"✅ Hexadecimal: {hex_value or '0'}")
+        print(f"Hexadecimal result: {hex_value or '0'}")
 
     def octal_to_binary(self):
-        octal = input("🔢 Enter an octal number: ")
+        octal = input("Enter an octal number: ")
         decimal = int(octal, 8)
         binary = ""
         while decimal:
             binary = str(decimal % 2) + binary
             decimal //= 2
-        print(f"✅ Binary value: {binary or '0'}")
+        print(f"Binary result: {binary or '0'}")
 
     def octal_to_hex(self):
-        octal = input("🔢 Enter an octal number: ")
+        octal = input("Enter an octal number: ")
         decimal = int(octal, 8)
         hex_value = ""
         while decimal:
             hex_value = "0123456789ABCDEF"[decimal % 16] + hex_value
             decimal //= 16
-        print(f"✅ Hexadecimal: {hex_value or '0'}")
+        print(f"Hexadecimal result: {hex_value or '0'}")
 
     def hex_to_binary(self):
-        hex_str = input("🔢 Enter a hexadecimal number: ")
+        hex_str = input("Enter a hexadecimal number: ")
         decimal = int(hex_str, 16)
         binary = ""
         while decimal:
             binary = str(decimal % 2) + binary
             decimal //= 2
-        print(f"✅ Binary value: {binary or '0'}")
+        print(f"Binary result: {binary or '0'}")
 
     def hex_to_octal(self):
-        hex_str = input("🔢 Enter a hexadecimal number: ")
+        hex_str = input("Enter a hexadecimal number: ")
         decimal = int(hex_str, 16)
         octal = ""
         while decimal:
             octal = str(decimal % 8) + octal
             decimal //= 8
-        print(f"✅ Octal value: {octal or '0'}")
+        print(f"Octal result: {octal or '0'}")
 #endregion conversion
+
 
 # region Prime
 class Prime:
@@ -588,19 +593,23 @@ class Prime:
 
     def __init__(self):
         clear_screen()
-        print("🔎 Prime Number Toolkit is ready!")
+        print("🔸 Prime Number Toolkit is ready!")
         sleep(1)
         self.start()
 
     def start(self):
         print("\n🧮 What would you like to do?")
-        print(" 1️⃣  Check if a number is prime")
-        print(" 2️⃣  Generate primes (Sieve of Eratosthenes)")
-        print(" 3️⃣  Compute prime factors")
-        print(" 4️⃣  Fermat’s little theorem")
-        print(" 5️⃣  Find primitive roots")
-        choice = int(input("Select option (1–5): "))
-        
+        print(" 1️⃣ Check prime status")
+        print(" 2️⃣ Generate primes (Sieve of Eratosthenes)")
+        print(" 3️⃣ Compute prime factors")
+        print(" 4️⃣ Fermat’s little theorem check")
+        print(" 5️⃣ Find primitive roots")
+        try:
+            choice = int(input("Choose an option (1–5): "))
+        except ValueError:
+            print("❗ That’s not a valid choice. Please try again.")
+            return self.start()
+
         match choice:
             case 1:
                 self.check_prime()
@@ -613,30 +622,31 @@ class Prime:
             case 5:
                 self.primitive_roots()
             case _:
-                print("❗ Oops—that's not a valid option.")
+                print("❗ Option not recognized!")
 
     def check_prime(self):
-        n = int(input("🔢 Enter a number to test: "))
+        n = int(input("🔢 Enter a number: "))
         if n < 2:
             print("❌ Not prime.")
             return
-        for i in range(2, int(n ** 0.5) + 1):
+        for i in range(2, int(n**0.5) + 1):
             if n % i == 0:
                 print("❌ Not prime.")
                 return
-        print("✅ Prime!")
+        print("✅ Number is prime!")
 
     @staticmethod
     def _check_prime(n):
         if n < 2:
             return False
-        for i in range(2, int(n ** 0.5) + 1):
+        for i in range(2, int(n**0.5) + 1):
             if n % i == 0:
                 return False
         return True
     
     def prime_factors(self):
         num = int(input("🔢 Enter a number to factor: "))
+        n = num
         factors = []
         while n % 2 == 0:
             factors.append(2)
@@ -651,29 +661,31 @@ class Prime:
         print(f"🔍 Prime factors of {num}: {factors}")
 
     def sieve(self):
-        low = int(input("📏 Enter the lower bound: "))
-        high = int(input("📏 Enter the upper bound: "))
+        low = int(input("📏 Lower bound: "))
+        high = int(input("📏 Upper bound: "))
         primes = [i for i in range(low, high) if self._check_prime(i)]
         print(f"✅ Primes between {low} and {high}: {primes}")
-    
+
     def fermats(self):
-        print("🧠 Fermat’s little theorem: a^(p–1) ≡ 1 (mod p)")
-        a = int(input("🔢 Enter a (base): "))
-        k = int(input("🔢 Enter k (exponent): "))
-        p = int(input("🔢 Enter p (prime): "))
+        print("ℹ️ Fermat’s little theorem: a^(p–1) ≡ 1 (mod p)")
+        a = int(input("🔢 Base a: "))
+        k = int(input("🔢 Exponent k: "))
+        p = int(input("🔢 Prime p: "))
         if not self._check_prime(p):
             print("❗ p must be prime.")
-        answer = pow(a, k) % p
-        print(f"📊 {a}^{k} mod {p} = {answer}")
+            return
+        answer = pow(a, k, p)
+        print(f"📊 a^k mod p → {a}^{k} mod {p} = {answer}")
 
     def primitive_roots(self):
-        p = int(input("🔢 Enter a prime p: "))
-        a = int(input("🔢 Enter a candidate for primitive root: "))
+        p = int(input("🔢 Enter prime p: "))
+        a = int(input("🔢 Candidate root a: "))
         if a <= 0 or p <= 0:
             print("❗ a and p must be positive.")
         if not self._check_prime(p):
             print("❗ p must be prime.")
-        
+            return
+
         required = set(range(1, p))
         roots = [
             g for g in range(2, p)
@@ -691,41 +703,47 @@ class GCD_LCM:
 
     def __init__(self):
         clear_screen()
-        print("🔢 GCD & LCM Calculator is ready!")
+        print("🧮 GCD & LCM Tool is ready!")
         sleep(1)
         self.start()
 
     def start(self):
-        print("\n🛠️ Choose an operation:")
-        print(" 1️⃣  Compute GCD (Euclidean method)")
-        print(" 2️⃣  Compute LCM (via GCD)")
-        choice = int(input("Your selection (1 or 2): "))
-        
+        print("\n✨ What would you like to compute today?")
+        print(" 1️⃣  Greatest Common Divisor (GCD)")
+        print(" 2️⃣  Least Common Multiple (LCM)")
+        try:
+            choice = int(input("Enter 1 or 2: "))
+        except ValueError:
+            print("❗ That input isn't valid — please try again.")
+            return self.start()
+
         match choice:
             case 1:
                 self.gcd()
             case 2:
                 self.lcm()
             case _:
-                print("❗ Invalid choice, please restart.")
+                print("❗ Option not recognized — please restart.")
 
     def gcd(self):
-        a = int(input("📌 Enter the first number: "))
-        b = int(input("📌 Enter the second number: "))
+        a = int(input("🔢 First number: "))
+        b = int(input("🔢 Second number: "))
+        original = (a, b)
         while b:
             a, b = b, a % b
-        print(f"✅ GCD result: {a}")
+        print(f"✅ The GCD of {original[0]} and {original[1]} is {a}")
 
     def lcm(self):
-        a = int(input("📌 Enter the first number: "))
-        b = int(input("📌 Enter the second number: "))
-        orig_a, orig_b = a, b
+        a = int(input("🔢 First number: "))
+        b = int(input("🔢 Second number: "))
+        orig = (a, b)
         while b:
             a, b = b, a % b
         gcd = a
-        lcm = (orig_a * orig_b) // gcd
-        print(f"✅ LCM result: {lcm}")
+        lcm = (orig[0] * orig[1]) // gcd
+        print(f"✅ The LCM of {orig[0]} and {orig[1]} is {lcm}")
 # endregion
+
 
 
 # region Searching
@@ -734,23 +752,23 @@ class Searching:
 
     def __init__(self):
         clear_screen()
-        print("✨ Hello there! Welcome to the Search Algorithm Playground!")
+        print("🔍 Welcome to the Search Playground!")
         sleep(1)
         self.menu()
 
     def menu(self):
-        print("\nWhich search path would you like to explore today?")
-        print(" 1. Interpolation Search 🚀")
-        print(" 2. Linear Search 🧭")
-        print(" 3. Binary Search 🧠")
-        print(" 4. Ternary Search 🔱")
-        print(" 5. Jump Search 🏃")
-        print(" 6. Interval Search 📏")
+        print("\nSelect a search technique to explore:")
+        print(" 1. Interpolation Search 🔢")
+        print(" 2. Linear Search 🏷️")
+        print(" 3. Binary Search 📚")
+        print(" 4. Ternary Search 🎯")
+        print(" 5. Jump Search 🏃‍♂️")
+        print(" 6. Interval Search ⏱️")
 
         try:
-            choice = int(input("Enter a number between 1 and 6: "))
+            choice = int(input("Pick a number (1–6): "))
         except ValueError:
-            print("⚠️ Uh-oh—that wasn't a number 1–6. Let's try again!")
+            print("❗ That wasn't a valid number. Try again.")
             return self.menu()
 
         {
@@ -760,36 +778,36 @@ class Searching:
             4: self.ternary_search,
             5: self.jump_search,
             6: self.interval_search,
-        }.get(choice, lambda: (print("⚠️ Oops—that option isn't on the list. Give it another shot!"), self.menu()))()
+        }.get(choice, lambda: (print("❗ Option not recognized—give it another go."), self.menu()))()
 
     def get_array_and_target(self, sort_array=False):
         try:
-            values = list(map(int, input("\nType in a series of numbers (space-separated): ").split()))
+            values = list(map(int, input("\nEnter numbers separated by spaces: ").split()))
             if sort_array:
                 values.sort()
-                print(f"📊 Sorted array: {values}")
-            target = int(input("🔍 What number are we searching for? "))
+                print(f"✅ Sorted list: {values}")
+            target = int(input("Which number are you searching for? "))
             return values, target
         except ValueError:
-            print("⚠️ Whoops! All inputs must be integers. Let's try that again.")
+            print("❗ Please enter only integers. Let's retry.")
             return self.get_array_and_target(sort_array)
 
     def linear_search(self):
         arr, target = self.get_array_and_target()
-        print("\n🔎 Launching linear search…\n")
+        print("\n🚀 Starting linear search...\n")
         sleep(0.5)
 
         for idx, val in enumerate(arr):
-            print(f"Checking index {idx} (value: {val})")
+            print(f"→ Checking position {idx} (has {val})")
             if val == target:
-                print(f"🎉 Success! Found {target} at index {idx}.")
+                print(f"✅ Found {target} at index {idx}!")
                 return
-            print("…not here, moving on.")
-        print(f"❌ Nope, {target} isn't in this list.")
+            print(" ... not here, moving on.")
+        print(f"❌ {target} isn't in the list.")
 
     def binary_search(self):
         arr, target = self.get_array_and_target(sort_array=True)
-        print("\n🔎 Running binary search…\n")
+        print("\n🚀 Starting binary search...\n")
         sleep(0.5)
 
         left, right = 0, len(arr) - 1
@@ -797,24 +815,24 @@ class Searching:
 
         while left <= right:
             mid = (left + right) // 2
-            print(f"Step {step}: left={left}, right={right}, mid={mid} (value: {arr[mid]})")
+            print(f"Step {step}: left={left}, right={right}, mid={mid} (is {arr[mid]})")
             step += 1
 
             if arr[mid] == target:
-                print(f"🎯 Found {target}! It's at index {mid}.")
+                print(f"✅ {target} found at index {mid}!")
                 return
             elif arr[mid] < target:
-                print("Going right—current is smaller than target.")
+                print(" → Target is higher; going right.")
                 left = mid + 1
             else:
-                print("Going left—current is bigger than target.")
+                print(" ← Target is lower; going left.")
                 right = mid - 1
 
-        print(f"❌ No luck—{target} isn't present.")
+        print(f"❌ Couldn't find {target}.")
 
     def interpolation_search(self):
         arr, target = self.get_array_and_target(sort_array=True)
-        print("\n🔎 Performing interpolation search…\n")
+        print("\n🚀 Starting interpolation search...\n")
         sleep(0.5)
 
         low, high = 0, len(arr) - 1
@@ -823,7 +841,7 @@ class Searching:
         while low <= high and arr[low] <= target <= arr[high]:
             if arr[high] == arr[low]:
                 if arr[low] == target:
-                    print(f"🎉 Found {target} at index {low}!")
+                    print(f"✅ Got {target} at index {low}!")
                     return
                 break
 
@@ -831,24 +849,24 @@ class Searching:
             if pos < low or pos > high:
                 break
 
-            print(f"Step {step}: low={low}, high={high}, pos={pos} (value: {arr[pos]})")
+            print(f"Step {step}: low={low}, high={high}, pos={pos} (is {arr[pos]})")
             step += 1
 
             if arr[pos] == target:
-                print(f"🎯 Hit! {target} is at index {pos}.")
+                print(f"✅ Found {target} at index {pos}!")
                 return
             elif arr[pos] < target:
-                print("Target's higher—shifting right.")
+                print(" → Too low; moving right.")
                 low = pos + 1
             else:
-                print("Target's lower—shifting left.")
+                print(" ← Too high; shifting left.")
                 high = pos - 1
 
-        print(f"❌ {target} wasn't found this time.")
+        print(f"❌ Didn't locate {target}.")
 
     def ternary_search(self):
         arr, target = self.get_array_and_target(sort_array=True)
-        print("\n🔎 Kicking off ternary search…\n")
+        print("\n🚀 Starting ternary search...\n")
         sleep(0.5)
 
         left, right = 0, len(arr) - 1
@@ -856,32 +874,32 @@ class Searching:
         while left <= right:
             mid1 = left + (right - left) // 3
             mid2 = right - (right - left) // 3
-            print(f"Step {step}: left={left}, mid1={mid1}, mid2={mid2}, right={right} (vals: {arr[mid1]}, {arr[mid2]})")
+            print(f"Step {step}: left={left}, mid1={mid1}, mid2={mid2}, right={right} (values {arr[mid1]}, {arr[mid2]})")
             step += 1
 
             if arr[mid1] == target:
-                print(f"🎉 Found it at mid1 (index {mid1})!")
+                print(f"✅ Found at mid1 (index {mid1})!")
                 return
             if arr[mid2] == target:
-                print(f"🎉 Found it at mid2 (index {mid2})!")
+                print(f"✅ Found at mid2 (index {mid2})!")
                 return
 
             if target < arr[mid1]:
-                print("Going left third.")
+                print(" → Going left.")
                 right = mid1 - 1
             elif target > arr[mid2]:
-                print("Going right third.")
+                print(" → Going right.")
                 left = mid2 + 1
             else:
-                print("Going middle third.")
+                print(" → Searching middle segment.")
                 left = mid1 + 1
                 right = mid2 - 1
 
-        print(f"❌ Couldn't locate {target}.")
+        print(f"❌ {target} not found.")
 
     def jump_search(self):
         arr, target = self.get_array_and_target(sort_array=True)
-        print("\n🔎 Starting jump search…\n")
+        print("\n🚀 Starting jump search...\n")
         sleep(0.5)
 
         import math
@@ -890,61 +908,60 @@ class Searching:
         prev = 0
         step = 1
 
-        # Jumping blocks
+        # Jump ahead in blocks
         while prev < n and arr[min(prev + step_size, n) - 1] < target:
-            print(f"Step {step}: jumped to block ending at index {min(prev+step_size, n)-1}")
+            print(f"Step {step}: jumped to block ending at {min(prev+step_size, n)-1}")
             prev += step_size
             step += 1
 
-        print(f"🔍 Now linearly scanning from index {prev}…")
+        print(f"🔍 Now scanning from index {prev}...")
         for idx in range(prev, min(prev + step_size, n)):
-            print(f"Checking index {idx} (value: {arr[idx]})")
+            print(f"→ Checking {idx} (has {arr[idx]})")
             if arr[idx] == target:
-                print(f"🎉 Found {target} at index {idx}!")
+                print(f"✅ Found {target} at index {idx}!")
                 return
 
-        print(f"❌ {target} not found in the list.")
+        print(f"❌ {target} isn't here.")
 
     def interval_search(self):
         arr, target = self.get_array_and_target(sort_array=False)
-        print("\n🔎 Launching interval search…\n")
+        print("\n🚀 Starting interval search...\n")
         sleep(0.5)
 
         left, right = 0, len(arr) - 1
         step = 1
         while left <= right:
-            print(f"Step {step}: examining interval {left}–{right}")
+            print(f"Step {step}: examining window {left}–{right}")
             mini = min(arr[left:right+1])
             maxi = max(arr[left:right+1])
-            print(f"Range is {mini} to {maxi}")
+            print(f"Range: {mini} to {maxi}")
             if target < mini or target > maxi:
-                print("Target out of this slice—shrinking the window.")
+                print(" → Outside this range; shrinking window.")
                 left += 1
                 right -= 1
             else:
                 for idx in range(left, right+1):
-                    print(f"Scanning index {idx} — value {arr[idx]}")
+                    print(f"→ Scanning index {idx}: {arr[idx]}")
                     if arr[idx] == target:
-                        print(f"🎉 Found {target} at index {idx}!")
+                        print(f"✅ Found {target} at {idx}!")
                         return
                 break
             step += 1
 
-        print(f"❌ {target} isn’t in this list.")
+        print(f"❌ {target} not found.")
 # endregion
-
 
 
 # region Main Program Loop
 def main():
     modules = [
-        Prime,
-        GCD_LCM,
-        Ciphers,
         Conversion,
         Searching,
         SetTheory,
+        GCD_LCM,
+        Ciphers,
         Sorting,
+        Prime,
     ]
 
     while True:
