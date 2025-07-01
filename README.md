@@ -84,3 +84,20 @@ This is the source code for the topic asignment of discrete math(sy 2024-2025) i
 <!-- - ## Sorting -->
 
 <!-- - ## Ciphers  -->
+
+      <!-- <h2>Greedy Algorithms</h2>
+      <p>Select your weapon of choice</p>
+      <button onclick="change_scene_to_file('greedy/FKP.html')">➗ Fractional Knapsack</button>
+      <button onclick="change_scene_to_file('greedy/EP.html')">🇪🇬 Egyptian Fraction</button>
+      <button onclick="change_scene_to_file('greedy/ASP.html')">🤸‍♂️ Activity Selection</button>
+      <button onclick="change_scene_to_file('greedy/JSP.html')">💼 Job Sequencing</button>
+    </div>
+
+    <div class="section">
+      <h2>Minimum Spanning Tree</h2>
+      <p>Forge optimal connections</p>
+      <button onclick="change_scene_to_file('MSTA/kruskals.html')">🕸Kruskal's Algorithm</button>
+      <button onclick="change_scene_to_file('MSTA/prims.html')">🕸Prim's Algorithm</button>
+      <button onclick="change_scene_to_file('MSTA/boruvka.html')">🕸boruvka's Algorithm</button>
+      <button onclick="change_scene_to_file('MSTA/dijkstra.html')">🕸dijkstra's Algorithm</button>
+      Add Prim’s or others here -->
